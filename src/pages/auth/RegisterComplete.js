@@ -71,9 +71,10 @@ const RegisterComplete = ({history}) => {
 
         console.log("user", user, "idTokenResult", idTokenResult);
         // populate user in Redux store
-        // we need to access json web token
-        // (user email, etc) on many different components
-        
+        // we need to access name, email, etc.
+        // but most importantly the JSON
+        // web token on many different components
+
         // Redirect
         //history.push('/');
       }
