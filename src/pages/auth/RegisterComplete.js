@@ -10,6 +10,11 @@ import classnames from 'classnames';
 // Register component
 
 // history is passed via props
+// we have access to history here
+// because RegisterComplete is defined
+// as a route and therefore history
+// is passed to this component on the
+// props
 const RegisterComplete = ({history}) => {
 
   const [password, setPassword] = useState("")

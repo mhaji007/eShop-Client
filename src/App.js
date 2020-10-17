@@ -23,11 +23,20 @@ const App = () => {
 
   // Check fire base auth state
   useEffect(() => {
+
+    // Clean up the state after dispatching
+    // the action to store to prevent
+    // memory leak
     const unsubscribe = auth.onAuthStateChanged(async(user) => {
+
       if(user) {
+        // On the backend we validate this token
+        // to make sure it is coming from Firebase
+        // and it belongs to user (e.g., when admin
+        // attempts to create a new user)
         const idTokenResult = await user.getIdTokenResult();
 
-        console.log("user", user)
+        // console.log("user", user)
 
         dispatch({
           type: 'LOGGED_IN_USER',

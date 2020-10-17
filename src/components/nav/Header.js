@@ -1,16 +1,54 @@
 import React, {useState} from 'react'
+// Ant Design imports
 import { Menu } from 'antd';
-import { HomeOutlined, UserOutlined, UserAddOutlined, SettingOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, UserAddOutlined, SettingOutlined, LogoutOutlined, LoginOutlined } from '@ant-design/icons';
+// Link from react
 import {Link} from 'react-router-dom';
+// Required to implement log out
+import firebase from 'firebase';
+// Used to update redux store on logout
+import {useDispatch} from 'react-redux';
+// Used to access history in non-route components
+import {useHistory} from 'react-router-dom';
 
+// Destructure subcomponents
+const { SubMenu, Item } = Menu;
 
-const { SubMenu, Item } = Menu; // Menu.SunMenu
-
+// Header component houses the navigation
 const Header = () => {
-  const [current, setCurrent] = useState('home')
+  // Update the active link
+  const [current, setCurrent] = useState('home');
+  // Used in logout
+  const dispatch = useDispatch();
+  let history = useHistory();
 
   const handleClick = (e) => {
     setCurrent(e.key);
+  }
+
+  // Logout
+  const logout = () => {
+    // Log the user out from
+    // Firebase
+    firebase.auth().signOut();
+    // Log the user out from redux store
+    dispatch({
+      type: "LOGOUT",
+      payload: null
+    });
+
+    history.push("/login")
+
+    // We cannot access history here
+    // like below because
+    // Header component is not
+    // a route by itself
+    // Destructinh history from
+    // props for a component
+    // is possible only if
+    // said component is a route
+    // const Header = ({history}) => {...} X not possible
+
   }
 
   return (
@@ -21,12 +59,13 @@ const Header = () => {
       <Item key="register" icon={<UserAddOutlined/>} className="float-right">
       <Link to="/register">Register</Link>
       </Item>
-      <Item key="login" icon={<UserOutlined/>} className="float-right">
+      <Item key="login" icon={<LoginOutlined />} className="float-right">
       <Link to="/login">Login</Link>
       </Item>
       <SubMenu key="SubMenu" icon={<SettingOutlined/>} title="Username">
           <Item key="setting:1">Option 1</Item>
           <Item key="setting:2">Option 2</Item>
+          <Item icon ={<LogoutOutlined />} onClick={logout}>Logout</Item>
       </SubMenu>
     </Menu>
   );
