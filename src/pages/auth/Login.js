@@ -4,15 +4,38 @@ import {toast} from "react-toastify";
 import { MailOutlined} from '@ant-design/icons';
 import styles from "./Register.module.scss"
 import classnames from 'classnames';
+import {useDispatch} from 'react-redux';
 
-const Login = (e) => {
+const Login = ({history}) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const[loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(email, password)
+    try {
+      setLoading(true)
+      // Log user in via Firebase
+      const result = await auth.signInWithEmailAndPassword(email, password);
+      const {user} = result
+      const idTokenResult = await user.getIdTokenResult()
+      dispatch({
+        type: 'LOGGED_IN_USER',
+        payload: {
+          email: user.email,
+          token: idTokenResult.token
+        }
+      });
+      history.push('/')
+    } catch(error) {
+      console.log(error);
+      toast.error(error.message);
+      setLoading(false);
+    }
 
   }
 
@@ -51,7 +74,7 @@ const Login = (e) => {
       </div>
     </div>
 
-    <button className={classnames(styles.btn, styles.blockCube, styles.blockChubeHover)} type='submit' disabled = {!email||password.length<6}>
+    <button className={classnames(styles.btn, styles.blockCube, styles.blockCubeHover)} type='submit' disabled = {!email||password.length<6}>
       <div className={styles.bgTop}>
         <div className={styles.bgInner}></div>
       </div>
@@ -62,7 +85,7 @@ const Login = (e) => {
         <div className={styles.bgInner}></div>
       </div>
       <div className={styles.text}>
-    {<MailOutlined/>} {""}Login
+    {<MailOutlined/> } {""}Login
 
       </div>
     </button>

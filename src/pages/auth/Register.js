@@ -57,7 +57,7 @@ const Register = (e) => {
       </div>
     </div>
 
-    <button className={classnames(styles.btn, styles.blockCube, styles.blockChubeHover)} type='submit'>
+    <button className={classnames(styles.btn, styles.blockCube, styles.blockCubeHover)} type='submit'>
       <div className={styles.bgTop}>
         <div className={styles.bgInner}></div>
       </div>
@@ -81,7 +81,7 @@ const Register = (e) => {
     <div className="container p-5">
       {/* <div className="row"> */}
         {/* <div className="col-md-6 offset-md-3"> */}
-          
+
           {registerForm()}
         {/* </div> */}
       {/* </div> */}

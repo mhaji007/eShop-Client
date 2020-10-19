@@ -3,7 +3,7 @@
 }
 
 $bg_body: #fff;
-$bg_gradient_last_color: rgba(0,212,255,1);
+$bg_gradient_last_color:#6fbaff;
 $bg_gradient: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(52,9,121,1) 37%, $bg_gradient_last_color 94%);;
 
 body {
@@ -61,7 +61,7 @@ position: relative;
   position: absolute;
   height: 10px;
   background: rgb(2,0,36);
-  background:  rgba(0,212,255,1);
+  background:  #6fbaff;
   bottom: 100%;
   left: 5px;
   right: -5px;
@@ -119,13 +119,13 @@ position: relative;
     &:focus ~ .bgTop .bgInner,
     &:focus ~ .bgInner .bgInner {
       top: 100%;
-      background: rgba(0,212,255,1);
+      background: #6fbaff
     }
   }
   .bgTop,
   .bgRight,
   .bg {
-    background-color:rgba(0,212,255,1);
+    background-color:#6fbaff;
     transition: background-color 0.2s ease-in-out;
   }
   .bgRight,
@@ -139,9 +139,10 @@ position: relative;
       .bgTop,
       .bgRight,
       .bg {
-        background:rgba(0,212,255,1);
+        background:#6fbaff;
         }
   }
+
 }
 // State hover, focus
 &.blockCubeHover:focus,
@@ -155,3 +156,8 @@ position: relative;
 }
 
 
+.btn:hover {
+  .text {
+    color:white;
+  }
+}

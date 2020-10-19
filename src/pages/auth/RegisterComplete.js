@@ -81,7 +81,7 @@ const RegisterComplete = ({history}) => {
         // web token on many different components
 
         // Redirect
-        //history.push('/');
+        history.push('/');
       }
     } catch (error) {
       console.log(error);
@@ -95,9 +95,9 @@ const RegisterComplete = ({history}) => {
       <div>
       <form autoComplete='off' className={styles.form} onSubmit={handleSubmit}>
     <div className={styles.control}>
-      {/* <h1>
+      <h1>
         Join
-      </h1> */}
+      </h1>
     </div>
     <div className={classnames(styles.control, styles.blockCube, styles.blockInput)}>
       <input name='email' placeholder='Email' type='email'  value={email} dsiabled="true"/>
@@ -124,7 +124,7 @@ const RegisterComplete = ({history}) => {
       </div>
     </div>
 
-    <button className={classnames(styles.btn, styles.blockCube, styles.blockChubeHover)} type='submit'>
+    <button className={classnames(styles.btn, styles.blockCube, styles.blockCubeHover)} type='submit'>
       <div className={styles.bgTop}>
         <div className={styles.bgInner}></div>
       </div>
