@@ -11,6 +11,10 @@ import {useDispatch} from 'react-redux';
 // Used to access history in non-route components
 import {useHistory} from 'react-router-dom';
 
+// useDispatch => updating the state
+// useSelector => Retrieving data from the state
+import { useSelector } from "react-redux";
+
 // Destructure subcomponents
 const { SubMenu, Item } = Menu;
 
@@ -20,6 +24,9 @@ const Header = () => {
   const [current, setCurrent] = useState('home');
   // Used in logout
   const dispatch = useDispatch();
+
+  let {user} = useSelector(state => ({...state}))
+
   let history = useHistory();
 
   const handleClick = (e) => {
@@ -56,17 +63,18 @@ const Header = () => {
       <Item key="home" icon={<HomeOutlined />}>
         <Link to="/">Home</Link>
       </Item>
-      <Item key="register" icon={<UserAddOutlined/>} className="float-right">
+      {!user &&(<Item key="register" icon={<UserAddOutlined/>} className="float-right">
       <Link to="/register">Register</Link>
-      </Item>
-      <Item key="login" icon={<LoginOutlined />} className="float-right">
+      </Item>)}
+      {!user && (<Item key="login" icon={<LoginOutlined />} className="float-right">
       <Link to="/login">Login</Link>
-      </Item>
-      <SubMenu key="SubMenu" icon={<SettingOutlined/>} title="Username">
+      </Item>)}
+      {user &&(<SubMenu key="SubMenu" icon={<SettingOutlined/>} title={user.email&&user.email.split("@")[0]} className="float-right">
           <Item key="setting:1">Option 1</Item>
           <Item key="setting:2">Option 2</Item>
           <Item icon ={<LogoutOutlined />} onClick={logout}>Logout</Item>
       </SubMenu>
+      )}
     </Menu>
   );
 }

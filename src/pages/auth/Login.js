@@ -5,14 +5,16 @@ import { Button } from "antd";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import styles from "./Login.module.scss";
 import classnames from "classnames";
-import { useDispatch } from "react-redux";
+import {useDispatch} from 'react-redux';
+
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
+  let dispatch = useDispatch();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -141,7 +143,7 @@ const Login = ({ history }) => {
               <div className={styles.bgInner}></div>
             </div>
             <div className={styles.text}>
-              {<MailOutlined />} {""}Login
+              {<MailOutlined />} {""}Login with Email
             </div>
           </button>
         </form>
@@ -186,21 +188,6 @@ const Login = ({ history }) => {
           </div>
         </button>
       </form>
-
-      {/* <button className={classnames(styles.btn, styles.blockCube, styles.blockCubeHover)} type='submit' disabled = {!email||password.length<6} onClick={googleLogin}>
-      <div className={styles.bgTop}>
-        <div className={styles.bgInner}></div>
-      </div>
-      <div className={styles.bgRight}>
-        <div className={styles.bgInner}></div>
-      </div>
-      <div className={styles.bg}>
-        <div className={styles.bgInner}></div>
-      </div>
-      <div className={styles.text}>
-    {<MailOutlined/> } {""}Login
-      </div>
-    </button> */}
 
       {/* </div> */}
       {/* </div> */}

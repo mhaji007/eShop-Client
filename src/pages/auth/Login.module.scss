@@ -4,7 +4,7 @@
 
 $bg_body: #fff;
 $bg_gradient_last_color:#6fbaff;
-$bg_gradient: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(52,9,121,1) 37%, $bg_gradient_last_color 94%);;
+$bg_gradient: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(52,9,121,1) 37%, $bg_gradient_last_color 94%);
 
 body {
 background-color: $bg_body !important;
@@ -167,8 +167,8 @@ position: relative;
   .bgTop {
     position: absolute;
     height: 10px;
-    background: rgb(2,0,36);
-    background: red;
+    background: #de5246;
+    background: #de5246;
     bottom: 100%;
     left: 5px;
     right: -5px;
@@ -184,13 +184,13 @@ position: relative;
     top: 0;
     right: 0;
     bottom: 0;
-    background: red;
-    background:red !important;
+    background: #de5246ed;
+    background:#e04637 !important;
   }
   .bgRight {
     position: absolute;
-    background:red;
-    background: red !important;
+    background:#de5246;
+    background: #de5246 !important;
     top: -5px;
     z-index: 0;
     bottom: 5px;
