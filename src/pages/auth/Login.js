@@ -6,6 +6,7 @@ import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import styles from "./Login.module.scss";
 import classnames from "classnames";
 import {useDispatch} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 
 const Login = ({ history }) => {
@@ -186,7 +187,9 @@ const Login = ({ history }) => {
           <div className={styles.text}>
             {<GoogleOutlined />} {""} Login with Google
           </div>
+
         </button>
+          <Link to="/forgot/password" className="float-right text-danger"> Forgot Password?</Link>
       </form>
 
       {/* </div> */}

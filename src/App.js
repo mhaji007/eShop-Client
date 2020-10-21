@@ -7,6 +7,7 @@ import Header from './components/nav/Header';
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RegisterComplete from './pages/auth/RegisterComplete';
+import ForgotPassword from './pages/auth/ForgotPassword';
 
 // Access the currenlty logged in user
 import {auth} from './firebase';
@@ -58,6 +59,7 @@ const App = () => {
       <Route path="/"  exact component ={Home}/>
       <Route path="/login" exact component ={Login}/>
       <Route path="/register" exact component ={Register}/>
+      <Route path="/forgot/password" exact component ={ForgotPassword}/>
       <Route path="/register/complete" exact component ={RegisterComplete}/>
     </Switch>
     </>

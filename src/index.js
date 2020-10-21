@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import { BrowserRouter } from 'react-router-dom';
 import "antd/dist/antd.css";
+import "./index.css";
 // Helps in creating a store
 import {createStore} from 'redux';
 // Connects the global state store to all components
