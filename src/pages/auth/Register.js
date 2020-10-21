@@ -1,10 +1,24 @@
-import React, {useState} from "react";
+import React, {useEffect,useState} from "react";
 import {auth} from '../../firebase';
 import {toast} from "react-toastify";
 import styles from "./Register.module.scss"
 import classnames from 'classnames';
+import {useSelector} from 'react-redux';
 
-const Register = (e) => {
+
+const Register = ({history}) => {
+
+  const {user} = useSelector((state) => ({...state}))
+
+
+  useEffect(() => {
+
+    if(user && user.token) {
+      history.push("/");
+    }
+
+  }, [user])
+
 
   const [email, setEmail] = useState("");
 

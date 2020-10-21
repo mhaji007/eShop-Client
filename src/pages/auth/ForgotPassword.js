@@ -19,7 +19,18 @@ const ForgotPassword = ({ history }) => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const {user} = useSelector((state) => ({...state}))
+
   let dispatch = useDispatch();
+
+
+  useEffect(() => {
+
+    if(user && user.token) {
+      history.push("/");
+    }
+
+  }, [user])
 
 
   const handleSubmit = async (e) => {
