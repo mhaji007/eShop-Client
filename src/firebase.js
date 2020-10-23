@@ -15,7 +15,7 @@ firebase.initializeApp(firebaseConfig);
 
 // Export
 
-// Used for loggin in the registrated user
+// Used for logging in the registrated user
 // and Google log in
 export const auth = firebase.auth();
 

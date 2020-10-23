@@ -57,7 +57,7 @@ const Header = () => {
     // const Header = ({history}) => {...} X not possible
 
   }
-
+  // Conditionally render nav links
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
       <Item key="home" icon={<HomeOutlined />}>
@@ -69,6 +69,7 @@ const Header = () => {
       {!user && (<Item key="login" icon={<LoginOutlined />} className="float-right">
       <Link to="/login">Login</Link>
       </Item>)}
+      {/* Extract first part of email to display as username */}
       {user &&(<SubMenu key="SubMenu" icon={<SettingOutlined/>} title={user.email&&user.email.split("@")[0]} className="float-right">
           <Item key="setting:1">Option 1</Item>
           <Item key="setting:2">Option 2</Item>

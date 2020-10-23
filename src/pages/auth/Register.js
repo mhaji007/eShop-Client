@@ -10,7 +10,11 @@ const Register = ({history}) => {
 
   const {user} = useSelector((state) => ({...state}))
 
-
+  // Upon compounent mounting
+  // Check for user and token
+  // to see whether user is already
+  // logged in. If logged in,
+  // redirect user to homepage
   useEffect(() => {
 
     if(user && user.token) {

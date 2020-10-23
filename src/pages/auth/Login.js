@@ -1,56 +1,83 @@
 import React, { useState, useEffect } from "react";
 import { auth, googleAuthProvider } from "../../firebase";
 import { toast } from "react-toastify";
-import { Button } from "antd";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import styles from "./Login.module.scss";
 import classnames from "classnames";
-import {useDispatch, useSelector} from 'react-redux';
-import {Link} from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import axios from 'axios';
 
-
+// Function to send token to the backend api after log in
+const createOrUpdateUser = async(authToken) => {
+  // Body of the request is empty
+  // body is not used since
+  // Token will be sent in the headers
+  return await axios.post(`${process.env.REACT_APP_API}/create-or-update-user`, {}, {
+    headers: {
+      authToken,
+    }
+  });
+}
+// Login user
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const {user} = useSelector((state) => ({...state}))
+  const { user } = useSelector((state) => ({ ...state }));
+
 
   let dispatch = useDispatch();
 
-
+  // Upon compounent mounting
+  // Check for user and token
+  // to see whether user is already
+  // logged in. If logged in,
+  // redirect user to homepage
   useEffect(() => {
-
-    if(user && user.token) {
+    if (user && user.token) {
       history.push("/");
     }
+  }, [user]);
 
-  }, [user])
-
-
+  // Handle login with email and password
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Display loader
       setLoading(true);
       // Log user in via Firebase
       const result = await auth.signInWithEmailAndPassword(email, password);
+      // Destructure user
       const { user } = result;
+      // Retrieve token for the logged in user from Firebase
       const idTokenResult = await user.getIdTokenResult();
-      dispatch({
-        type: "LOGGED_IN_USER",
-        payload: {
-          email: user.email,
-          token: idTokenResult.token,
-        },
-      });
-      history.push("/");
+      // Send token in the headers as authToken
+      createOrUpdateUser(idTokenResult.token).then(
+        res => console.log("CREATE OR UPDATE RES", res)
+      ).catch();
+
+      // Update state via dispatching action
+      // dispatch({
+      //   type: "LOGGED_IN_USER",
+      //   payload: {
+      //     email: user.email,
+      //     token: idTokenResult.token,
+      //   },
+      // });
+      // history.push("/");
     } catch (error) {
+      // Display error in console
       console.log(error);
+      // Display error detail to user
       toast.error(error.message);
+      // Remove loader
       setLoading(false);
     }
   };
 
+  // Handle login with Gmail
   const googleLogin = async () => {
     auth
       .signInWithPopup(googleAuthProvider)
@@ -68,7 +95,7 @@ const Login = ({ history }) => {
       })
       .catch((err) => {
         console.log(err);
-        // toast.error(err.message);
+        toast.error(err.message);
       });
   };
 
@@ -163,9 +190,9 @@ const Login = ({ history }) => {
     );
   };
 
-  const handleGoogleSubmit = (e) =>{
+  const handleGoogleSubmit = (e) => {
     e.preventDefault();
-  }
+  };
 
   return (
     <div className="container">
@@ -174,7 +201,11 @@ const Login = ({ history }) => {
 
       {loading ? <h4 className>Loading...</h4> : <h4></h4>}
       {loginForm()}
-      <form autoComplete="off" className={styles.form} onSubmit={handleGoogleSubmit}>
+      <form
+        autoComplete="off"
+        className={styles.form}
+        onSubmit={handleGoogleSubmit}
+      >
         <button
           className={classnames(
             styles.btn,
@@ -198,9 +229,11 @@ const Login = ({ history }) => {
           <div className={styles.text}>
             {<GoogleOutlined />} {""} Login with Google
           </div>
-
         </button>
-          <Link to="/forgot/password" className="float-right text-danger"> Forgot Password?</Link>
+        <Link to="/forgot/password" className="float-right text-danger">
+          {" "}
+          Forgot Password?
+        </Link>
       </form>
 
       {/* </div> */}
