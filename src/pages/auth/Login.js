@@ -6,20 +6,12 @@ import styles from "./Login.module.scss";
 import classnames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import axios from 'axios';
+import {createOrUpdateUser} from "../../functions/auth";
 
-// Function to send token to the backend api after log in
-const createOrUpdateUser = async(authToken) => {
-  // Body of the request is empty
-  // body is not used since
-  // Token will be sent in the headers
-  return await axios.post(`${process.env.REACT_APP_API}/create-or-update-user`, {}, {
-    headers: {
-      authToken,
-    }
-  });
-}
 // Login user
+// Login is a route component
+// ( <Route path="/login" exact component ={Login}/>)
+// as such has access to history on the props
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -54,11 +46,37 @@ const Login = ({ history }) => {
       // Retrieve token for the logged in user from Firebase
       const idTokenResult = await user.getIdTokenResult();
       // Send token in the headers as authToken
-      createOrUpdateUser(idTokenResult.token).then(
-        res => console.log("CREATE OR UPDATE RES", res)
-      ).catch();
+      // The server upon receiveing the request on /create-or-update
+      // endpoint passes it to the  authCheck middleware
+      // for token authentication and only then the
+      // request is sent to the createOrUpdateUser controller
+      createOrUpdateUser(idTokenResult.token).then((res) =>{
+        // res => console.log("CREATE OR UPDATE RES", res)
+        dispatch({
+          type:"LOGGED_IN_USER",
+          // payload values here,
+          // aside from email and
+          // token directly obtained
+          // via firebase,
+          // will not persist on
+          // refresh. Therefore there
+          // is a need for another endpoint
+          // to retrieve current user info
+          payload:{
+            name: res.data.name,
+            email:user.email,
+            token: idTokenResult.token,
+            role: res.data.role,
+            id:res.data._id
+
+          }
+        })
+      }).catch();
 
       // Update state via dispatching action
+      // Below action comes from firebase
+      // i.e., we get user email and token
+      // from firebase
       // dispatch({
       //   type: "LOGGED_IN_USER",
       //   payload: {
@@ -84,13 +102,28 @@ const Login = ({ history }) => {
       .then(async (result) => {
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: {
-            email: user.email,
-            token: idTokenResult.token,
-          },
-        });
+
+        createOrUpdateUser(idTokenResult.token).then((res) =>{
+          dispatch({
+            type:"LOGGED_IN_USER",
+            payload:{
+              name: res.data.name,
+              email:user.email,
+              token: idTokenResult.token,
+              role: res.data.role,
+              id:res.data._id
+
+            }
+          })
+        }).catch();
+
+        // dispatch({
+        //   type: "LOGGED_IN_USER",
+        //   payload: {
+        //     email: user.email,
+        //     token: idTokenResult.token,
+        //   },
+        // });
         history.push("/");
       })
       .catch((err) => {

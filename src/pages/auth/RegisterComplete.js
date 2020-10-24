@@ -3,6 +3,22 @@ import {auth} from '../../firebase';
 import {toast} from "react-toastify";
 import styles from "./Register.module.scss"
 import classnames from 'classnames';
+import { useDispatch, useSelector } from "react-redux";
+import {createOrUpdateUser} from "../../functions/auth";
+
+
+// // Function to send token to the backend api after log in
+// const createOrUpdateUser = async(authToken) => {
+//   // Body of the request is empty
+//   // body is not used since
+//   // Token will be sent in the headers
+//   return await axios.post(`${process.env.REACT_APP_API}/create-or-update-user`, {}, {
+//     headers: {
+//       authToken,
+//     }
+//   });
+// }
+
 
 // User lands on this page
 // after clicking on the email
@@ -20,6 +36,11 @@ const RegisterComplete = ({history}) => {
   const [password, setPassword] = useState("")
 
   const [email, setEmail] = useState("");
+
+  const { user } = useSelector((state) => ({ ...state }));
+
+  let dispatch = useDispatch();
+
   // populate email via localstorage
   useEffect(() => {
     setEmail(window.localStorage.getItem("emailForRegistration"));
@@ -75,10 +96,24 @@ const RegisterComplete = ({history}) => {
         const idTokenResult = await user.getIdTokenResult();
 
         console.log("user", user, "idTokenResult", idTokenResult);
+
         // populate user in Redux store
         // we need to access name, email, etc.
         // but most importantly the JSON
         // web token on many different components
+        createOrUpdateUser(idTokenResult.token).then((res) =>{
+          dispatch({
+            type:"LOGGED_IN_USER",
+            payload:{
+              name: res.data.name,
+              email:user.email,
+              token: idTokenResult.token,
+              role: res.data.role,
+              id:res.data._id
+
+            }
+          })
+        }).catch();
 
         // Redirect
         history.push('/');
