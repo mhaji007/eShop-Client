@@ -26,7 +26,9 @@ const Login = ({ history }) => {
 
   let dispatch = useDispatch();
 
-
+  // Take user obtained from making request
+  // to create-or-update endpoint and
+  // redirect based on role (e.g., admin vs subscriber)
   const roleBasedRedirect = (res) => {
     if(res.data.role === "admin") {
       history.push("/admin/dashboard");

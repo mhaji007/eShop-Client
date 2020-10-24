@@ -8,14 +8,15 @@ import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RegisterComplete from './pages/auth/RegisterComplete';
 import ForgotPassword from './pages/auth/ForgotPassword';
-import {createOrUpdateUser} from "./functions/auth";
-import {currentUser} from './functions/auth';
+import History from './pages/user/History';
+import UserRoute from './components/routes/UserRoute';
 
 // Access the currenlty logged in user
 import {auth} from './firebase';
 // Used for dispatching action and
 // payload to update redux store
 import {useDispatch} from 'react-redux';
+import {currentUser} from './functions/auth';
 
 
 
@@ -99,6 +100,7 @@ const App = () => {
       <Route path="/register" exact component ={Register}/>
       <Route path="/forgot/password" exact component ={ForgotPassword}/>
       <Route path="/register/complete" exact component ={RegisterComplete}/>
+      <UserRoute path="/user/history" exact component ={History}/>
     </Switch>
     </>
   )
