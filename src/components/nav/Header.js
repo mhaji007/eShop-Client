@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 // Ant Design imports
 import { Menu } from 'antd';
-import { HomeOutlined, UserOutlined, UserAddOutlined, SettingOutlined, LogoutOutlined, LoginOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserAddOutlined, SettingOutlined, LogoutOutlined, LoginOutlined } from '@ant-design/icons';
 // Link from react
 import {Link} from 'react-router-dom';
 // Required to implement log out

@@ -71,7 +71,7 @@ const Login = ({ history }) => {
 
           }
         })
-      }).catch();
+      }).catch(err => console.log(err));
 
       // Update state via dispatching action
       // Below action comes from firebase
@@ -115,7 +115,7 @@ const Login = ({ history }) => {
 
             }
           })
-        }).catch();
+        }).catch(err => console.log(err));
 
         // dispatch({
         //   type: "LOGGED_IN_USER",

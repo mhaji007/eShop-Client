@@ -8,6 +8,8 @@ import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RegisterComplete from './pages/auth/RegisterComplete';
 import ForgotPassword from './pages/auth/ForgotPassword';
+import {createOrUpdateUser} from "./functions/auth";
+import {currentUser} from './functions/auth';
 
 // Access the currenlty logged in user
 import {auth} from './firebase';
@@ -30,6 +32,13 @@ const App = () => {
     // memory leak
     const unsubscribe = auth.onAuthStateChanged(async(user) => {
 
+      // If the expression if(user) returns true
+      // this indicates that we already have access to user informaiton
+      // in the database because we have already made a request
+      // to the create-or-update endpoint
+      // therefore instead of making request to create-or-update
+      // user on each request we can simply retrieve the current
+      // user information from the database
       if(user) {
         // On the backend we validate this token
         // to make sure it is coming from Firebase
@@ -39,13 +48,42 @@ const App = () => {
 
         // console.log("user", user)
 
-        dispatch({
-          type: 'LOGGED_IN_USER',
-          payload: {
-            email: user.email,
-            token: idTokenResult.token
-          }
-        })
+        // dispatch({
+        //   type: 'LOGGED_IN_USER',
+        //   payload: {
+        //     email: user.email,
+        //     token: idTokenResult.token
+        //   }
+        // })
+
+        // Make request to backend to
+        // get current user's information
+        // on state change
+        currentUser(idTokenResult.token).then((res) =>{
+          dispatch({
+            type:"LOGGED_IN_USER",
+            // payload values here,
+            // aside from email and
+            // token directly obtained
+            // via firebase,
+            // will not persist on
+            // refresh. Therefore there
+            // is a need for another endpoint
+            // to retrieve current user info
+            payload:{
+              name: res.data.name,
+              email:user.email,
+              token: idTokenResult.token,
+              role: res.data.role,
+              id:res.data._id
+
+            }
+          })
+        }).catch(err => console.log(err));
+
+
+
+
       }
     });
     return () => unsubscribe();
