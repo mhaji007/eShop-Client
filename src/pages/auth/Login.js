@@ -8,6 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {createOrUpdateUser} from "../../functions/auth";
 
+
+
+
+
 // Login user
 // Login is a route component
 // ( <Route path="/login" exact component ={Login}/>)
@@ -22,6 +26,15 @@ const Login = ({ history }) => {
 
   let dispatch = useDispatch();
 
+
+  const roleBasedRedirect = (res) => {
+    if(res.data.role === "admin") {
+      history.push("/admin/dashboard");
+    } else {
+
+      history.push("/user/history");
+    }
+  }
   // Upon compounent mounting
   // Check for user and token
   // to see whether user is already
@@ -46,7 +59,7 @@ const Login = ({ history }) => {
       // Retrieve token for the logged in user from Firebase
       const idTokenResult = await user.getIdTokenResult();
       // Send token in the headers as authToken
-      // The server upon receiveing the request on /create-or-update
+      // The server upon receiving the request at /create-or-update
       // endpoint passes it to the  authCheck middleware
       // for token authentication and only then the
       // request is sent to the createOrUpdateUser controller
@@ -71,6 +84,8 @@ const Login = ({ history }) => {
 
           }
         })
+        // Role based redirect
+        roleBasedRedirect(res);
       }).catch(err => console.log(err));
 
       // Update state via dispatching action
@@ -84,7 +99,10 @@ const Login = ({ history }) => {
       //     token: idTokenResult.token,
       //   },
       // });
+
+
       // history.push("/");
+
     } catch (error) {
       // Display error in console
       console.log(error);
@@ -115,6 +133,8 @@ const Login = ({ history }) => {
 
             }
           })
+          // Role based redirect
+          roleBasedRedirect(res);
         }).catch(err => console.log(err));
 
         // dispatch({
@@ -124,7 +144,12 @@ const Login = ({ history }) => {
         //     token: idTokenResult.token,
         //   },
         // });
-        history.push("/");
+
+
+        // history.push("/");
+
+
+
       })
       .catch((err) => {
         console.log(err);
@@ -232,7 +257,7 @@ const Login = ({ history }) => {
       {/* <div className="row"> */}
       {/* <div className="col-md-6 offset-md-3"> */}
 
-      {loading ? <h4 className>Loading...</h4> : <h4></h4>}
+      {loading ? <h4>Loading...</h4> : <h4></h4>}
       {loginForm()}
       <form
         autoComplete="off"
