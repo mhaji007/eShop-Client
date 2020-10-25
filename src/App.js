@@ -10,6 +10,8 @@ import RegisterComplete from './pages/auth/RegisterComplete';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import History from './pages/user/History';
 import UserRoute from './components/routes/UserRoute';
+import Password from './pages/user/Password';
+import Wishlist from './pages/user/Wishlist';
 
 // Access the currenlty logged in user
 import {auth} from './firebase';
@@ -101,6 +103,8 @@ const App = () => {
       <Route path="/forgot/password" exact component ={ForgotPassword}/>
       <Route path="/register/complete" exact component ={RegisterComplete}/>
       <UserRoute path="/user/history" exact component ={History}/>
+      <UserRoute path="/user/password" exact component ={Password}/>
+      <UserRoute path="/user/wishlist" exact component ={Wishlist}/>
     </Switch>
     </>
   )
