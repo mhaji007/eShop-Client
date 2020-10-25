@@ -21,7 +21,7 @@ const Register = ({history}) => {
       history.push("/");
     }
 
-  }, [user])
+  }, [user, history])
 
 
   const [email, setEmail] = useState("");

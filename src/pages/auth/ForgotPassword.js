@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { auth, googleAuthProvider } from "../../firebase";
+import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 // import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import styles from "./Login.module.scss";
 import classnames from "classnames";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 // Used for accessing the logged in state
 // If users are already logged in
 // theu should not see the forgot password or logged in page
@@ -18,7 +16,6 @@ const ForgotPassword = ({ history }) => {
 
   const { user } = useSelector((state) => ({ ...state }));
 
-  let dispatch = useDispatch();
 
   // Upon compounent mounting
   // Check for user and token
@@ -29,7 +26,7 @@ const ForgotPassword = ({ history }) => {
     if (user && user.token) {
       history.push("/");
     }
-  }, [user]);
+  }, [user, history]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,7 +66,7 @@ const ForgotPassword = ({ history }) => {
       {/* <div className="row"> */}
       {/* <div className="col-md-6 offset-md-3"> */}
 
-      {loading ? <h4 className>Loading...</h4> : <h4></h4>}
+      {loading ? <h4 className>Loading...</h4> : <h4>""</h4>}
 
       <form autoComplete="off" className={styles.form} onSubmit={handleSubmit}>
         <div

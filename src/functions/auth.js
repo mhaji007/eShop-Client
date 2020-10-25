@@ -26,3 +26,14 @@ export const currentUser = async(authtoken) => {
     }
   });
 }
+
+export const currentAdmin = async(authtoken) => {
+// This route has two middlewares: authCheck and adminCheck
+  return await axios.post(`${process.env.REACT_APP_API}/current-admin`, {}, {
+    headers: {
+      authtoken,
+    }
+  });
+}
+
+

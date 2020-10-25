@@ -41,7 +41,7 @@ const RegisterComplete = ({ history }) => {
   // populate email via localstorage upon component's mounting
   useEffect(() => {
     setEmail(window.localStorage.getItem("emailForRegistration"));
-  }, []);
+  }, [user, history]);
 
   // Form handler
   const handleSubmit = async (e) => {

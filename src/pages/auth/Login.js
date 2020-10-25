@@ -46,7 +46,7 @@ const Login = ({ history }) => {
     if (user && user.token) {
       history.push("/");
     }
-  }, [user]);
+  }, [user, history]);
 
   // Handle login with email and password
   const handleSubmit = async (e) => {
@@ -259,7 +259,7 @@ const Login = ({ history }) => {
       {/* <div className="row"> */}
       {/* <div className="col-md-6 offset-md-3"> */}
 
-      {loading ? <h4>Loading...</h4> : <h4></h4>}
+      {loading ? <h4>Loading...</h4> : <h4>""</h4>}
       {loginForm()}
       <form
         autoComplete="off"
