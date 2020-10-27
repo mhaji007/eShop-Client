@@ -259,7 +259,7 @@ const Login = ({ history }) => {
       {/* <div className="row"> */}
       {/* <div className="col-md-6 offset-md-3"> */}
 
-      {loading ? <h4>Loading...</h4> : <h4>""</h4>}
+      {loading ? <h4>Loading...</h4> : <h4></h4>}
       {loginForm()}
       <form
         autoComplete="off"

@@ -1,3 +1,6 @@
+// API methods for auth
+// to be used in the components
+
 import axios from "axios"
 
 // Function to send token to the backend api after log in
