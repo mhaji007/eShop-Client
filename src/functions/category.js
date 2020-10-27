@@ -2,7 +2,8 @@
 // to be used in the components
 
 import axios from "axios";
-// Retrun all categories
+
+// Return all categories
 export const getCategories = async () =>
   await axios.get(`${process.env.REACT_APP_API}/categories`);
 
