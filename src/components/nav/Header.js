@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Menu } from "antd";
 import {
   HomeOutlined,
+  IdcardOutlined,
   UserAddOutlined,
   SettingOutlined,
   LogoutOutlined,
@@ -88,12 +89,12 @@ const Header = () => {
         >
           {/* Conditionally render submenu items based on user role */}
           {user && user.role === "subscriber" && (
-            <Item>
+            <Item icon={<IdcardOutlined />}>
               <Link to="/user/history">Dashboard</Link>
             </Item>
           )}
           {user && user.role === "admin" && (
-            <Item>
+            <Item icon={<IdcardOutlined />}>
               <Link to="/admin/dashboard">Dashboard</Link>
             </Item>
           )}

@@ -4,18 +4,12 @@ import UserNav from "../../components/nav/UserNav";
 const History = () => (
   <div className="container-fluid">
     <div className="row">
-  {/* <div className="col-md-2"> */}
-  <div >
+      {/* <div className="col-md-2"> */}
+      <div>
+        <UserNav />
+      </div>
 
-
-        <UserNav/>
-
-  </div>
-
-  <div className="col">
-    user history page
-  </div>
-
+      <div className="col">user history page</div>
     </div>
   </div>
 );
