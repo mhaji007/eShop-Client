@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
+import {Link} from 'react-router-dom';
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import {
@@ -7,7 +8,7 @@ import {
   getCategories,
   removeCategory,
 } from "../../../functions/category";
-import { SaveOutlined } from "@ant-design/icons";
+import { SaveOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import classnames from "classnames";
 import styles from "./CategoryCreate.module.scss";
 
@@ -45,6 +46,27 @@ const CategoryCreate = () => {
         setLoading(false);
         if (err.response.status === 400) toast.error(err.response.data);
       });
+  };
+
+  const handleRemove = async (slug) => {
+    // Ask for confirmation (to be replaced with a modal pop-up)
+    // let answer = window.confirm("Delete?");
+    // console.log(answer, slug);
+    if (window.confirm("Delete?")) {
+      setLoading(true);
+      removeCategory(slug, user.token)
+        .then((res) => {
+          setLoading(false);
+          toast.error(`${res.data.name} category deleted successfully`);
+          loadCategories();
+        })
+        .catch((err) => {
+          if (err.response.status === 400) {
+            setLoading(false);
+            toast.error(err.response.data);
+          }
+        });
+    }
   };
 
   const categoryForm = () => (
@@ -120,7 +142,22 @@ const CategoryCreate = () => {
           )}
           {categoryForm()}
           <hr />
-          {JSON.stringify(categories)}
+          {categories.map((c) => (
+            <div className="alert alert-secondary" key={c._id}>
+              {c.name}
+              <span
+                onClick={() => handleRemove(c.slug)}
+                className="btn btn-sm float-right"
+              >
+                <DeleteOutlined className="text-danger" />
+              </span>
+              <Link to={`/admin/category/${c.slug}`}>
+                <span className="btn btn-sm float-right">
+                  <EditOutlined className="text-info"/>
+                </span>
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </div>
