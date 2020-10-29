@@ -20,6 +20,10 @@ const CategoryCreate = () => {
   // Used for displaying created categories
   const [categories, setCategories] = useState([]);
 
+   // step 1
+   // State for user's search query
+   const [keyword, setKeyword] = useState("");
+
   useEffect(() => {
     loadCategories();
   }, []);
@@ -70,6 +74,18 @@ const CategoryCreate = () => {
     }
   };
 
+    // Store user's (lowercased) search term in the state
+    const handleSearchChange = (e) => {
+      e.preventDefault();
+      setKeyword(e.target.value.toLowerCase());
+    };
+
+    // Function to use in mapping through the categories
+    // check if the category name includes the incoming keyword
+    const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
+
+
+
 
 
   return (
@@ -87,13 +103,33 @@ const CategoryCreate = () => {
           ) : (
             ""
           )}
+
+
+
            <CategoryForm handleSubmit={handleSubmit}
            name={name}
            setName={setName}
            loading={loading}
            />
+
+          {/* User input filter form */}
+          <input
+            type="search"
+            placeholder="Filter"
+            value={keyword}
+            onChange={handleSearchChange}
+            className="form-control mb-4"
+          />
+
           <hr />
-          {categories.map((c) => (
+
+          {/* {categories.map((c) => (
+             */}
+
+          {/* Add searching and filtering to the map function above.
+          Before mapping check if the category names includes the
+          incoming keyword and only then display the categories */}
+          {categories.filter(searched(keyword)).map((c) => (
             <div className="alert alert-secondary" key={c._id}>
               {c.name}
               <span
