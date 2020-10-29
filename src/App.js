@@ -15,6 +15,7 @@ import Password from './pages/user/Password';
 import Wishlist from './pages/user/Wishlist';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import CategoryCreate from './pages/admin/category/CategoryCreate';
+import CategoryUpdate from './pages/admin/category/CategoryUpdate';
 
 // Access the currenlty logged in user
 import {auth} from './firebase';
@@ -110,6 +111,7 @@ const App = () => {
       <UserRoute path="/user/wishlist" exact component ={Wishlist}/>
       <AdminRoute path="/admin/dashboard" exact component ={AdminDashboard}/>
       <AdminRoute path="/admin/category" exact component ={CategoryCreate}/>
+      <AdminRoute path="/admin/category/:slug" exact component ={CategoryUpdate}/>
     </Switch>
     </>
   )

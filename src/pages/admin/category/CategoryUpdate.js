@@ -1,46 +1,58 @@
 import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
-import {Link} from 'react-router-dom';
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import {
-  createCategory,
-  getCategories,
-  removeCategory,
-} from "../../../functions/category";
-import { SaveOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { getCategory, updateCategory } from "../../../functions/category";
+import { SaveOutlined } from "@ant-design/icons";
 import classnames from "classnames";
-import styles from "./CategoryCreate.module.scss";
+import styles from "./CategoryUpdate.module.scss";
+// import {useParams} from 'react-rotuer-dom';
 
-const CategoryCreate = () => {
+// This protected route component renders when
+// "/admin/category/:slug" path is reached
+// by admin attempting to edit the category name
+// through edit link in create category page
+
+// history is needed in this route component
+// to redirect user to the create page upon success
+
+// the route parameter (slug) is needed
+// to identify the resource (the category) to
+// be updated
+
+// to get the parameters, there are two options
+// destructring match from props or using a react hook
+// called useParams
+const CategoryUpdate = ({ history, match }) => {
   const { user } = useSelector((state) => ({ ...state }));
 
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
-  // Used for displaying created categories
-  const [categories, setCategories] = useState([]);
+
+  //  let {slug} = useParams()
 
   useEffect(() => {
-    loadCategories();
+    loadCategory();
   }, []);
 
-  // Load categories upon component mounting and categories change
-  const loadCategories = () =>
-    getCategories().then((c) => setCategories(c.data));
+  const loadCategory = () =>
+  // match.params.slug looks for a route paramter
+  // with key of slug on the url. We have access to
+  // slug parameter on the url
+  // because it is derived in the create component
+    getCategory(match.params.slug).then((c) => setName(c.data.name));
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(name);
     setLoading(true);
-    // Send in name (as an object) and token
-    createCategory({ name }, user.token)
+    updateCategory(match.params.slug, {name}, user.token)
       .then((res) => {
         // console.log(res)
         setLoading(false);
-        // Clear name field after submission
         setName("");
-        toast.success(`"${res.data.name}" category has been created successfully`);
-        loadCategories();
+        toast.success(`"${res.data.name}" category updated successfully`);
+        history.push("/admin/category");
       })
       .catch((err) => {
         console.log(err);
@@ -49,32 +61,11 @@ const CategoryCreate = () => {
       });
   };
 
-  const handleRemove = async (slug) => {
-    // Ask for confirmation (to be replaced with a modal pop-up)
-    // let answer = window.confirm("Delete?");
-    // console.log(answer, slug);
-    if (window.confirm("Delete?")) {
-      setLoading(true);
-      removeCategory(slug, user.token)
-        .then((res) => {
-          setLoading(false);
-          toast.error(`${res.data.name} category deleted successfully`);
-          loadCategories();
-        })
-        .catch((err) => {
-          if (err.response.status === 400) {
-            setLoading(false);
-            toast.error(err.response.data);
-          }
-        });
-    }
-  };
-
   const categoryForm = () => (
     <form autoComplete="off" className={styles.form} onSubmit={handleSubmit}>
-      <div className={styles.control}>{/* <h1>
-
-</h1> */}</div>
+      <div className={styles.control}><h1>
+    {/* Update Category */}
+</h1></div>
       <div
         className={classnames(
           styles.control,
@@ -124,45 +115,27 @@ const CategoryCreate = () => {
         </div>
       </button>
     </form>
+
   );
 
   return (
     <div className="container-fluid">
       <div className="row">
-        {" "}
-          {/* <div className="col-md-2"> */}
-        <div>
+        <div className="col-md-2">
           <AdminNav />
         </div>
-        {/* Create category form */}
         <div className="col">
           {loading ? (
             <h4 className="text-danger">Loading..</h4>
           ) : (
-            ""
+           ""
           )}
           {categoryForm()}
           <hr />
-          {categories.map((c) => (
-            <div className="alert alert-secondary" key={c._id}>
-              {c.name}
-              <span
-                onClick={() => handleRemove(c.slug)}
-                className="btn btn-sm float-right"
-              >
-                <DeleteOutlined className="text-danger" />
-              </span>
-              <Link to={`/admin/category/${c.slug}`}>
-                <span className="btn btn-sm float-right">
-                  <EditOutlined className="text-info"/>
-                </span>
-              </Link>
-            </div>
-          ))}
         </div>
       </div>
     </div>
   );
 };
 
-export default CategoryCreate;
+export default CategoryUpdate;
