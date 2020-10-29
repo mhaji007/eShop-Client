@@ -3,9 +3,7 @@ import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { getCategory, updateCategory } from "../../../functions/category";
-import { SaveOutlined } from "@ant-design/icons";
-import classnames from "classnames";
-import styles from "./CategoryUpdate.module.scss";
+import CategoryForm from "../../../components/forms/CategoryForm";
 // import {useParams} from 'react-rotuer-dom';
 
 // This protected route component renders when
@@ -36,17 +34,17 @@ const CategoryUpdate = ({ history, match }) => {
   }, []);
 
   const loadCategory = () =>
-  // match.params.slug looks for a route paramter
-  // with key of slug on the url. We have access to
-  // slug parameter on the url
-  // because it is derived in the create component
+    // match.params.slug looks for a route paramter
+    // with key of slug on the url. We have access to
+    // slug parameter on the url
+    // because it is derived in the create component
     getCategory(match.params.slug).then((c) => setName(c.data.name));
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(name);
     setLoading(true);
-    updateCategory(match.params.slug, {name}, user.token)
+    updateCategory(match.params.slug, { name }, user.token)
       .then((res) => {
         // console.log(res)
         setLoading(false);
@@ -61,63 +59,6 @@ const CategoryUpdate = ({ history, match }) => {
       });
   };
 
-  const categoryForm = () => (
-    <form autoComplete="off" className={styles.form} onSubmit={handleSubmit}>
-      <div className={styles.control}><h1>
-    {/* Update Category */}
-</h1></div>
-      <div
-        className={classnames(
-          styles.control,
-          styles.blockCube,
-          styles.blockInput
-        )}
-      >
-        <input
-          type="text"
-          className="form-control"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-          autoFocus
-          required
-        />
-        <div className={styles.bgTop}>
-          <div className={styles.bgInner}></div>
-        </div>
-        <div className={styles.bgRight}>
-          <div className={styles.bgInner}></div>
-        </div>
-        <div className={styles.bg}>
-          <div className={styles.bgInner}></div>
-        </div>
-      </div>
-
-      <button
-        className={classnames(
-          styles.btn,
-          styles.blockCube,
-          styles.blockCubeHover
-        )}
-        type="submit"
-        disabled={loading}
-      >
-        <div className={styles.bgTop}>
-          <div className={styles.bgInner}></div>
-        </div>
-        <div className={styles.bgRight}>
-          <div className={styles.bgInner}></div>
-        </div>
-        <div className={styles.bg}>
-          <div className={styles.bgInner}></div>
-        </div>
-        <div className={styles.text}>
-          {<SaveOutlined />} {""}Save
-        </div>
-      </button>
-    </form>
-
-  );
-
   return (
     <div className="container-fluid">
       <div className="row">
@@ -125,12 +66,13 @@ const CategoryUpdate = ({ history, match }) => {
           <AdminNav />
         </div>
         <div className="col">
-          {loading ? (
-            <h4 className="text-danger">Loading..</h4>
-          ) : (
-           ""
-          )}
-          {categoryForm()}
+          {loading ? <h4 className="text-danger">Loading..</h4> : ""}
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+            loading={loading}
+          />
           <hr />
         </div>
       </div>
