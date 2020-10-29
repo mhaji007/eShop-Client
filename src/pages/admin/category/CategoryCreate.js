@@ -11,6 +11,7 @@ import {
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 import CategoryForm from '../../../components/forms/CategoryForm';
+import LocalSearch from '../../../components/forms/LocalSearch';
 
 const CategoryCreate = () => {
   const { user } = useSelector((state) => ({ ...state }));
@@ -112,14 +113,7 @@ const CategoryCreate = () => {
            loading={loading}
            />
 
-          {/* User input filter form */}
-          <input
-            type="search"
-            placeholder="Filter"
-            value={keyword}
-            onChange={handleSearchChange}
-            className="form-control mb-4"
-          />
+            <LocalSearch keyword={keyword} setKeyword={setKeyword}/>
 
           <hr />
 
