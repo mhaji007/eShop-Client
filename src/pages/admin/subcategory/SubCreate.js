@@ -3,7 +3,12 @@ import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { getCategories } from "../../../functions/category";
-import { createSubcategory, getSubcategory, removeSubcategory } from "../../../functions/subcategory";
+import {
+  createSubcategory,
+  getSubcategory,
+  removeSubcategory,
+  getSubcategories,
+} from "../../../functions/subcategory";
 import { Link } from "react-router-dom";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import CategoryForm from "../../../components/forms/CategoryForm";
@@ -16,15 +21,20 @@ const SubCreate = () => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
+  const [subcategories, setSubCategories] = useState([]);
 
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     loadCategories();
+    loadSubCategories();
   }, []);
 
   const loadCategories = () =>
     getCategories().then((c) => setCategories(c.data));
+
+  const loadSubCategories = () =>
+    getSubcategories().then((s) => setSubCategories(s.data));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,6 +46,7 @@ const SubCreate = () => {
         setLoading(false);
         setName("");
         toast.success(`Subcategory "${res.data.name}" created successfully`);
+        loadSubCategories();
       })
       .catch((err) => {
         console.log(err);
@@ -52,7 +63,8 @@ const SubCreate = () => {
       removeSubcategory(slug, user.token)
         .then((res) => {
           setLoading(false);
-          toast.error(`${res.data.name} deleted`);
+          toast.error(`Subcategory ${res.data.name} deleted successfully`);
+          loadSubCategories();
         })
         .catch((err) => {
           if (err.response.status === 400) {
@@ -63,6 +75,7 @@ const SubCreate = () => {
     }
   };
 
+  const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
 
   return (
     <div className="container-fluid">
@@ -72,11 +85,7 @@ const SubCreate = () => {
           <AdminNav />
         </div>
         <div className="col">
-          {loading ? (
-            <h4 className="text-danger">Loading..</h4>
-          ) : (
-            ""
-          )}
+          {loading ? <h4 className="text-danger">Loading..</h4> : ""}
 
           <div className="form-group">
             {/* <label>Parent category</label> */}
@@ -95,17 +104,30 @@ const SubCreate = () => {
             </select>
           </div>
 
-          {JSON.stringify(category)}
-
           <CategoryForm
             handleSubmit={handleSubmit}
             name={name}
             setName={setName}
           />
 
-          {/* step 2 and step 3 */}
           <LocalSearch keyword={keyword} setKeyword={setKeyword} />
 
+          {subcategories.filter(searched(keyword)).map((s) => (
+            <div className="alert alert-secondary" key={s._id}>
+              {s.name}
+              <span
+                onClick={() => handleRemove(s.slug)}
+                className="btn btn-sm float-right"
+              >
+                <DeleteOutlined className="text-danger" />
+              </span>
+              <Link to={`/admin/sub/${s.slug}`}>
+                <span className="btn btn-sm float-right">
+                  <EditOutlined className="text-info" />
+                </span>
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -113,4 +135,3 @@ const SubCreate = () => {
 };
 
 export default SubCreate;
-
