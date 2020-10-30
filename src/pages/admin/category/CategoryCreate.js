@@ -75,11 +75,7 @@ const CategoryCreate = () => {
     }
   };
 
-    // Store user's (lowercased) search term in the state
-    const handleSearchChange = (e) => {
-      e.preventDefault();
-      setKeyword(e.target.value.toLowerCase());
-    };
+
 
     // Function to use in mapping through the categories
     // check if the category name includes the incoming keyword

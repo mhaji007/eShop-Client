@@ -1,7 +1,69 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { getCategories } from "../../../functions/category";
+import { createSubcategory, getSubcategory, removeSubcategory } from "../../../functions/subcategory";
+import { Link } from "react-router-dom";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import CategoryForm from "../../../components/forms/CategoryForm";
+import LocalSearch from "../../../components/forms/LocalSearch";
 
 const SubCreate = () => {
+  const { user } = useSelector((state) => ({ ...state }));
+
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState("");
+
+  const [keyword, setKeyword] = useState("");
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = () =>
+    getCategories().then((c) => setCategories(c.data));
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log(name);
+    setLoading(true);
+    createSubcategory({ name, parent: category }, user.token)
+      .then((res) => {
+        // console.log(res)
+        setLoading(false);
+        setName("");
+        toast.success(`Subcategory "${res.data.name}" created successfully`);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        if (err.response.status === 400) toast.error(err.response.data);
+      });
+  };
+
+  const handleRemove = async (slug) => {
+    // let answer = window.confirm("Delete?");
+    // console.log(answer, slug);
+    if (window.confirm("Delete?")) {
+      setLoading(true);
+      removeSubcategory(slug, user.token)
+        .then((res) => {
+          setLoading(false);
+          toast.error(`${res.data.name} deleted`);
+        })
+        .catch((err) => {
+          if (err.response.status === 400) {
+            setLoading(false);
+            toast.error(err.response.data);
+          }
+        });
+    }
+  };
+
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -9,11 +71,46 @@ const SubCreate = () => {
         <div>
           <AdminNav />
         </div>
+        <div className="col">
+          {loading ? (
+            <h4 className="text-danger">Loading..</h4>
+          ) : (
+            ""
+          )}
 
-        <div className="col-md-10">sub create page</div>
+          <div className="form-group">
+            {/* <label>Parent category</label> */}
+            <select
+              name="category"
+              className="form-control"
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option>Please select a category</option>
+              {categories.length > 0 &&
+                categories.map((c) => (
+                  <option key={c._id} value={c._id}>
+                    {c.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+
+          {JSON.stringify(category)}
+
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+          />
+
+          {/* step 2 and step 3 */}
+          <LocalSearch keyword={keyword} setKeyword={setKeyword} />
+
+        </div>
       </div>
     </div>
   );
 };
 
 export default SubCreate;
+
