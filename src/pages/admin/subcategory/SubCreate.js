@@ -121,7 +121,7 @@ const SubCreate = () => {
               >
                 <DeleteOutlined className="text-danger" />
               </span>
-              <Link to={`/admin/sub/${s.slug}`}>
+              <Link to={`/admin/subcategory/${s.slug}`}>
                 <span className="btn btn-sm float-right">
                   <EditOutlined className="text-info" />
                 </span>
