@@ -26,9 +26,14 @@ const initialState = {
   brand: "",
 };
 
+
 const ProductCreate = () => {
   // Instead og separate state variables
   const [values, setValues] = useState(initialState);
+
+  // Destructure user from redux state
+  // for sending the token via request to product endpoint
+  const { user } = useSelector((state) => ({ ...state }));
 
   // Destructure values from the state
   const {
@@ -47,16 +52,27 @@ const ProductCreate = () => {
     brand,
   } = values;
 
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    //
+    createProduct(values, user.token)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+      if (err.response.status === 400) toast.error(err.response.data);
+    });
   };
 
   // Dynamic input handler based on
   // the input name field
   const handleChange = (e) => {
-    //
+    setValues({ ...values, [e.target.name]: e.target.value });
+    // console.log(e.target.name, " ----- ", e.target.value);
   };
+
 
   return (
     <div className="container-fluid">
