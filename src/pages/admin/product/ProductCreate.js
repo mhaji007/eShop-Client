@@ -59,6 +59,11 @@ const ProductCreate = () => {
     createProduct(values, user.token)
     .then((res) => {
       console.log(res);
+      window.alert(`Product "${res.data.title}" created successfully`);
+      // Page will only reload after
+      // user has interacted with the alert
+      // window
+      window.location.reload();
     })
     .catch((err) => {
       console.log(err);
@@ -90,9 +95,6 @@ const ProductCreate = () => {
               onSubmit={handleSubmit}
             >
               <div className={styles.control}>
-                {/* <h1>
-        Join
-      </h1> */}
                 <h4>Create a product</h4>
               </div>
               <div className="form-group mt-5">
