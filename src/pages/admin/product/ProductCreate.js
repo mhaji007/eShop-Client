@@ -29,8 +29,12 @@ const initialState = {
 const ProductCreate = () => {
   // Instead of separate state variables
   const [values, setValues] = useState(initialState);
-  // State for storing fetched subcategories
+  // State for storing fetched subcategories (options to be displayed)
   const [subOptions, setSubOptions] = useState([]);
+  // State for controlling display of subcategories
+  // initially set to false
+  // (prior to user interaction with parent category)
+  const [showSub, setShowSub] = useState(false)
 
   // Destructure user from redux state
   // for sending the token via request to product endpoint
@@ -114,6 +118,8 @@ const ProductCreate = () => {
             handleChange={handleChange}
             values={values}
             handleCatagoryChange = {handleCatagoryChange}
+            subOptions={subOptions}
+            showSub={showSub}
           />
         </div>
       </div>

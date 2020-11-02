@@ -3,7 +3,7 @@ import { SaveOutlined } from "@ant-design/icons";
 import styles from "./ProductCreateForm.module.scss";
 import classnames from "classnames";
 
-const ProductCreateForm = ({ handleSubmit, handleChange, values, handleCatagoryChange }) => {
+const ProductCreateForm = ({ handleSubmit, handleChange, values, handleCatagoryChange, subOptions, showSub }) => {
   // Destructure values from the state
   const {
     title,
@@ -191,6 +191,8 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values, handleCatagoryC
           <option value="Yes">Yes</option>
         </select>
       </div>
+
+      {JSON.stringify(subOptions)}
 
       <button
         className={classnames(
