@@ -93,14 +93,18 @@ const ProductCreate = () => {
   const handleCatagoryChange = (e) => {
     e.preventDefault();
     console.log("CLICKED CATEGORY", e.target.value);
-    // Update category values on click
-    setValues({ ...values, category: e.target.value });
+    // Update category values with category id
+    // clear any possible subs from previous category id
+    setValues({ ...values, subs:[], category: e.target.value });
     // fetch subcategories based on category id (e.target.value)
     getCategorySubs(e.target.value).then((res) => {
       console.log("SUB OPTIONS ON CATGORY CLICK", res);
     // Store fetched subcategories in state for display
       setSubOptions(res.data);
+
     });
+    // Set showSubs to true when user click on category
+    setShowSub(true);
   };
 
   return (
