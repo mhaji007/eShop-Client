@@ -20,11 +20,11 @@ export const removeCategory = async (slug, authtoken) =>
   });
 // Return updated category info based on slug, updated information(what category), and authtoken
 export const updateCategory = async (slug, category, authtoken) =>
-await axios.put(`${process.env.REACT_APP_API}/category/${slug}`, category, {
-  headers: {
-    authtoken,
-  },
-});
+  await axios.put(`${process.env.REACT_APP_API}/category/${slug}`, category, {
+    headers: {
+      authtoken,
+    },
+  });
 
 // Return created category info based on the information(what category), and authtoken
 export const createCategory = async (category, authtoken) =>
@@ -33,3 +33,7 @@ export const createCategory = async (category, authtoken) =>
       authtoken,
     },
   });
+
+// Return created subcategories info based on the id of parent category
+export const getCategorySubs = async (_id) =>
+  await axios.get(`${process.env.REACT_APP_API}/category/subs/${_id}`);

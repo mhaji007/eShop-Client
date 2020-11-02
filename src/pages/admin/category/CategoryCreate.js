@@ -29,7 +29,7 @@ const CategoryCreate = () => {
     loadCategories();
   }, []);
 
-  // Load categories upon component mounting and categories change
+  // Load categories upon component mounting 
   const loadCategories = () =>
     getCategories().then((c) => setCategories(c.data));
 
