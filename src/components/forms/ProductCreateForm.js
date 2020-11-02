@@ -1,9 +1,12 @@
 import React from "react";
+import {Select} from 'antd';
 import { SaveOutlined } from "@ant-design/icons";
 import styles from "./ProductCreateForm.module.scss";
 import classnames from "classnames";
 
-const ProductCreateForm = ({ handleSubmit, handleChange, values, handleCatagoryChange, subOptions, showSub }) => {
+const {Option} = Select;
+
+const ProductCreateForm = ({ handleSubmit, handleChange, values, handleCatagoryChange, subOptions, showSub, setValues }) => {
   // Destructure values from the state
   const {
     title,
@@ -192,7 +195,24 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values, handleCatagoryC
         </select>
       </div>
 
-      {JSON.stringify(subOptions)}
+      {/* {JSON.stringify(subOptions)} */}
+
+      <div>
+        <label> Subcategories</label>
+        {/* Cannot use name property in Ant Design's select */}
+        <Select
+        mode="multiple"
+        style={{width:'100%'}}
+        placeholder="Select a subcategory"
+        value={subs}
+        // Whatever is selected is put into value array by Ant Design
+        onChange= {value => setValues({...values, subs:value})}
+  
+        >
+          <Option value="one">Option one</Option>
+          <Option value="two">Option two</Option>
+        </Select>
+      </div>
 
       <button
         className={classnames(

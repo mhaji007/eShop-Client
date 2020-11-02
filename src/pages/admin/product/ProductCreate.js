@@ -116,6 +116,8 @@ const ProductCreate = () => {
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
+            // Passed in for Ant Design's select
+            setValues = {setValues}
             values={values}
             handleCatagoryChange = {handleCatagoryChange}
             subOptions={subOptions}
