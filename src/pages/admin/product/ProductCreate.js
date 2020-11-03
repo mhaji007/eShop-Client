@@ -6,6 +6,7 @@ import { createProduct } from "../../../functions/product";
 import { toast } from "react-toastify";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import { getCategories, getCategorySubs } from "../../../functions/category";
+import FileUpload from "../../../components/forms/FileUpload";
 
 // State object
 const initialState = {
@@ -59,7 +60,7 @@ const ProductCreate = () => {
         window.alert(`Product "${res.data.title}" created successfully`);
         // Page will only reload after
         // user has interacted with the alert
-        // window
+        // window. Cannot achieve this via toast
         window.location.reload();
       })
       .catch((err) => {
@@ -117,6 +118,12 @@ const ProductCreate = () => {
 
         <div className="col-md-10">
           {/* {JSON.stringify(values.categories)} */}
+
+          {/* Image upload component */}
+          <div className="p-3">
+            <FileUpload />
+          </div>
+
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}

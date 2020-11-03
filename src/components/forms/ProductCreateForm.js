@@ -3,6 +3,7 @@ import { Select } from "antd";
 import { SaveOutlined } from "@ant-design/icons";
 import styles from "./ProductCreateForm.module.scss";
 import classnames from "classnames";
+// import FileUpload from "./FileUpload";
 
 const { Option } = Select;
 
@@ -36,6 +37,9 @@ const ProductCreateForm = ({
     <form autoComplete="off" className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.control}>
         <h4>Create a product</h4>
+        {/* <div className="p-3">
+            <FileUpload />
+          </div> */}
       </div>
       <div className="form-group mt-5">
         <div
