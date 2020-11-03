@@ -4,15 +4,20 @@ import Resizer from "react-image-file-resizer";
 import { useSelector } from "react-redux";
 
 // File resize and upload
-const FileUpload = () => {
+const FileUpload = ({values, setValues, setLoading}) => {
   const { user } = useSelector((state) => ({ ...state }));
 
   const fileUploadAndResize = (e) => {
+
     // console.log(e.target.files);
     // Resize images
+
     // e.target.files includes file name and
     // meta information for each of the files selected
-    let files = e.target.files; // 3
+    let files = e.target.files;
+    // Variable for storing all the uploaded images
+    let allUploadedFiles = values.images;
+
     if (files) {
       for (let i = 0; i < files.length; i++) {
         // Resize each file based on width, height,
@@ -28,7 +33,21 @@ const FileUpload = () => {
           // Callback function of the new image URI
           // At this time files have been resized
           (uri) => {
-            console.log(uri);
+            axios.post(`${process.env.REACT_APP_API}/uploadimages`, {image:uri},
+            {headers: {
+              authtoken: user ? user.token: ""
+            }}).then (res => {
+              console.log('Image upload response data', res);
+              setLoading(false);
+              // Push the new image to the image array
+              allUploadedFiles.push(res.data);
+              // Update the state with all the uploaded images
+              setValues({...values, image: allUploadedFiles});
+            })
+            .catch(err => {
+              setLoading(false);
+              console.log("Cloudinary upload error", err);
+            })
           },
           // compress format of the new image
           "base64"

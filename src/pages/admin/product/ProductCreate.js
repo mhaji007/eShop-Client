@@ -36,10 +36,13 @@ const ProductCreate = () => {
   // initially set to false
   // (prior to user interaction with parent category)
   const [showSub, setShowSub] = useState(false)
+  // State for storing loading state for image upload
+  const [loading, setLoading] = useState(false);
 
   // Destructure user from redux state
   // for sending the token via request to product endpoint
   const { user } = useSelector((state) => ({ ...state }));
+
 
 
 
@@ -97,7 +100,7 @@ const ProductCreate = () => {
     // Update category values with category id
     // clear any possible subs from previous category id
     setValues({ ...values, subs:[], category: e.target.value });
-    // fetch subcategories based on category id (e.target.value)
+    // Fetch subcategories based on category id (e.target.value)
     getCategorySubs(e.target.value).then((res) => {
       console.log("SUB OPTIONS ON CATGORY CLICK", res);
     // Store fetched subcategories in state for display
@@ -117,11 +120,11 @@ const ProductCreate = () => {
         </div>
 
         <div className="col-md-10">
-          {/* {JSON.stringify(values.categories)} */}
+          {JSON.stringify(values.images)}
 
           {/* Image upload component */}
           <div className="p-3">
-            <FileUpload />
+            <FileUpload values={values} setValues={setValues} setLoading={setLoading}/>
           </div>
 
           <ProductCreateForm
