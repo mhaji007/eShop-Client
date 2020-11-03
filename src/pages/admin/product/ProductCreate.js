@@ -123,15 +123,16 @@ const ProductCreate = () => {
           {JSON.stringify(values.images)}
 
           {/* Image upload component */}
-          <div className="p-3">
+          {/* <div className="p-3">
             <FileUpload values={values} setValues={setValues} setLoading={setLoading}/>
-          </div>
+          </div> */}
 
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
             // Passed in for Ant Design's select
             setValues = {setValues}
+            setLoading={setLoading}
             values={values}
             handleCatagoryChange = {handleCatagoryChange}
             subOptions={subOptions}

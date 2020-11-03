@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
 import { useSelector } from "react-redux";
+import {Avatar} from "antd";
 
 // File resize and upload
 const FileUpload = ({values, setValues, setLoading}) => {
@@ -19,6 +20,7 @@ const FileUpload = ({values, setValues, setLoading}) => {
     let allUploadedFiles = values.images;
 
     if (files) {
+      setLoading(true);
       for (let i = 0; i < files.length; i++) {
         // Resize each file based on width, height,
         // type, quality, rotation, and compress format
@@ -59,12 +61,14 @@ const FileUpload = ({values, setValues, setLoading}) => {
   // send the resized image back to server to upload to cloudinary
   // store urls in images[] in the parent component state (ProductCreate)
 
-  return (
+  return(
+  <>
     <div className="row">
+
       {/* Warp input within the label
       and set the hiddent property to
       display only the label */}
-      <label className="btn btn-info btn-raised mx-auto mt-5">
+      <label className="btn btn-info btn-raised mx-auto my-auto">
         Choose File
         <input
           type="file"
@@ -76,7 +80,12 @@ const FileUpload = ({values, setValues, setLoading}) => {
           onChange={fileUploadAndResize}
         />
       </label>
+         {values.images && values.images.map((image) => { return (
+        <Avatar key={image.public_id} src={image.url} size={60}/>
+      )
+      })}
     </div>
+    </>
   );
 };
 
