@@ -10,6 +10,7 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 // Helps in keeping track of redux state in dev tool
 import {composeWithDevTools} from 'redux-devtools-extension';
+import 'font-awesome/css/font-awesome.min.css';
 import rootReducer from './reducers';
 
 // Create store
