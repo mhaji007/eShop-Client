@@ -4,12 +4,15 @@ import { SaveOutlined } from "@ant-design/icons";
 import styles from "./ProductCreateForm.module.scss";
 import classnames from "classnames";
 import FileUpload from "./FileUpload";
+import { LoadingOutlined } from "@ant-design/icons";
+
 
 const { Option } = Select;
 
 const ProductCreateForm = ({
   handleSubmit,
   handleChange,
+  loading,
   values,
   setLoading,
   setValue,
@@ -38,7 +41,7 @@ const ProductCreateForm = ({
   return (
     <form autoComplete="off" className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.control}>
-        <h4 className="pl-3">Create a product</h4>
+        {loading? <LoadingOutlined className="ml-5 text-info h1"/>: <h4 className="pl-3">Create a product</h4>}
       </div>
         <div className="p-3">
             <FileUpload values={values} setValues={setValues} setLoading={setLoading}/>

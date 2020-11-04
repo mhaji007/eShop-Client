@@ -133,6 +133,7 @@ const ProductCreate = () => {
             // Passed in for Ant Design's select
             setValues = {setValues}
             setLoading={setLoading}
+            loading={loading}
             values={values}
             handleCatagoryChange = {handleCatagoryChange}
             subOptions={subOptions}
