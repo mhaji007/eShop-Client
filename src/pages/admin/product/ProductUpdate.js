@@ -15,12 +15,35 @@ import { toast } from "react-toastify";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import { getCategories, getCategorySubs } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
+// import {useParams} from "react-router-dom";
 
-const ProductUpdate = () => {
+// ==============================================================//
+// Access to route parameter (e.g., …/:routeparameter)
+
+// 1.	in Server:
+// req.params.routeparameter
+// Or
+// import {userParams} from “react-router-dom”;
+// let {routeparameter} = useParams();
+
+// 2.	in Client:
+
+// -	if component is a route component it is available on
+// props.match.params.routeparameter
+
+// -	if component is note a route component it can be accessed via
+// import {userParams} from “react-router-dom”;
+// let {routeparameter} = useParams();
+// ==============================================================//
+
+
+const ProductUpdate = ({match: {params:{slug}}}) => {
 
   // Destructure user from redux state
   // for sending the token via request to product endpoint
   const { user } = useSelector((state) => ({ ...state }));
+
+  // let {slug} = useParams();
 
 
   return (
@@ -33,6 +56,7 @@ const ProductUpdate = () => {
 
         <div className="col-md-10">
           Product Update
+          {JSON.stringify(slug)}
         </div>
       </div>
     </div>
