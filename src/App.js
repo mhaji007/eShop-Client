@@ -20,6 +20,7 @@ import SubCreate from './pages/admin/subcategory/SubCreate';
 import SubUpdate from './pages/admin/subcategory/SubUpdate';
 import ProductCreate from './pages/admin/product/ProductCreate';
 import AllProducts from './pages/admin/product/AllProducts';
+import ProductUpdate from './pages/admin/product/ProductUpdate';
 
 // Access the currenlty logged in user
 import {auth} from './firebase';
@@ -120,6 +121,7 @@ const App = () => {
       <AdminRoute path="/admin/subcategory/:slug" exact component ={SubUpdate}/>
       <AdminRoute path="/admin/product" exact component ={ProductCreate}/>
       <AdminRoute path="/admin/products" exact component ={AllProducts}/>
+      <AdminRoute path="/admin/product/:slug" exact component ={ProductUpdate}/>
     </Switch>
     </>
   )

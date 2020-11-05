@@ -1,7 +1,19 @@
 import React from "react";
 import styles from "./AdminProductCard.module.css";
+// Used for displaying default placeholder
+// for products with no/broken image
 import noImage from "../../images/noImage.jpg";
-import { EditOutlined, DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
+// Need to redirect admin after
+// clicking on edit to product page
+// Unlike delete functionality that
+// can be performed on the spot
+// using onClick handler
+import { Link } from "react-router-dom";
 
 const AdminProductCard = ({ product, handleRemove }) => {
   // Destructure values to be displayed
@@ -32,22 +44,41 @@ const AdminProductCard = ({ product, handleRemove }) => {
 
         <div className={styles.description}>
           <div className={styles.icon}>
-          <QuestionCircleOutlined  style={{fontSize:"15px"}} />
+            <QuestionCircleOutlined style={{ fontSize: "15px" }} />
           </div>
           <div className={styles.contents}>
             {/* <h2 className={styles.detailHead}>VIP Tutorials</h2> */}
-            <p className={styles.detailDescription}> {description.lenght>150?description.substring(0,150):description}</p>{" "}
-            <div className={styles.actionContainer} style={{height:"30vh", display:"grid", justifyContent:"end", alignItems:"end", gridTemplateColumns:"1fr 1fr"}}>
+            <p className={styles.detailDescription}>
+              {" "}
+              {description.lenght > 150
+                ? description.substring(0, 150)
+                : description}
+            </p>{" "}
+            <div
+              className={styles.actionContainer}
+              style={{
+                height: "30vh",
+                display: "grid",
+                justifyContent: "end",
+                alignItems: "end",
+                gridTemplateColumns: "1fr 1fr",
+              }}
+            >
               {/* delete and edit handlers are not implemented here
               because they need to update state. If there were implemented here
               there would be no way to update the deleted or ediited product in
               the state. So update and delete handlers are passed from the parent
               component (AllProducts) as props */}
               <div className="mx-auto">
-                <EditOutlined style={{fontSize:"20px"}}  />
+                <Link to={`/admin/product/${slug}`} style={{color: "white"}}>
+                  <EditOutlined style={{ fontSize: "20px" }} />
+                </Link>
               </div>
               <div className="mx-auto">
-                <DeleteOutlined  style={{fontSize:"20px"}} onClick={()=>handleRemove(slug)}/>
+                <DeleteOutlined
+                  style={{ fontSize: "20px" }}
+                  onClick={() => handleRemove(slug)}
+                />
               </div>
             </div>
           </div>
