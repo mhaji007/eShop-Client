@@ -1,3 +1,6 @@
+// When admin clicks on product from the side nav of admin dashboard
+// they land on this page where they can create a new product
+
 import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 

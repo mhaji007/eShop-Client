@@ -1,3 +1,7 @@
+// When admin clicks on products from the side nav of admin dashboard
+// they land on this page where all products created
+// are displayed
+
 import React, { useEffect, useState } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import { getProductsByCount } from "../../../functions/product";

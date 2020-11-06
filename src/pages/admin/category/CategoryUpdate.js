@@ -1,3 +1,7 @@
+// When admin clicks on edit icon on of the created categories
+// displayed on the category page, they are redirected to
+// this page where they can update the chosen category
+
 import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";

@@ -1,3 +1,5 @@
+// Collection of functions used for performing CRUD on categories
+
 // API methods for categories
 // to be used in the components
 

@@ -5,14 +5,12 @@
 // the data is prepopulated for the user
 // on the page
 
-
 import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 
 import { useSelector } from "react-redux";
-import { createProduct } from "../../../functions/product";
+import { getProduct } from "../../../functions/product";
 import { toast } from "react-toastify";
-import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import { getCategories, getCategorySubs } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
 // import {useParams} from "react-router-dom";
@@ -36,15 +34,59 @@ import FileUpload from "../../../components/forms/FileUpload";
 // let {routeparameter} = useParams();
 // ==============================================================//
 
+// State object
+const initialState = {
+  title: "",
+  descriptioin: "",
+  price: "",
+  categories: [],
+  category: "",
+  subs: [],
+  shipping: "",
+  quantity: "",
+  images: [],
+  // Values displayed in the select drop down
+  colors: ["Black", "Brown", "Silver", "White", "Blue"],
+  brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
+  // Values used for creating the product
+  color: "",
+  brand: "",
+};
 
-const ProductUpdate = ({match: {params:{slug}}}) => {
+// Entire application is wrapped in BrowserRotuer
+// so we have access to react router props
+
+// Slug is available on props.match.params.slug
+const ProductUpdate = ({
+  match: {
+    params: { slug },
+  },
+}) => {
+  // Instead of separate state variables
+  const [values, setValues] = useState(initialState);
 
   // Destructure user from redux state
   // for sending the token via request to product endpoint
   const { user } = useSelector((state) => ({ ...state }));
 
-  // let {slug} = useParams();
+  // Load product to be edited on component mounting
+  useEffect(() => {
+    loadProduct();
+  }, []);
 
+  const loadProduct = () => {
+    getProduct(slug).then((p) => {
+      // console.log("Single product", p);
+
+      // The actual data retrieved from
+      // axios call is on p.data
+      setValues({...values, ...p.data});
+    });
+  };
+
+  // let {params} = userParams();
+  // Or more specifically
+  // let {slug} = useParams();
 
   return (
     <div className="container-fluid">

@@ -1,3 +1,6 @@
+// When admin clicks on category from the side nav of admin dashboard
+// they land on this page where they can create a new category
+
 import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import {Link} from 'react-router-dom';
@@ -29,7 +32,7 @@ const CategoryCreate = () => {
     loadCategories();
   }, []);
 
-  // Load categories upon component mounting 
+  // Load categories upon component mounting
   const loadCategories = () =>
     getCategories().then((c) => setCategories(c.data));
 
