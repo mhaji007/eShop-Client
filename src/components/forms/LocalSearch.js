@@ -1,3 +1,7 @@
+// Search component used for filtering
+// created categories/subcategories
+// used in CategoryCreate and SubCreate pages
+
 import React from "react";
 
 const LocalSearch = ({ keyword, setKeyword }) => {

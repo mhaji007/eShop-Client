@@ -13,6 +13,8 @@ import { getProduct } from "../../../functions/product";
 import { toast } from "react-toastify";
 import { getCategories, getCategorySubs } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
+import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
+
 // import {useParams} from "react-router-dom";
 
 // ==============================================================//
@@ -78,10 +80,23 @@ const ProductUpdate = ({
     getProduct(slug).then((p) => {
       // console.log("Single product", p);
 
+      // Update state with values
+      // retrieved from the backend
       // The actual data retrieved from
       // axios call is on p.data
-      setValues({...values, ...p.data});
+      setValues({ ...values, ...p.data });
     });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  // Dynamic input handler based on
+  // the input name field
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    // console.log(e.target.name, " ----- ", e.target.value);
   };
 
   // let {params} = userParams();
@@ -97,8 +112,17 @@ const ProductUpdate = ({
         </div>
 
         <div className="col-md-10">
-          Product Update
-          {JSON.stringify(slug)}
+
+          {/* {JSON.stringify(slug)} */}
+
+          <ProductUpdateForm
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            setValues = {setValues}
+            // setLoading={setLoading}
+            // loading={loading}
+            values={values}
+          />
         </div>
       </div>
     </div>

@@ -1,3 +1,7 @@
+// file Upload Form component along with
+// file resize functionality
+// exported and used in ProductCreateForm component
+
 import React from "react";
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
@@ -64,7 +68,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
     }
   };
 
-  // send the resized image back to server to upload to cloudinary
+  // Send the resized image back to server to upload to cloudinary
   // store urls in images[] in the parent component state (ProductCreate)
 
   const handleImageRemove = (public_id) => {

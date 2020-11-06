@@ -1,27 +1,20 @@
-// Form component used for creating
-// products. Used in ProductCreate page
-
 import React from "react";
 import { Select } from "antd";
 import { SaveOutlined } from "@ant-design/icons";
-import styles from "./ProductCreateForm.module.scss";
+
+import styles from "./ProductUpdateForm.module.scss";
 import classnames from "classnames";
 import FileUpload from "./FileUpload";
 import { LoadingOutlined } from "@ant-design/icons";
 
-
 const { Option } = Select;
 
-const ProductCreateForm = ({
+const ProductUpdateForm = ({
   handleSubmit,
   handleChange,
-  loading,
+  // loading,
   values,
-  setLoading,
-  setValue,
-  handleCatagoryChange,
-  subOptions,
-  showSub,
+  // setLoading,
   setValues,
 }) => {
   // Destructure values from the state
@@ -44,11 +37,8 @@ const ProductCreateForm = ({
   return (
     <form autoComplete="off" className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.control}>
-        {loading? <LoadingOutlined className="ml-5 text-info h1"/>: <h4 className="pl-3">Create a product</h4>}
+        <h4 className="pl-3">Update a product</h4>
       </div>
-        <div className="p-3">
-            <FileUpload values={values} setValues={setValues} setLoading={setLoading}/>
-          </div>
       <div className="form-group mt-5">
         <div
           className={classnames(
@@ -162,24 +152,6 @@ const ProductCreateForm = ({
       </div>
 
       <div className="form-group">
-        <label>Category</label>
-        <select
-          name="category"
-          className="form-control"
-          onChange={handleCatagoryChange}
-        >
-          <option>Select a category</option>
-          {categories.length > 0 &&
-            categories.map((c) => (
-              // Save the id (objectId, referencing the category) in the database
-              <option key={c._id} value={c._id}>
-                {/* Display the name to the user */}
-                {c.name}
-              </option>
-            ))}
-        </select>
-      </div>
-      <div className="form-group">
         <label>Brand</label>
         <select name="brand" className="form-control" onChange={handleChange}>
           <option>Select a brand</option>
@@ -215,31 +187,6 @@ const ProductCreateForm = ({
         </select>
       </div>
 
-      {/* {JSON.stringify(subOptions)} */}
-      {/* If showSub is true (when categories is clicked) show the subcategories drop-down */}
-      {showSub && (
-        <div>
-          <label> Subcategories</label>
-          {/* Cannot use name property in Ant Design's select */}
-          <Select
-            mode="multiple"
-            style={{ width: "100%" }}
-            placeholder="Select a subcategory"
-            value={subs}
-            // Whatever is selected is put into value array by Ant Design
-            onChange={(value) => setValues({ ...values, subs: value })}
-          >
-            {/* Subcategory options */}
-            {subOptions.length &&
-              subOptions.map((s) => (
-                // Display the name. Save the id
-                <Option key={s._id} value={s._id}>
-                  {s.name}
-                </Option>
-              ))}
-          </Select>
-        </div>
-      )}
       <button
         className={classnames(
           "mt-4",
@@ -263,100 +210,7 @@ const ProductCreateForm = ({
         </div>
       </button>
     </form>
-
-    /* <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Title</label>
-              <input
-                type="text"
-                name="title"
-                className="form-control"
-                value={title}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Description</label>
-              <input
-                type="text"
-                name="description"
-                className="form-control"
-                value={description}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Price</label>
-              <input
-                type="number"
-                name="price"
-                className="form-control"
-                value={price}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Shipping</label>
-              <select
-                name="shipping"
-                className="form-control"
-                onChange={handleChange}
-              >
-                <option>Please select</option>
-                <option value="No">No</option>
-                <option value="Yes">Yes</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Quantity</label>
-              <input
-                type="number"
-                name="quantity"
-                className="form-control"
-                value={quantity}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Color</label>
-              <select
-                name="color"
-                className="form-control"
-                onChange={handleChange}
-              >
-                <option>Please select</option>
-                {colors.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Brand</label>
-              <select
-                name="brand"
-                className="form-control"
-                onChange={handleChange}
-              >
-                <option>Please select</option>
-                {brands.map((b) => (
-                  <option key={b} value={b}>
-                    {b}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <button className="btn btn-outline-info">Save</button>
-          </form> */
   );
 };
 
-export default ProductCreateForm;
+export default ProductUpdateForm;
