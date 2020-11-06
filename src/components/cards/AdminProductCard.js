@@ -31,6 +31,31 @@ const AdminProductCard = ({ product, handleRemove }) => {
             <h3 className={styles.name}>{title}</h3>
             <div className={styles.price}>£250</div>
           </div>
+          <div
+              className={styles.actionContainer}
+              style={{
+                marginTop:"50px",
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+              }}
+            >
+              {/* delete and edit handlers are not implemented here
+              because they need to update state. If there were implemented here
+              there would be no way to update the deleted or ediited product in
+              the state. So update and delete handlers are passed from the parent
+              component (AllProducts) as props */}
+              <div className="mx-auto">
+                <Link to={`/admin/product/${slug}`} style={{color: "#747474"}}>
+                  <EditOutlined style={{ fontSize: "25px" }} />
+                </Link>
+              </div>
+              <div className="mx-auto text-danger" >
+                <DeleteOutlined
+                  style={{ fontSize: "25px" }}
+                  onClick={() => handleRemove(slug)}
+                />
+              </div>
+            </div>
           {/* <h4 className={styles.colors}>Colors</h4>
 			<ul className={styles.cardUl}>
 				<li></li>
@@ -54,33 +79,7 @@ const AdminProductCard = ({ product, handleRemove }) => {
                 ? description.substring(0, 150)
                 : description}
             </p>{" "}
-            <div
-              className={styles.actionContainer}
-              style={{
-                height: "30vh",
-                display: "grid",
-                justifyContent: "end",
-                alignItems: "end",
-                gridTemplateColumns: "1fr 1fr",
-              }}
-            >
-              {/* delete and edit handlers are not implemented here
-              because they need to update state. If there were implemented here
-              there would be no way to update the deleted or ediited product in
-              the state. So update and delete handlers are passed from the parent
-              component (AllProducts) as props */}
-              <div className="mx-auto">
-                <Link to={`/admin/product/${slug}`} style={{color: "white"}}>
-                  <EditOutlined style={{ fontSize: "20px" }} />
-                </Link>
-              </div>
-              <div className="mx-auto">
-                <DeleteOutlined
-                  style={{ fontSize: "20px" }}
-                  onClick={() => handleRemove(slug)}
-                />
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
