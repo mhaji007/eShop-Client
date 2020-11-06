@@ -41,8 +41,20 @@ const initialState = {
   title: "",
   descriptioin: "",
   price: "",
-  categories: [],
+  // Unlike ProductCreate
+  // we are not using categories
+  // since loadProduct runs when
+  // component is mounted and
+  // at that time when we try to
+  // update the result, it will be delayed
+  // by few miliseconds and is not
+  // reflected in the state and that is why
+  // here and we establish a separate
+  // local state for it
+  // categories: [],
   category: "",
+  // Array of subcategories
+  // used to update the product
   subs: [],
   shipping: "",
   quantity: "",
@@ -66,14 +78,21 @@ const ProductUpdate = ({
 }) => {
   // Instead of separate state variables
   const [values, setValues] = useState(initialState);
+  const [categories, setCategories] = useState([]);
+  // state for storing subcategory options
+  // used for dsiplaying the options to user to choose from
+  const [subOptions, setSubOptions] = useState([]);
 
   // Destructure user from redux state
   // for sending the token via request to product endpoint
   const { user } = useSelector((state) => ({ ...state }));
 
-  // Load product to be edited on component mounting
+  // Load product and categories to be edited on component mounting
   useEffect(() => {
     loadProduct();
+    // Fetch all categories
+    // so that user can select any
+    loadCategories();
   }, []);
 
   const loadProduct = () => {
@@ -88,6 +107,16 @@ const ProductUpdate = ({
     });
   };
 
+  const loadCategories = () =>
+    getCategories().then((c) => {
+      console.log("GET CATEGORIES IN UPDATE PRODUCT", c.data);
+      // Category used as an independent value
+      // no need to rely on product's state
+      // So the following commented line is not needed
+      // setValues({...values, categories: c.data});
+      setCategories(c.data);
+    });
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -97,6 +126,37 @@ const ProductUpdate = ({
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     // console.log(e.target.name, " ----- ", e.target.value);
+  };
+
+  // Load the subcategory belonging to the category just clicked
+
+  // Custom handler for subcategories
+
+  // Since subcategories are known only
+  // when user has clicked the
+  // (parent) categories drop down,
+  // the generic dynamic input handler
+  // above would not suffice
+  // this handler is designed to
+  // fetch subcategories based on parent id
+  // derived from user interaction with categories'
+  // drop down
+
+  const handleCatagoryChange = (e) => {
+    e.preventDefault();
+    console.log("CLICKED CATEGORY", e.target.value);
+    // Get category Id and update the state (category string in initialState)
+    // clear any possible subs from previous category id
+    setValues({ ...values, subs: [], category: e.target.value });
+    // Fetch subcategories based on category id (e.target.value)
+    // and populate in the state as subOptions
+    // so that user can select them from dropdown menu
+    // Once user selects the options it is then populated
+    // in the subs array in the state (subs array in initialState)
+    getCategorySubs(e.target.value).then((res) => {
+      console.log("SUB OPTIONS ON CATGORY CLICK", res);
+      setSubOptions(res.data);
+    });
   };
 
   // let {params} = userParams();
@@ -112,16 +172,22 @@ const ProductUpdate = ({
         </div>
 
         <div className="col-md-10">
-
           {/* {JSON.stringify(slug)} */}
 
           <ProductUpdateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
-            setValues = {setValues}
+            setValues={setValues}
             // setLoading={setLoading}
             // loading={loading}
             values={values}
+            handleCatagoryChange={handleCatagoryChange}
+            // categories sent in
+            // as an independent value
+            // since it is no longer
+            // available in initialState
+            categories={categories}
+            setSubOptions={setSubOptions}
           />
         </div>
       </div>
