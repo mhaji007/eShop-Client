@@ -179,6 +179,7 @@ const ProductUpdateForm = ({
           style={{ width: "100%" }}
           placeholder="Select a subcategory"
           value={arrayOfSubs}
+          // onChange={(value) => setValues({ ...values, subs: value })}
           onChange={(value) => setArrayOfSubs(value)}
         >
           {subOptions.length &&

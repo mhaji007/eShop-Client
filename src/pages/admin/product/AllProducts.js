@@ -4,11 +4,13 @@
 
 import React, { useEffect, useState } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
+import Loader from "../../../components/loader/Loader";
 import { getProductsByCount } from "../../../functions/product";
 import AdminProductCard from "../../../components/cards/AdminProductCard";
 import { removeProduct } from "../../../functions/product";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -65,7 +67,11 @@ const AllProducts = () => {
           <AdminNav />
         </div>
         {loading ? (
-          <h4 className="text-danger">Loading...</h4>
+          // <h4 className="text-danger">Loading...</h4>
+          <div className="mx-auto" style={{marginTop:"50vh"}}>
+
+            <Loader  />
+          </div>
         ) : (
           <div className="col-md-10">
             <div className="row">
