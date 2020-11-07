@@ -6,12 +6,15 @@ import styles from "./ProductUpdateForm.module.scss";
 import classnames from "classnames";
 import FileUpload from "./FileUpload";
 import { LoadingOutlined } from "@ant-design/icons";
+import Loader from "../../components/loader/Loader";
 
 const { Option } = Select;
 
 const ProductUpdateForm = ({
   handleSubmit,
   handleChange,
+  loading,
+  setLoading,
   categories,
   handleCategoryChange,
   subOptions,
@@ -42,7 +45,13 @@ const ProductUpdateForm = ({
   return (
     <form autoComplete="off" className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.control}>
-        <h4 className="pl-3">Update a product</h4>
+        <div className={styles.control}>
+        {loading? <Loader/>: <h4 className="pl-3"> Update a product</h4>}
+        
+      </div>
+        <div className="p-3">
+            <FileUpload values={values} setValues={setValues} setLoading={setLoading}/>
+          </div>
       </div>
       <div className="form-group mt-5">
         <div

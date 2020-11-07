@@ -46,6 +46,7 @@ const ProductCreateForm = ({
     <form autoComplete="off" className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.control}>
         {loading? <Loader/>: <h4 className="pl-3">Create a product</h4>}
+        
       </div>
         <div className="p-3">
             <FileUpload values={values} setValues={setValues} setLoading={setLoading}/>

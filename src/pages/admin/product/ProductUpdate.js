@@ -100,6 +100,9 @@ const ProductUpdate = ({
   // for sending the token via request to product endpoint
   const { user } = useSelector((state) => ({ ...state }));
 
+  // State for storing loading state for image upload
+  const [loading, setLoading] = useState(false);
+
   // Load product and categories to be edited on component mounting
   useEffect(() => {
     loadProduct();
@@ -226,8 +229,8 @@ const ProductUpdate = ({
             handleSubmit={handleSubmit}
             handleChange={handleChange}
             setValues={setValues}
-            // setLoading={setLoading}
-            // loading={loading}
+            setLoading={setLoading}
+            loading={loading}
             values={values}
             handleCategoryChange={handleCategoryChange}
             // categories sent in
