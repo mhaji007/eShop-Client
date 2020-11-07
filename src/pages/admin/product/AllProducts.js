@@ -68,7 +68,7 @@ const AllProducts = () => {
         </div>
         {loading ? (
           // <h4 className="text-danger">Loading...</h4>
-          <div className="mx-auto" style={{marginTop:"50vh"}}>
+          <div className="mx-auto" style={{marginTop:"30vh"}}>
 
             <Loader  />
           </div>

@@ -15,6 +15,7 @@ const ProductUpdateForm = ({
   categories,
   handleCatagoryChange,
   subOptions,
+  selectedCategory,
   // loading,
   values,
   // setLoading,
@@ -161,8 +162,9 @@ const ProductUpdateForm = ({
           name="category"
           className="form-control"
           onChange={handleCatagoryChange}
+          value={selectedCategory ? selectedCategory : category._id}
         >
-          <option>{category ? category.name : "Please select"}</option>
+
           {categories.length > 0 &&
             categories.map((c) => (
               <option key={c._id} value={c._id}>
@@ -178,8 +180,29 @@ const ProductUpdateForm = ({
           mode="multiple"
           style={{ width: "100%" }}
           placeholder="Select a subcategory"
+          // value={subs} ==> X this does not work
           value={arrayOfSubs}
-          // onChange={(value) => setValues({ ...values, subs: value })}
+          // Cannot use the exact
+          // select component
+          // used in subcategory of ProductCreateForm.
+          // The Ant Design select
+          // works differently than
+          // DOM select in that
+          // the value property by default expects
+          // an array of ids.
+          // Since the subs
+          // here will not contain
+          // an array of Ids like before
+          // but an array of objects
+          // (containing id, name, slug, etc.),
+          // the solution is to
+          // extract ids of the subcategories
+          // and push them in the state
+          // pass them as in an array props
+          // and consume them as values
+
+          // onChange={(value) => setValues({ ...values, subs: value })} => This will not work
+          // for the same reason as above
           onChange={(value) => setArrayOfSubs(value)}
         >
           {subOptions.length &&

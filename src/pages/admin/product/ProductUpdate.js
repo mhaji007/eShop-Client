@@ -79,14 +79,21 @@ const ProductUpdate = ({
   // Local state for storing
   // all product states instead of separate state variables
   const [values, setValues] = useState(initialState);
+
   // State for storing categories as
   // an independent state value (as opposed to being part of initialState)
   const [categories, setCategories] = useState([]);
+
   // state for storing subcategory options
   // used for dsiplaying the options to user to choose from
   const [subOptions, setSubOptions] = useState([]);
 
-  // state
+  // State for storing the changed(updated) category
+  // used for comparing with the category state in the initialState
+  // to see whether we are back to the default selected category
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  // State for storing the array of subcategories
   const [arrayOfSubs, setArrayOfSubs] = useState([]);
 
   // Destructure user from redux state
@@ -112,6 +119,8 @@ const ProductUpdate = ({
       setValues({ ...values, ...p.data });
 
       // Load single product subcategories
+      // Fetch subcategories to be used as default options
+      // when component loads for the first tie,
       getCategorySubs(p.data.category._id).then((res) => {
         setSubOptions(res.data); // on first load, show default subs
       });
@@ -167,7 +176,11 @@ const ProductUpdate = ({
     console.log("CLICKED CATEGORY", e.target.value);
     // Get category Id and update the state (category string in initialState)
     // clear any possible subs from previous category id
-    setValues({ ...values, subs: [], category: e.target.value });
+    // setValues({ ...values, subs: [], category: e.target.value });
+    setValues({ ...values, subs: []});
+
+    setSelectedCategory(e.target.value);
+
     // Fetch subcategories based on category id (e.target.value)
     // and populate in the state as subOptions
     // so that user can select them from dropdown menu
@@ -177,7 +190,22 @@ const ProductUpdate = ({
       console.log("SUB OPTIONS ON CATGORY CLICK", res);
       setSubOptions(res.data);
     });
+    console.log("EXISTING CATEGORY values.category", values.category);
+
+    // if admin clicks on a different category
+    // and navigates away from the default selected
+    // category and then clicks back to the default selected category,
+    // display the original sub categories in default
+    if (values.category._id === e.target.value) {
+    // Load products once again to display
+    // updated information
+      loadProduct();
+    }
+    // Clear old sub category ids
+    setArrayOfSubs([]);
   };
+
+
 
   // let {params} = userParams();
   // Or more specifically
@@ -210,6 +238,7 @@ const ProductUpdate = ({
             subOptions={subOptions}
             arrayOfSubs={arrayOfSubs}
             setArrayOfSubs={setArrayOfSubs}
+            selectedCategory={selectedCategory}
           />
         </div>
       </div>
