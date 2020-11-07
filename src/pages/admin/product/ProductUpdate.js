@@ -171,7 +171,7 @@ const ProductUpdate = ({
   // derived from user interaction with categories'
   // drop down
 
-  const handleCatagoryChange = (e) => {
+  const handleCategoryChange = (e) => {
     e.preventDefault();
     console.log("CLICKED CATEGORY", e.target.value);
     // Get category Id and update the state (category string in initialState)
@@ -229,7 +229,7 @@ const ProductUpdate = ({
             // setLoading={setLoading}
             // loading={loading}
             values={values}
-            handleCatagoryChange={handleCatagoryChange}
+            handleCategoryChange={handleCategoryChange}
             // categories sent in
             // as an independent value
             // since it is no longer

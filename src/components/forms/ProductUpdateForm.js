@@ -13,7 +13,7 @@ const ProductUpdateForm = ({
   handleSubmit,
   handleChange,
   categories,
-  handleCatagoryChange,
+  handleCategoryChange,
   subOptions,
   selectedCategory,
   // loading,
@@ -161,7 +161,7 @@ const ProductUpdateForm = ({
         <select
           name="category"
           className="form-control"
-          onChange={handleCatagoryChange}
+          onChange={handleCategoryChange}
           value={selectedCategory ? selectedCategory : category._id}
         >
 
