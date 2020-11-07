@@ -19,6 +19,8 @@ const ProductUpdateForm = ({
   values,
   // setLoading,
   setValues,
+  arrayOfSubs,
+  setArrayOfSubs,
 }) => {
   // Destructure values from the state
   const {
@@ -170,9 +172,32 @@ const ProductUpdateForm = ({
         </select>
       </div>
 
+      <div>
+        <label>Subcategories</label>
+        <Select
+          mode="multiple"
+          style={{ width: "100%" }}
+          placeholder="Select a subcategory"
+          value={arrayOfSubs}
+          onChange={(value) => setArrayOfSubs(value)}
+        >
+          {subOptions.length &&
+            subOptions.map((s) => (
+              <Option key={s._id} value={s._id}>
+                {s.name}
+              </Option>
+            ))}
+        </Select>
+      </div>
+
       <div className="form-group">
         <label>Brand</label>
-        <select name="brand" className="form-control" onChange={handleChange} value={brand}>
+        <select
+          name="brand"
+          className="form-control"
+          onChange={handleChange}
+          value={brand}
+        >
           <option>Select a brand</option>
           {brands.map((b) => (
             <option key={b} value={b}>
@@ -183,7 +208,12 @@ const ProductUpdateForm = ({
       </div>
       <div className="form-group">
         <label>Color</label>
-        <select name="color" className="form-control" onChange={handleChange} value={color}>
+        <select
+          name="color"
+          className="form-control"
+          onChange={handleChange}
+          value={color}
+        >
           <option>Select a color</option>
           {colors.map((c) => (
             <option key={c} value={c}>

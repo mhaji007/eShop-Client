@@ -36,7 +36,7 @@ import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
 // let {routeparameter} = useParams();
 // ==============================================================//
 
-// State object
+// Local state object
 const initialState = {
   title: "",
   descriptioin: "",
@@ -76,12 +76,18 @@ const ProductUpdate = ({
     params: { slug },
   },
 }) => {
-  // Instead of separate state variables
+  // Local state for storing
+  // all product states instead of separate state variables
   const [values, setValues] = useState(initialState);
+  // State for storing categories as
+  // an independent state value (as opposed to being part of initialState)
   const [categories, setCategories] = useState([]);
   // state for storing subcategory options
   // used for dsiplaying the options to user to choose from
   const [subOptions, setSubOptions] = useState([]);
+
+  // state
+  const [arrayOfSubs, setArrayOfSubs] = useState([]);
 
   // Destructure user from redux state
   // for sending the token via request to product endpoint
@@ -98,12 +104,26 @@ const ProductUpdate = ({
   const loadProduct = () => {
     getProduct(slug).then((p) => {
       // console.log("Single product", p);
-
+      // Load single product
       // Update state with values
       // retrieved from the backend
       // The actual data retrieved from
       // axios call is on p.data
       setValues({ ...values, ...p.data });
+
+      // Load single product subcategories
+      getCategorySubs(p.data.category._id).then((res) => {
+        setSubOptions(res.data); // on first load, show default subs
+      });
+      // Prepare array of sub ids to show as default
+      // sub values in Ant Design Select
+      let arr = [];
+      p.data.subs.map((s) => {
+        arr.push(s._id);
+      });
+      console.log("ARR", arr);
+      // Required for Ant Design select to work
+      setArrayOfSubs((prev) => arr);
     });
   };
 
@@ -187,7 +207,9 @@ const ProductUpdate = ({
             // since it is no longer
             // available in initialState
             categories={categories}
-            setSubOptions={setSubOptions}
+            subOptions={subOptions}
+            arrayOfSubs={arrayOfSubs}
+            setArrayOfSubs={setArrayOfSubs}
           />
         </div>
       </div>
