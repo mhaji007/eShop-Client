@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const AdminProductCard = ({ product, handleRemove }) => {
   // Destructure values to be displayed
   // and slug (for deleting and editing)
-  const { title, description, images, slug } = product;
+  const { title, description, images, slug, price } = product;
 
   return (
     <>
@@ -29,7 +29,7 @@ const AdminProductCard = ({ product, handleRemove }) => {
         <div className={styles.details}>
           <div className={styles.textContent}>
             <h3 className={styles.name}>{title}</h3>
-            <div className={styles.price}>£250</div>
+            <div className={styles.price}>${price}</div>
           </div>
           <div
               className={styles.actionContainer}

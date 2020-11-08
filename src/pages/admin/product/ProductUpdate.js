@@ -9,11 +9,13 @@ import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 
 import { useSelector } from "react-redux";
-import { getProduct } from "../../../functions/product";
+import { getProduct, updateProduct } from "../../../functions/product";
 import { toast } from "react-toastify";
 import { getCategories, getCategorySubs } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
 import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
+
+
 
 // import {useParams} from "react-router-dom";
 
@@ -75,6 +77,7 @@ const ProductUpdate = ({
   match: {
     params: { slug },
   },
+  history
 }) => {
   // Local state for storing
   // all product states instead of separate state variables
@@ -151,6 +154,24 @@ const ProductUpdate = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
+    // Add updated values to the values property
+    // so they can easily be destructured
+    values.subs = arrayOfSubs;
+    // Check for selected category
+    values.category = selectedCategory ? selectedCategory : values.category;
+
+    updateProduct(slug, values, user.token)
+      .then((res) => {
+        setLoading(false);
+        toast.success(`"Product ${res.data.title}" is updated`);
+        history.push("/admin/products");
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        toast.error(err.response.data.err);
+      });
   };
 
   // Dynamic input handler based on

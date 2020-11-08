@@ -27,3 +27,12 @@ export const removeProduct = async (slug, authtoken) =>
 // Return single product based on slug(which product)
 export const getProduct = async (slug) =>
   await axios.get(`${process.env.REACT_APP_API}/product/${slug}`);
+
+// Return updated product info based on slug, updated information(what product), and authtoken
+  export const updateProduct = async (slug, product, authtoken) =>
+  await axios.put(`${process.env.REACT_APP_API}/product/${slug}`, product, {
+    headers: {
+      authtoken,
+    },
+  });
+
