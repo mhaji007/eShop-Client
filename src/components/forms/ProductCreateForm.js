@@ -44,10 +44,9 @@ const ProductCreateForm = ({
 
   return (
     <form autoComplete="off" className={styles.form} onSubmit={handleSubmit}>
-      <div className={styles.control}>
+
         {loading? <Loader/>: <h4 className="pl-3">Create a product</h4>}
-        
-      </div>
+
         <div className="p-3">
             <FileUpload values={values} setValues={setValues} setLoading={setLoading}/>
           </div>
@@ -163,6 +162,8 @@ const ProductCreateForm = ({
         </div>
       </div>
 
+
+
       <div className="form-group">
         <label>Category</label>
         <select
@@ -181,6 +182,33 @@ const ProductCreateForm = ({
             ))}
         </select>
       </div>
+
+            {/* {JSON.stringify(subOptions)} */}
+      {/* If showSub is true (when categories is clicked) show the subcategories drop-down */}
+      {showSub && (
+        <div className="mb-3 text-info">
+          <label> Subcategories</label>
+          {/* Cannot use name property in Ant Design's select */}
+          <Select
+            mode="multiple"
+            style={{ width: "100%" }}
+            placeholder="Select a subcategory"
+            value={subs}
+            // Whatever is selected is put into value array by Ant Design
+            onChange={(value) => setValues({ ...values, subs: value })}
+          >
+            {/* Subcategory options */}
+            {subOptions.length &&
+              subOptions.map((s) => (
+                // Display the name. Save the id
+                <Option key={s._id} value={s._id}>
+                  {s.name}
+                </Option>
+              ))}
+          </Select>
+        </div>
+      )}
+
       <div className="form-group">
         <label>Brand</label>
         <select name="brand" className="form-control" onChange={handleChange}>
@@ -217,31 +245,7 @@ const ProductCreateForm = ({
         </select>
       </div>
 
-      {/* {JSON.stringify(subOptions)} */}
-      {/* If showSub is true (when categories is clicked) show the subcategories drop-down */}
-      {showSub && (
-        <div>
-          <label> Subcategories</label>
-          {/* Cannot use name property in Ant Design's select */}
-          <Select
-            mode="multiple"
-            style={{ width: "100%" }}
-            placeholder="Select a subcategory"
-            value={subs}
-            // Whatever is selected is put into value array by Ant Design
-            onChange={(value) => setValues({ ...values, subs: value })}
-          >
-            {/* Subcategory options */}
-            {subOptions.length &&
-              subOptions.map((s) => (
-                // Display the name. Save the id
-                <Option key={s._id} value={s._id}>
-                  {s.name}
-                </Option>
-              ))}
-          </Select>
-        </div>
-      )}
+
       <button
         className={classnames(
           "mt-4",

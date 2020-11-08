@@ -104,40 +104,44 @@ const FileUpload = ({ values, setValues, setLoading }) => {
 
   return (
     <>
+      {/* Warp input within the label
+        and set the hiddent property to
+        display only the label */}
+      <label className="btn btn-info btn-raised mx-5">
+        Choose File
+        <input
+          type="file"
+          multiple
+          hidden
+          //accept all the files
+          // that starts with images
+          accept="images/*"
+          onChange={fileUploadAndResize}
+        />
+      </label>
       <div className="row">
-        {/* Warp input within the label
-      and set the hiddent property to
-      display only the label */}
-        <label className="btn btn-info btn-raised mx-5 my-auto">
-          Choose File
-          <input
-            type="file"
-            multiple
-            hidden
-            //accept all the files
-            // that starts with images
-            accept="images/*"
-            onChange={fileUploadAndResize}
-          />
-        </label>
-
         <div className="row">
-        {values.images &&
-          values.images.map((image) => {
-            return (
-              <Badge
-                count="X"
-                key={image.public_id}
-                // Remove image on click based on id
-                onClick={() => handleImageRemove(image.public_id)}
-                style={{ cursor: "pointer" }}
-                className="ml-3 mt-3"
-              >
-                <Avatar key={image.public_id} src={image.url} size={60} shape="square" />
-              </Badge>
-            );
-          })}
-          </div>
+          {values.images &&
+            values.images.map((image) => {
+              return (
+                <Badge
+                  count="X"
+                  key={image.public_id}
+                  // Remove image on click based on id
+                  onClick={() => handleImageRemove(image.public_id)}
+                  style={{ cursor: "pointer" }}
+                  className="ml-3 mt-3"
+                >
+                  <Avatar
+                    key={image.public_id}
+                    src={image.url}
+                    size={60}
+                    shape="square"
+                  />
+                </Badge>
+              );
+            })}
+        </div>
       </div>
     </>
   );

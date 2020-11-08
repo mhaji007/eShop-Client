@@ -127,7 +127,7 @@ const ProductCreate = () => {
         </div>
 
         <div className="col-md-10">
-          {JSON.stringify(values.images)}
+          {/* {JSON.stringify(values.images)} */}
 
           {/* Image upload component */}
           {/* <div className="p-3">

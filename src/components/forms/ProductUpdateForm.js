@@ -47,13 +47,13 @@ const ProductUpdateForm = ({
       <div className={styles.control}>
         <div className={styles.control}>
         {loading? <Loader/>: <h4 className="pl-3"> Update a product</h4>}
-        
+
       </div>
         <div className="p-3">
             <FileUpload values={values} setValues={setValues} setLoading={setLoading}/>
           </div>
       </div>
-      <div className="form-group mt-5">
+      <div className="form-group mt-3">
         <div
           className={classnames(
             styles.control,
@@ -183,9 +183,10 @@ const ProductUpdateForm = ({
         </select>
       </div>
 
-      <div>
-        <label>Subcategories</label>
+      <div >
+        <label >Subcategories</label>
         <Select
+        className="mb-3"
           mode="multiple"
           style={{ width: "100%" }}
           placeholder="Select a subcategory"
