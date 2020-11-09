@@ -10,9 +10,9 @@ body {
     padding-bottom: 6rem;
     margin-bottom: 0;
 
-    /* background: linear-gradient(to bottom left, rgba(97, 151, 255, 0.5), rgba(126, 129, 133,0.5)) url("./images/jumbo.jpg"); */
-    background:  url("./images/jumbo.jpg");
-    /* background-blend-mode: multiply; */
+    background: linear-gradient(to bottom, #a0a0a0, #7abfff), url("./images/jumbo.jpg");
+    /* background:  url("./images/jumbo.jpg"); */
+    background-blend-mode: multiply;
     background-repeat: no-repeat;
     background-position: bottom center;
     background-size: cover;
@@ -29,7 +29,7 @@ body {
 
   .jumbotron .container {
     max-width: 40rem;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.1);
     padding: 2rem;
     color: white;
   }

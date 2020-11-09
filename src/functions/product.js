@@ -35,4 +35,13 @@ export const getProduct = async (slug) =>
       authtoken,
     },
   });
+// Retrun recently created products (new arrivals) based on sore, order, and limit parameters sent
+// in the body of the request
+export const getProducts = async (sort, order, limit) =>
+  await axios.post(`${process.env.REACT_APP_API}/products`, {
+    sort,
+    order,
+    limit
+  }, {
 
+  });
