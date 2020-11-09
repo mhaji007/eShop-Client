@@ -11,7 +11,7 @@ import eShop from "../../images/eShop.jpg";
   <section class="jumbotron text-xs-center mb-3">
     <div class="container">
 
-      <img src={eShop} className="pull-left mr-3" style={{width: "200px"}}/>
+      <img src={eShop} className="pull-left mr-2" style={{width: "200px"}}/>
       <h1 class="jumbotron-heading">
       <p class="lead"> <h1>Shop More. <br/> Pay Less.</h1> </p>
       </h1>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./ProductCard.module.css";
 import { Link } from "react-router-dom";
 
+
 // Used for displaying default placeholder
 // for products with no/broken image
 import noImage from "../../images/noImage.jpg";

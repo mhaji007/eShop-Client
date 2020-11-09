@@ -4,7 +4,7 @@ import classnames from "classnames";
 
 const Loader = () => {
   return (
-    <div className={ classnames(styles.loaderBox, "mx-auto")}>
+    <div className={ classnames(styles.loaderBox, "mx-auto", "my-auto")}>
       <div className={classnames(styles.side, styles.side1)}></div>
       <div className={classnames(styles.side, styles.side2)}></div>
       <div className={classnames(styles.side, styles.side3)}></div>
