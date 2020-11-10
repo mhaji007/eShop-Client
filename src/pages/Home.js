@@ -7,7 +7,8 @@ import Jumbotron from "../components/cards/Jumbotron";
 import LoadingCard from "../components/cards/LoadingCard";
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
+  const [arrivals, setArrivals] = useState([]);
+  const [bestSellers, setBestSellers] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -18,7 +19,11 @@ const Home = () => {
     setLoading(true);
 
     getProducts("createdAt", "desc", 3).then((res) => {
-      setProducts(res.data);
+      setArrivals(res.data);
+      setLoading(false);
+    });
+      getProducts("sold", "desc", 3).then((res) => {
+      setBestSellers(res.data);
       setLoading(false);
     });
   };
@@ -39,7 +44,7 @@ const Home = () => {
           <LoadingCard count={3} />
         ) : (
         <div className="row m-0 mb-3 justify-content-center ">
-          {products.map((product) => (
+          {arrivals.map((product) => (
             <div key={product._id}>
 
               <ProductCard product={product}/>
@@ -48,6 +53,29 @@ const Home = () => {
         </div>
          )}
       </div>
+
+       {/* Best sellers Section  */}
+
+             <h4 className="text-center p-3 mt-5 mb-5 display-3 ">
+        Best Sellers
+      </h4>
+
+      <div >
+        {loading ? (
+          <LoadingCard count={3} />
+        ) : (
+        <div className="row m-0 mb-3 justify-content-center ">
+          {bestSellers.map((product) => (
+            <div key={product._id}>
+
+              <ProductCard product={product}/>
+            </div>
+          ))}
+        </div>
+         )}
+      </div>
+
+
     </>
   );
 };
