@@ -21,15 +21,13 @@ body {
 
   }
 
-  .jumbotron-heading {
-    font-weight: 300;
-  }
+
 
 
 
   .jumbotron .container {
-    max-width: 40rem;
-    background: rgba(255,255,255,0.1);
+    max-width: 50rem;
+    background: transparent;
     padding: 2rem;
     color: white;
   }
@@ -39,6 +37,11 @@ body {
     text-shadow: 0 0 10px rgba(0,0,0,0.2);
   }
 
+
   .jumbotron .lead {
     height: 280px;
+
   }
+
+
+

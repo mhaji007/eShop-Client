@@ -5,6 +5,7 @@ import ProductCard from "../components/cards/ProductCard";
 import Loader from "../components/loader/Loader";
 import Jumbotron from "../components/cards/Jumbotron";
 import LoadingCard from "../components/cards/LoadingCard";
+import styles from "./Home.module.scss";
 
 const Home = () => {
   const [arrivals, setArrivals] = useState([]);
