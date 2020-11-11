@@ -1,33 +1,58 @@
 import React, { useEffect, useState } from "react";
 // import { getProductsByCount } from "../functions/product";
-import { getProducts} from "../functions/product";
+import { getProducts, getProductsCount} from "../functions/product";
 import ProductCard from "../components/cards/ProductCard";
 import Loader from "../components/loader/Loader";
 import Jumbotron from "../components/cards/Jumbotron";
 import LoadingCard from "../components/cards/LoadingCard";
 import styles from "./Home.module.scss";
+import {Pagination} from "antd";
+
 
 const Home = () => {
   const [arrivals, setArrivals] = useState([]);
+  const [arrivalsPage, setArrivalsPage] = useState(1);
+  const [arrivalsProductsCount, setArrivalsProductsCount] = useState(0);
+
   const [bestSellers, setBestSellers] = useState([]);
+  const [bestSellersPage, setBestSellersPage] = useState(1);
+  const [bestSellersCount, setBestSellersCount] = useState(0);
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    loadAllProducts();
-  }, []);
+    loadAllArrivalsProducts();
+  }, [arrivalsPage]);
 
-  const loadAllProducts = () => {
+  const loadAllArrivalsProducts = () => {
     setLoading(true);
 
-    getProducts("createdAt", "desc", 3).then((res) => {
+    getProducts("createdAt", "desc", arrivalsPage).then((res) => {
       setArrivals(res.data);
       setLoading(false);
     });
-      getProducts("sold", "desc", 3).then((res) => {
+  };
+
+    useEffect(() => {
+    loadAllBestSellersProducts();
+  }, [bestSellersPage]);
+
+  const loadAllBestSellersProducts = () => {
+    setLoading(true);
+
+      getProducts("sold", "desc", bestSellersPage).then((res) => {
       setBestSellers(res.data);
       setLoading(false);
     });
   };
+
+
+  useEffect (() => {
+    getProductsCount().then ((res) => setArrivalsProductsCount(res.data));
+    getProductsCount().then ((res) => setBestSellersCount(res.data));
+  }, [] )
+
+
 
   return (
     <>
@@ -55,7 +80,15 @@ const Home = () => {
          )}
       </div>
 
+
+
+
+    <Pagination className="row m-0 mb-3 justify-content-center" current = {arrivalsPage} total={(arrivalsProductsCount/3) * 10} onChange={(value) => setArrivalsPage(value)} />
+
+
        {/* Best sellers Section  */}
+
+
 
              <h4 className="text-center p-3 mt-5 mb-5 display-3 ">
         Best Sellers
@@ -76,6 +109,8 @@ const Home = () => {
          )}
       </div>
 
+
+<Pagination className="row m-0 mb-3 justify-content-center" current = {bestSellersPage} total={(bestSellersCount/3) * 10} onChange={(value) => setBestSellersPage(value)} />
 
     </>
   );

@@ -37,11 +37,15 @@ export const getProduct = async (slug) =>
   });
 // Retrun recently created products (new arrivals) based on sore, order, and limit parameters sent
 // in the body of the request
-export const getProducts = async (sort, order, limit) =>
+export const getProducts = async (sort, order, page) =>
   await axios.post(`${process.env.REACT_APP_API}/products`, {
     sort,
     order,
-    limit
+    page
   }, {
 
   });
+
+  // Return total count of all products
+export const getProductsCount = async () =>
+  await axios.get(`${process.env.REACT_APP_API}/products/total`);
