@@ -25,6 +25,10 @@ export const removeProduct = async (slug, authtoken) =>
   });
 
 // Return single product based on slug(which product)
+// Used both by the admin (when prepoulating
+// the product's data on edit page)
+// and the regular user (when navigating
+// to the detail page)
 export const getProduct = async (slug) =>
   await axios.get(`${process.env.REACT_APP_API}/product/${slug}`);
 

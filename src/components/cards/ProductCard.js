@@ -49,10 +49,10 @@ const AdminProductCard = ({ product, handleRemove }) => {
                   style={{ fontSize: "30px" }}
                 />
                 <div className="ml-3">Add to cart</div>
-              </Link>
+              </Link >
             </div>
             <div className="mx-auto text-danger">
-              <Link>
+              <Link to={`/product/${slug}`} >
                 <EyeOutlined
                   className="ml-5 mr-5"
                   style={{ fontSize: "30px" }}
