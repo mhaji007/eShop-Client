@@ -26,7 +26,9 @@ const AdminProductCard = ({ product, handleRemove }) => {
         </div>
         <div className={styles.details}>
           <div className={styles.textContent}>
-            <h3 className={styles.name}>{title}</h3>
+            <h3 className={styles.name}>{title.length > 30
+                ? title.substring(0, 30)+"..."
+                : title }</h3>
             <div className={styles.price}>${price}</div>
           </div>
           <div

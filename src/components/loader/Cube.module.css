@@ -1,0 +1,98 @@
+
+@keyframes spinning {
+  from {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+
+
+.Cubecontainer {
+  display: block;
+  border: 0px solid #fff;
+  margin: 15% auto;
+  perspective: 1000px;
+  transform-origin: 50% 50%;
+  perspective-origin: 50% 50%;
+}
+
+
+.cube {
+  position: relative;
+  margin: 0 auto;
+  height: 200px;
+  width: 200px;
+  transition: transform 2s linear;
+  transform-style: preserve-3d;
+  animation: spinning 10s infinite linear;
+  animation-play-state: running;
+  cursor: pointer
+}
+
+.cube div {
+  position: absolute;
+  height: 200px;
+  width: 200px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+}
+
+.cube div:nth-child(1) {
+  transform: translateZ(100px);
+  background: url(https://webmary.nl/img/oog.jpg) no-repeat;
+  background-size: cover;
+}
+
+.cube div:nth-child(2) {
+  transform: rotateY(90deg) translateZ(100px);
+  background-color: #008800;
+  background: url(http://www.webmary.nl/img/tel.png) no-repeat;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: .6;
+}
+
+.cube div:nth-child(3) {
+  transform: rotateY(180deg) translateZ(100px);
+  background: url(http://www.webmary.nl/img/mail.png) no-repeat;
+  background-size: cover;
+  opacity: .6;
+}
+
+.cube div:nth-child(4) {
+  transform: rotateY(-90deg) translateZ(100px);
+  background: url(https://www.webmary.nl/img/katje.png) #693C1F no-repeat;
+  background-size: contain;
+}
+
+.cube div:nth-child(5) p {
+  color: #fff;
+  font-family: sans-serif;
+  text-shadow: 1px 1px 2px #000;
+  padding: 30px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%)
+}
+
+.cube div:nth-child(5) {
+  transform: rotateX(-90deg) translateZ(100px) rotate(180deg);
+  background: rgb(136,128, 0);
+  background-color: rgba(136, 128, 0, .9);
+  background-image: radial-gradient(closest-side, transparent 98%, rgba(255, 255, 255, .1) 99%), radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .1) 99%);
+  background-size: 100px 100px;
+  background-position: 0 0, 50px 50px;
+  text-align: center;
+}
+
+.cube div:nth-child(6) {
+  transform: rotateX(90deg) translateZ(100px);
+  background: url(http://www.webmary.nl/img/cookie.png) rgba(255, 50, 200, .5) no-repeat center center;
+  background-size: contain;
+}
+
+.cube:hover {
+  animation-play-state: paused
+}

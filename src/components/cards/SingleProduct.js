@@ -36,15 +36,15 @@ const SingleProduct = ({ product }) => {
       </div>
 
       <div className="col-md-5">
-        <h1 className="bg-info p-3">{title}</h1>
+        <h1 className="text-center p-3">{title}</h1>
         <Card
           actions={[
             <>
-              <ShoppingCartOutlined className="text-success" /> <br />
+              <ShoppingCartOutlined /> <br />
               Add to Cart
             </>,
-            <Link to="/">
-              <HeartOutlined className="text-info" /> <br /> Add to Wishlist
+            <Link  className="text-danger"  to="/">
+              <HeartOutlined/> <br /> Add to Wishlist
             </Link>,
           ]}
         >

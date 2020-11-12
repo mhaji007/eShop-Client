@@ -73,8 +73,11 @@ const AllProducts = () => {
             <Loader  />
           </div>
         ) : (
-          <div className="col-md-10">
-            <div className="row">
+          // This makes the cards
+          // occupy the whole row (in columns of 4)
+          // <div className="col-md-10">
+          <div className="container">
+            <div className="row m-0 mb-3 justify-content-center">
               {products.map((product) => (
                 // <div key={product._id} className="col-md-4">
                 <div key={product._id}>

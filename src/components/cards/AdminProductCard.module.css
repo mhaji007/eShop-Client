@@ -15,7 +15,7 @@ body{
 } */
 .card{
   /* border: 1px solid #6196ff; */
-	width: 300px;
+	width: 315px;
 	height: 400px;
 	background: #f4f4f4;
 	position: relative;
@@ -50,6 +50,7 @@ img{
 }
 .details:hover{
 	bottom: 0;
+	height: 40%;
 }
 .textContent{
 	position: relative;
@@ -65,7 +66,7 @@ img{
 	position: absolute;
 	top: 0;
 	right: 0;
-	font-size: 30px;
+	font-size: 20px;
 }
 .colors{
 	font-size: 18px;
@@ -99,20 +100,7 @@ img{
 .cardUl li:nth-child(5){
 	background: #f0f;
 }
-button{
-	width: 100%;
-	padding: 5px 0;
-	margin: 10px 0;
-	background: #6fbaff;
-	color: #fff;
-	border-radius: 5px;
-	border: none;
-	outline: none;
-	cursor: pointer;
-}
-button:hover{
-	background: #5acef4;
-}
+
 .description{
 	background: #747474;
 	position: absolute;
