@@ -42,24 +42,24 @@ const AdminProductCard = ({ product, handleRemove }) => {
               there would be no way to update the deleted or ediited product in
               the state. So update and delete handlers are passed from the parent
               component (AllProducts) as props */}
-            <div className="mx-auto">
               <Link  style={{ color: "#747474" }}>
+            <div className="mx-auto">
                 <ShoppingCartOutlined
                   className="ml-5 mr-5"
                   style={{ fontSize: "30px" }}
                 />
                 <div className="ml-3">Add to cart</div>
-              </Link >
             </div>
-            <div className="mx-auto text-danger">
+              </Link >
               <Link to={`/product/${slug}`} >
+            <div className="mx-auto">
                 <EyeOutlined
                   className="ml-5 mr-5"
                   style={{ fontSize: "30px" }}
                 />
                 <div className="ml-3" >View product</div>
-              </Link>
             </div>
+              </Link>
           </div>
           {/* <h4 className={styles.colors}>Colors</h4> */}
           {/* <ul className={styles.cardUl}>

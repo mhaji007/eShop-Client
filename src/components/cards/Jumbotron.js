@@ -11,7 +11,7 @@ import TextLoop from "react-text-loop";
 
   <section className="jumbotron text-xs-center mb-3">
     <div className="container">
-
+      
       <img src={eShop} className="pull-left mr-2" style={{width: "200px"}}/>
 
       <h1 className="jumbotron-heading">
