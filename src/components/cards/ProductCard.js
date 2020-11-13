@@ -12,7 +12,7 @@ import {
   QuestionCircleOutlined,
 } from "@ant-design/icons";
 
-const AdminProductCard = ({ product, handleRemove }) => {
+const ProductCard = ({ product, handleRemove }) => {
   const [loading, setLoading] = useState(false);
   // Destructure values to be displayed
   // and slug (for deleting and editing)
@@ -93,4 +93,4 @@ const AdminProductCard = ({ product, handleRemove }) => {
   );
 };
 
-export default AdminProductCard;
+export default ProductCard;

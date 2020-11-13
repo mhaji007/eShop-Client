@@ -6,13 +6,14 @@ import { StarOutlined } from "@ant-design/icons";
 // Since this component is not a route component
 // we do not have access to history in the props
 // hence, the use of useHistory hook here
-import {useHistory} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 
 const RatingModal = ({ children }) => {
   const { user } = useSelector((state) => ({ ...state }));
   const [modalVisible, setModalVisible] = useState(false);
 
   let history = useHistory();
+  let {slug} = useParams();
 
   // Function for conditonally rendering ratings modal
   // based on user's login status
@@ -20,7 +21,23 @@ const RatingModal = ({ children }) => {
     if (user && user.token) {
       setModalVisible(true);
     } else {
-      history.push("/login");
+      // Suppose a user who is not
+      // logged in wants tp
+      // leave a rating by using just
+      // histoyr.push and the route
+      // like below user is redirected
+      // to the dashboard
+      // history.push("/login");
+      // By passing an object like below
+      // user is redirected back to
+      // the detail page where they can
+      // where they can leave a review
+      history.push({
+        pathname:'/login',
+        state: {
+          from:`/product/${slug}` }
+
+      });
     }
   }
 
@@ -38,6 +55,7 @@ const RatingModal = ({ children }) => {
         title="Leave a rating"
         centered
         visible={modalVisible}
+        // For showing and hiding the modal
         onOk={() => {
           setModalVisible(false);
           toast.success(" Thank you for your review. Your rating has been submitted.");

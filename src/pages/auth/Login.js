@@ -6,11 +6,7 @@ import styles from "./Login.module.scss";
 import classnames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {createOrUpdateUser} from "../../functions/auth";
-
-
-
-
+import { createOrUpdateUser } from "../../functions/auth";
 
 // Login user
 // Login is a route component
@@ -23,28 +19,42 @@ const Login = ({ history }) => {
 
   const { user } = useSelector((state) => ({ ...state }));
 
-
   let dispatch = useDispatch();
 
   // Take user obtained from making request
   // to create-or-update endpoint and
   // redirect based on role (e.g., admin vs subscriber)
   const roleBasedRedirect = (res) => {
-    if(res.data.role === "admin") {
-      history.push("/admin/dashboard");
+    // Check if history location is present
+    let intended = history.location.state;
+    if (intended) {
+      history.push(intended.from);
     } else {
-
-      history.push("/user/history");
+      if (res.data.role === "admin") {
+        history.push("/admin/dashboard");
+      } else {
+        history.push("/user/history");
+      }
     }
-  }
-  // Upon compounent mounting
-  // Check for user and token
-  // to see whether user is already
-  // logged in. If logged in,
-  // redirect user to homepage
+  };
+  // Upon component mounting
   useEffect(() => {
-    if (user && user.token) {
-      history.push("/");
+    // If react-router state is present,
+    let intended = history.location.state;
+    // just return and let the roleBasedRedirect
+    // take care of the redirect to let the user navigate to desired page
+    if (intended) {
+      return;
+    }
+    // If not,
+    // check for user and token
+    // to see whether user is already
+    // logged in. If logged in,
+    // redirect user to homepage
+    else {
+      if (user && user.token) {
+        history.push("/");
+      }
     }
   }, [user, history]);
 
@@ -65,30 +75,31 @@ const Login = ({ history }) => {
       // endpoint passes it to the  authCheck middleware
       // for token authentication and only then the
       // request is sent to the createOrUpdateUser controller
-      createOrUpdateUser(idTokenResult.token).then((res) =>{
-        // res => console.log("CREATE OR UPDATE RES", res)
-        dispatch({
-          type:"LOGGED_IN_USER",
-          // payload values here,
-          // aside from email and
-          // token directly obtained
-          // via firebase,
-          // will not persist on
-          // refresh. Therefore there
-          // is a need for another endpoint
-          // to retrieve current user info
-          payload:{
-            name: res.data.name,
-            email:user.email,
-            token: idTokenResult.token,
-            role: res.data.role,
-            id:res.data._id
-
-          }
+      createOrUpdateUser(idTokenResult.token)
+        .then((res) => {
+          // res => console.log("CREATE OR UPDATE RES", res)
+          dispatch({
+            type: "LOGGED_IN_USER",
+            // payload values here,
+            // aside from email and
+            // token directly obtained
+            // via firebase,
+            // will not persist on
+            // refresh. Therefore there
+            // is a need for another endpoint
+            // to retrieve current user info
+            payload: {
+              name: res.data.name,
+              email: user.email,
+              token: idTokenResult.token,
+              role: res.data.role,
+              id: res.data._id,
+            },
+          });
+          // Role based redirect
+          roleBasedRedirect(res);
         })
-        // Role based redirect
-        roleBasedRedirect(res);
-      }).catch(err => console.log(err));
+        .catch((err) => console.log(err));
 
       // Update state via dispatching action
       // Below action comes from firebase
@@ -102,9 +113,7 @@ const Login = ({ history }) => {
       //   },
       // });
 
-
       // history.push("/");
-
     } catch (error) {
       // Display error in console
       console.log(error);
@@ -123,21 +132,22 @@ const Login = ({ history }) => {
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
 
-        createOrUpdateUser(idTokenResult.token).then((res) =>{
-          dispatch({
-            type:"LOGGED_IN_USER",
-            payload:{
-              name: res.data.name,
-              email:user.email,
-              token: idTokenResult.token,
-              role: res.data.role,
-              id:res.data._id
-
-            }
+        createOrUpdateUser(idTokenResult.token)
+          .then((res) => {
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: {
+                name: res.data.name,
+                email: user.email,
+                token: idTokenResult.token,
+                role: res.data.role,
+                id: res.data._id,
+              },
+            });
+            // Role based redirect
+            roleBasedRedirect(res);
           })
-          // Role based redirect
-          roleBasedRedirect(res);
-        }).catch(err => console.log(err));
+          .catch((err) => console.log(err));
 
         // dispatch({
         //   type: "LOGGED_IN_USER",
@@ -147,11 +157,7 @@ const Login = ({ history }) => {
         //   },
         // });
 
-
         // history.push("/");
-
-
-
       })
       .catch((err) => {
         console.log(err);

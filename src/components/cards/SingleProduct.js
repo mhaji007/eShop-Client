@@ -11,7 +11,7 @@ import RatingModal from "../modal/RatingModal";
 
 const { TabPane } = Tabs;
 
-const SingleProduct = ({ product }) => {
+const SingleProduct = ({ product, onStarClick, star }) => {
   const { title, images, description, _id } = product;
 
   return (
@@ -69,10 +69,23 @@ const SingleProduct = ({ product }) => {
               <StarRating
                 name={_id}
                 numberOfStars={5}
-                rating={2}
-                changeRating={(newRating, name) =>
-                  console.log("newRating", newRating, "name", name)
-                }
+                rating={star}
+
+                // Grab the rating and the productId
+
+                // SingleProduct is just a child card component
+                // Any functionalities should be placed in the
+                // parent component (Product in pages) otherwise
+                // all updates will be taken place in the child's
+                // internal local state and won't be reflected in the parent's state
+                // and there will be no synchronization
+
+                // changeRating={(newRating, name) =>
+                //   console.log("newRating", newRating, "name", name)
+                // }
+
+                // Call onStarClick in parent
+                changeRating={onStarClick}
                 isSelectable={true}
                 starRatedColor="red"
               />
