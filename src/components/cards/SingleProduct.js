@@ -7,11 +7,12 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import noImage from "../../images/noImage.jpg";
 import ProductListItems from "./ProductListItems";
 import StarRating from "react-star-ratings";
+import RatingModal from "../modal/RatingModal";
 
 const { TabPane } = Tabs;
 
 const SingleProduct = ({ product }) => {
-  const { title, images, description, _id  } = product;
+  const { title, images, description, _id } = product;
 
   return (
     <>
@@ -38,33 +39,44 @@ const SingleProduct = ({ product }) => {
 
       <div className="col-md-5">
         <h1 className="text-center p-3">{title}</h1>
-<div className="text-center">
-
-        <StarRating
-          // Each star is associated with a product
-          // product_id is assigned to name
-          name={_id}
-          numberOfStars={5}
-          rating={2}
-          changeRating={(newRating, name) =>
-            // rating and product on which
-            // this rating is going to be applied
-            console.log("newRating", newRating, "name", name)
-          }
-          // Make star interactable
-          isSelectable={true}
-          starRatedColor="red"
-        />
-</div>
+        <div className="text-center">
+          <StarRating
+            // Each star is associated with a product
+            // product_id is assigned to name
+            name={_id}
+            numberOfStars={5}
+            rating={2}
+            changeRating={(newRating, name) =>
+              // rating and product on which
+              // this rating is going to be applied
+              console.log("newRating", newRating, "name", name)
+            }
+            // Make star interactable
+            isSelectable={true}
+            starRatedColor="red"
+          />
+        </div>
         <Card
           actions={[
             <>
-              <ShoppingCartOutlined /> <br />
-              Add to Cart
-            </>,
-            <Link  className="text-danger"  to="/">
-              <HeartOutlined/> <br /> Add to Wishlist
-            </Link>,
+            <ShoppingCartOutlined /> <br />
+            Add to Cart
+          </>,
+          <Link to="/">
+            <HeartOutlined className="text-info" /> <br /> Add to Wishlist
+          </Link>,
+            <RatingModal>
+              <StarRating
+                name={_id}
+                numberOfStars={5}
+                rating={2}
+                changeRating={(newRating, name) =>
+                  console.log("newRating", newRating, "name", name)
+                }
+                isSelectable={true}
+                starRatedColor="red"
+              />
+            </RatingModal>,
           ]}
         >
           <ProductListItems product={product} />
