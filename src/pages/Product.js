@@ -4,6 +4,7 @@ import SingleProduct from "../components/cards/SingleProduct";
 // For accessing user's token
 import { useSelector } from "react-redux";
 
+
 const Product = ({ match }) => {
   // State for storing product
   const [product, setProduct] = useState({});
@@ -49,7 +50,7 @@ const Product = ({ match }) => {
     });
 
 
-    
+
     console.log("The value of star is ==> ", star);
 
 
