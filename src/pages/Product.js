@@ -3,13 +3,19 @@ import { getProduct, productStar } from "../functions/product";
 import SingleProduct from "../components/cards/SingleProduct";
 // For accessing user's token
 import { useSelector } from "react-redux";
+import { getRelated } from "../functions/product";
+import ProductCard from "../components/cards/ProductCard";
 
 
 const Product = ({ match }) => {
   // State for storing product
   const [product, setProduct] = useState({});
-  // State for holding star rating before sending it to the backend
 
+  // State for storing related products
+
+  const [related, setRelated] = useState([]);
+
+  // State for storing star rating before sending it to the backend
 
   const [star, setStar] = useState();
   // Destructure user from redux store
@@ -24,6 +30,7 @@ const Product = ({ match }) => {
       setStar(JSON.parse( localStorage.getItem(`star ${slug}`) ))
     }
     loadSingleProduct();
+
   }, [slug]);
 
   // Value records and persists here on refresh
@@ -54,8 +61,13 @@ const Product = ({ match }) => {
     console.log("The value of star is ==> ", star);
 
 
-    const loadSingleProduct = () =>
-    getProduct(slug).then((res) => setProduct(res.data));
+    const loadSingleProduct = () => {
+      getProduct(slug).then((res) => {
+        setProduct(res.data);
+        // load related
+        getRelated(res.data._id).then((res) => setRelated(res.data));
+      });
+    };
 
 
     // Update component's state
@@ -91,6 +103,18 @@ const Product = ({ match }) => {
           <h4>Related Products</h4>
           <hr />
         </div>
+      </div>
+
+      <div className="row pb-5">
+        {related.length ? (
+          related.map((r) => (
+            <div key={r._id} className="col-md-4">
+              <ProductCard product={r} />
+            </div>
+          ))
+        ) : (
+          <div className="text-center col">No Products Found</div>
+        )}
       </div>
     </div>
   );
