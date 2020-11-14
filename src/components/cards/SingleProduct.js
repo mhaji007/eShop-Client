@@ -39,13 +39,13 @@ const SingleProduct = ({ product, onStarClick, star }) => {
 
       <div className="col-md-5">
         <h1 className="text-center p-3">{title}</h1>
-        <div className="text-center">
+        {/* <div className="text-center">
           <StarRating
             // Each star is associated with a product
             // product_id is assigned to name
             name={_id}
             numberOfStars={5}
-            rating={2}
+            rating={star}
             changeRating={(newRating, name) =>
               // rating and product on which
               // this rating is going to be applied
@@ -55,7 +55,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
             isSelectable={true}
             starRatedColor="red"
           />
-        </div>
+        </div> */}
         <Card
           actions={[
             <>
