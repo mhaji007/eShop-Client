@@ -8,7 +8,7 @@ import StarRating from "react-star-ratings";
 // Pass product
 export const showAverage = (p) => {
   if (p && p.ratings) {
-    
+
     let ratingsArray = p && p.ratings;
     let total = [];
     let length = ratingsArray.length;
@@ -27,7 +27,9 @@ export const showAverage = (p) => {
     return (
       <div className="text-center pt-1 pb-3">
         <span>
-          <StarRating rating={result} />
+          <StarRating starDimension="20px" starSpacing="2px" starRatedColor="red" rating={result} editing={false} />
+        {""}
+        <span className="pl-3">({p.ratings.length})</span>
         </span>
       </div>
     );

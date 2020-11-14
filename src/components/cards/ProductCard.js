@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./ProductCard.module.css";
 import { Link } from "react-router-dom";
-
+import { showAverage } from "../../functions/rating";
 
 // Used for displaying default placeholder
 // for products with no/broken image
@@ -26,9 +26,9 @@ const ProductCard = ({ product, handleRemove }) => {
         </div>
         <div className={styles.details}>
           <div className={styles.textContent}>
-            <h3 className={styles.name}>{title.length > 30
-                ? title.substring(0, 30)+"..."
-                : title }</h3>
+            <h3 className={styles.name}>
+              {title.length > 30 ? title.substring(0, 30) + "..." : title}
+            </h3>
             <div className={styles.price}>${price}</div>
           </div>
           <div
@@ -44,24 +44,24 @@ const ProductCard = ({ product, handleRemove }) => {
               there would be no way to update the deleted or ediited product in
               the state. So update and delete handlers are passed from the parent
               component (AllProducts) as props */}
-              <Link  style={{ color: "#747474" }}>
-            <div className="mx-auto">
+            <Link style={{ color: "#747474" }}>
+              <div className="mx-auto">
                 <ShoppingCartOutlined
                   className="ml-5 mr-5"
                   style={{ fontSize: "30px" }}
                 />
                 <div className="ml-3">Add to cart</div>
-            </div>
-              </Link >
-              <Link to={`/product/${slug}`} >
-            <div className="mx-auto">
+              </div>
+            </Link>
+            <Link to={`/product/${slug}`}>
+              <div className="mx-auto">
                 <EyeOutlined
                   className="ml-5 mr-5"
                   style={{ fontSize: "30px" }}
                 />
-                <div className="ml-3" >View product</div>
-            </div>
-              </Link>
+                <div className="ml-3">View product</div>
+              </div>
+            </Link>
           </div>
           {/* <h4 className={styles.colors}>Colors</h4> */}
           {/* <ul className={styles.cardUl}>
@@ -76,15 +76,23 @@ const ProductCard = ({ product, handleRemove }) => {
 
         <div className={styles.description}>
           <div className={styles.icon}>
-            <QuestionCircleOutlined style={{ fontSize: "15px" }} />
+            <QuestionCircleOutlined  style={{ fontSize: "16px" }} />
           </div>
           <div className={styles.contents}>
             {/* <h2 className={styles.detailHead}>VIP Tutorials</h2> */}
             <p className={styles.detailDescription}>
               {" "}
+              {product && product.ratings && product.ratings.length > 0 ? (
+                showAverage(product)
+              ) : (
+                <div className="text-center pt-1 pb-3">
+                  "No rating available"
+                </div>
+              )}
               {description.lenght > 150
                 ? description.substring(0, 150)
                 : description}
+
             </p>{" "}
           </div>
         </div>
