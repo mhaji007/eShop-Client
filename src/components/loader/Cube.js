@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Cube.module.css"
+import styles from "./Cube.module.css";
 
 function Cube() {
   return (
@@ -9,11 +9,8 @@ function Cube() {
         <div></div>
         <div></div>
         <div></div>
-        <div>
-          <a href="#">
-            <p>hier kan bv een link ergens naartoe...</p>
-          </a>
-        </div>
+        <div></div>
+
         <div></div>
       </div>
     </div>

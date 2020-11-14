@@ -6,8 +6,8 @@ body {
 
 
   .jumbotron {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    padding-top: 7rem;
+    padding-bottom: 5.5rem;
     margin-bottom: 0;
 
     background: linear-gradient(to bottom, #a0a0a0, #7abfff), url("./images/jumbo.jpg");
@@ -27,25 +27,25 @@ body {
 
   .jumbotron .container {
     max-width: 50rem;
-    background: transparent;
-    padding: 2rem;
-    color: white;
+    /* background: transparent; */
+    /* padding: 2rem; */
+    /* color: white; */
   }
 
-  .jumbotron p {
+  /* .jumbotron p {
     color: white;
     text-shadow: 0 0 10px rgba(0,0,0,0.2);
-  }
+  } */
 
 
   .jumbotron .lead {
-    height: 280px;
+    height: 350px;
 
   }
 
 
 
-  .slider img, .card-image {
+  /* .slider img, .card-image {
     height: 450px;
     object-fit: cover;
-  }
+  } */

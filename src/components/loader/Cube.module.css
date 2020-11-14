@@ -22,11 +22,13 @@
 .cube {
   position: relative;
   margin: 0 auto;
+  top:10rem;
+  right:30rem;
   height: 200px;
   width: 200px;
   transition: transform 2s linear;
   transform-style: preserve-3d;
-  animation: spinning 10s infinite linear;
+  animation: spinning 50s infinite linear;
   animation-play-state: running;
   cursor: pointer
 }
@@ -35,35 +37,38 @@
   position: absolute;
   height: 200px;
   width: 200px;
-  box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+  box-shadow: 0 0 5px rgba(0, 0, 0, .5);
 }
 
 .cube div:nth-child(1) {
   transform: translateZ(100px);
-  background: url(https://webmary.nl/img/oog.jpg) no-repeat;
+  background: url(../../images/eShop.jpg) no-repeat;
   background-size: cover;
+  opacity: .8;
 }
 
 .cube div:nth-child(2) {
   transform: rotateY(90deg) translateZ(100px);
-  background-color: #008800;
-  background: url(http://www.webmary.nl/img/tel.png) no-repeat;
+  /* background-color: #008800; */
+  background:url(../../images/eShop.jpg) no-repeat;
   background-size: cover;
   background-repeat: no-repeat;
-  opacity: .6;
+  opacity: .8;
 }
 
 .cube div:nth-child(3) {
   transform: rotateY(180deg) translateZ(100px);
-  background: url(http://www.webmary.nl/img/mail.png) no-repeat;
+  background: url(../../images/eShop.jpg) no-repeat;
   background-size: cover;
-  opacity: .6;
+  opacity: .8;
 }
 
 .cube div:nth-child(4) {
   transform: rotateY(-90deg) translateZ(100px);
-  background: url(https://www.webmary.nl/img/katje.png) #693C1F no-repeat;
+  background: url(../../images/eShop.jpg) #693C1F no-repeat;
   background-size: contain;
+  opacity: .8;
+
 }
 
 .cube div:nth-child(5) p {
@@ -75,22 +80,25 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%)
+
 }
 
 .cube div:nth-child(5) {
   transform: rotateX(-90deg) translateZ(100px) rotate(180deg);
-  background: rgb(136,128, 0);
-  background-color: rgba(136, 128, 0, .9);
-  background-image: radial-gradient(closest-side, transparent 98%, rgba(255, 255, 255, .1) 99%), radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .1) 99%);
+  /* background: rgb(136,128, 0); */
+  /* background-color: rgba(136, 128, 0, .9); */
+  /* background-image: radial-gradient(closest-side, transparent 98%, rgba(255, 255, 255, .1) 99%), radial-gradient(closest-side, transparent 98%, rgba(0, 0, 0, .1) 99%); */
   background-size: 100px 100px;
   background-position: 0 0, 50px 50px;
   text-align: center;
+  opacity: .8;
 }
 
 .cube div:nth-child(6) {
   transform: rotateX(90deg) translateZ(100px);
-  background: url(http://www.webmary.nl/img/cookie.png) rgba(255, 50, 200, .5) no-repeat center center;
+  background: url(../../images/eShop.jpg) rgba(255, 50, 200, .5) no-repeat center center;
   background-size: contain;
+  opacity: .8;
 }
 
 .cube:hover {
