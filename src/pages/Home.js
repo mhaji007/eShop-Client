@@ -56,7 +56,7 @@ const Home = () => {
       {/* Jumbotron */}
       <div>{loading ? <Loader /> : <Jumbotron />}</div>
       {/* New Arrivals Section  */}
-      <h4 className="text-center p-3 mt-5 mb-5 display-3 ">New Arrivals</h4>
+      <h4 className="text-center p-3 mt-5 mb-5 display-4 ">New Arrivals</h4>
 
       <div>
         {loading ? (
@@ -81,7 +81,7 @@ const Home = () => {
 
       {/* Best sellers Section  */}
 
-      <h4 className="text-center p-3 mt-5 mb-5 display-3 ">Best Sellers</h4>
+      <h4 className="text-center p-3 mt-5 mb-5 display-4 ">Best Sellers</h4>
 
       <div>
         {loading ? (
@@ -104,7 +104,7 @@ const Home = () => {
         onChange={(value) => setBestSellersPage(value)}
       />
 
-      <h4 className="text-center p-3 mt-2 mb-5 display-3">Categories</h4>
+      <h4 className="text-center p-3 mt-2 mb-5 display-4">Categories</h4>
 
       <CategoryList />
 

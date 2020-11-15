@@ -1,8 +1,12 @@
+// Component used for listing all the categories
+// to be displayed in home page
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getCategories } from "../../functions/category";
 
 const CategoryList = () => {
+  // State for storing all categories retrieved from the server
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
 

@@ -7,8 +7,9 @@ body {
 
   .jumbotron {
     padding-top: 7rem;
-    padding-bottom: 5.5rem;
+    padding-bottom: 7rem;
     margin-bottom: 0;
+    margin:0;
 
     background: linear-gradient(to bottom, #a0a0a0, #7abfff), url("./images/jumbo.jpg");
     /* background:  url("./images/jumbo.jpg"); */
@@ -17,6 +18,7 @@ body {
     background-position: bottom center;
     background-size: cover;
 
+    border-radius: 0;
 
 
   }
@@ -26,7 +28,7 @@ body {
 
 
   .jumbotron .container {
-    max-width: 50rem;
+    max-width: 65rem;
     /* background: transparent; */
     /* padding: 2rem; */
     /* color: white; */
@@ -44,8 +46,79 @@ body {
   }
 
 
+  .jumbotron .btn {
+   /* font-weight: bold; */
+   color:#fff;
+   border-radius: 0px;
+   border: 2px solid black;
+   margin-left: 5px;
+
+  }
+
+
+
 
   /* .slider img, .card-image {
     height: 450px;
     object-fit: cover;
   } */
+
+
+
+
+
+  .cta{
+
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: .9rem;
+    font-weight: bold;
+    color: #fff !important;
+    border: 2px solid #fff;
+    padding: 15px 25px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  a.cta:hover{
+    animation-name: change-background;
+    animation-duration: .3s;
+    -webkit-animation-delay: .3s; /* Chrome, Safari, Opera */
+    animation-delay: .3s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes change-background {
+      0%   {background: transparent;}
+      100% {background: #000}
+  }
+
+  a.cta:before{
+    position: absolute;
+    content:"";
+    width: 10px;
+    height: 2px;
+    left:0;
+    top:22px;
+    background-color: #fff;
+    animation-name: right-to-left;
+    animation-duration: .3s;
+  }
+
+  @keyframes right-to-left {
+      0%   {width: 100%;}
+      50% {width: 100%; right: 0; }
+    100% { width: 10px; left:0; right: auto; }
+  }
+
+  a.cta:hover:before{
+    animation-name: left-to-right;
+    animation-duration: .3s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes left-to-right {
+      0%   {width: 10px;}
+      50% {width: 100%; left: 0; }
+    100% { width: 10px; right:0; left: auto; }
+  }
