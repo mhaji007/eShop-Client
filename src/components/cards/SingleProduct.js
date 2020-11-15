@@ -1,3 +1,6 @@
+// Component for displaying product detail
+// Used by Product page
+
 import React from "react";
 import { Card, Tabs } from "antd";
 import { Link } from "react-router-dom";

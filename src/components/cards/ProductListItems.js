@@ -1,3 +1,8 @@
+// Component for displaying product detail (price, categoey, suncategory, etc.)
+// Used by SingleProduct card component which in turn is used by Product page
+// to list all the details after user has clicked on the view product link
+// on home page
+
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -40,7 +45,7 @@ const ProductListItems = ({ product }) => {
           {subs.map((s) => (
             <Link
               key={s._id}
-              to={`/sub/${s.slug}`}
+              to={`/subcategory/${s.slug}`}
               className="label label-default label-pill pull-xs-right"
             >
               {s.name}

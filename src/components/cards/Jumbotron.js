@@ -3,7 +3,7 @@ import styles from "./Jumbotron.module.css";
 import classnames from "classnames";
 import eShop from "../../images/eShop.jpg";
 import TextLoop from "react-text-loop";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 // import Cube from "../loader/Cube";
 
 const Jumbotron = () => {
@@ -27,7 +27,9 @@ const Jumbotron = () => {
             <h2 className="display-3">Pay Less.</h2>
           </div>
 
-          <Link to="/" className="cta">Discover Now</Link>
+          <Link to="/" className="cta">
+            Discover Now
+          </Link>
         </div>
       </section>
     </div>

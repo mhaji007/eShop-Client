@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getCategories } from "../../functions/category";
+import Loader from "../loader/Loader";
 
 const CategoryList = () => {
   // State for storing all categories retrieved from the server
@@ -32,7 +33,8 @@ const CategoryList = () => {
     <div className="container">
       <div className="row">
         {loading ? (
-          <h4 className="text-center">Loading...</h4>
+          // <h4 className="text-center">Loading...</h4>
+          <Loader/>
         ) : (
           showCategories()
         )}

@@ -8,6 +8,7 @@ import LoadingCard from "../components/cards/LoadingCard";
 import styles from "./Home.module.scss";
 import { Pagination } from "antd";
 import CategoryList from "../components/category/CategoryList";
+import SubCategoryList from "../components/subcategory/SubCategoryList";
 
 const Home = () => {
   const [arrivals, setArrivals] = useState([]);
@@ -98,15 +99,21 @@ const Home = () => {
       </div>
 
       <Pagination
-        className="row m-0 mb-3 justify-content-center"
+        className="row m-0 mb-5 justify-content-center"
         current={bestSellersPage}
         total={(bestSellersCount / 3) * 10}
         onChange={(value) => setBestSellersPage(value)}
       />
 
-      <h4 className="text-center p-3 mt-2 mb-5 display-4">Categories</h4>
+      <h4 className="text-center p-3 mt-2 mb-3 display-4">Categories</h4>
 
       <CategoryList />
+
+      <h4 className="text-center p-3 mt-2 mb-3 display-4">SubCategories</h4>
+      <SubCategoryList/>
+
+
+
 
     </>
   );
