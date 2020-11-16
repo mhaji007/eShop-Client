@@ -1,3 +1,9 @@
+// Search component appearing at the top of
+// all pages along with nav header
+// After search term is entered
+// user is redirected to the shop page
+// where the matching items are displayed
+
 import React, { useState } from "react";
 // For redirecting user to shop page
 import { useHistory } from "react-router-dom";
