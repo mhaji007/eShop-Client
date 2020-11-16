@@ -9,6 +9,7 @@ import styles from "./Home.module.scss";
 import { Pagination } from "antd";
 import CategoryList from "../components/category/CategoryList";
 import SubCategoryList from "../components/subcategory/SubCategoryList";
+import classnames from "classnames";
 
 const Home = () => {
   const [arrivals, setArrivals] = useState([]);
@@ -57,7 +58,16 @@ const Home = () => {
       {/* Jumbotron */}
       <div>{loading ? <Loader /> : <Jumbotron />}</div>
       {/* New Arrivals Section  */}
-      <h4 className="text-center p-3 mt-5 mb-5 display-4 ">New Arrivals</h4>
+      {/* <h4 className="text-center p-3 mt-5 mb-5 display-4 ">New Arrivals</h4> */}
+
+      <div className="text-center p-3 mt-2 mb-3 display-4">
+        <h4 className={styles.title}>
+          <div>
+            <span>New Arrivals</span>
+          </div>
+        </h4>
+      </div>
+
 
       <div>
         {loading ? (
@@ -82,7 +92,17 @@ const Home = () => {
 
       {/* Best sellers Section  */}
 
-      <h4 className="text-center p-3 mt-5 mb-5 display-4 ">Best Sellers</h4>
+      {/* <h4 className="text-center p-3 mt-5 mb-5 display-4 ">Best Sellers</h4> */}
+
+
+      <div className="text-center p-3 mt-2 mb-3 display-4">
+        <h4 className={styles.title}>
+          <div>
+            <span>Best Sellers</span>
+          </div>
+        </h4>
+      </div>
+
 
       <div>
         {loading ? (
@@ -105,16 +125,25 @@ const Home = () => {
         onChange={(value) => setBestSellersPage(value)}
       />
 
-      <h4 className="text-center p-3 mt-2 mb-3 display-4">Categories</h4>
+      <div className="text-center p-3 mt-2 mb-3 display-4">
+        <h4 className={styles.title}>
+          <div>
+            <span>Categories</span>
+          </div>
+        </h4>
+      </div>
 
       <CategoryList />
 
-      <h4 className="text-center p-3 mt-2 mb-3 display-4">SubCategories</h4>
-      <SubCategoryList/>
-
-
-
-
+      {/* <h4 className="text-center p-3 mt-2 mb-3 display-4">SubCategories</h4> */}
+      <div className="text-center p-3 mt-2 mb-3 display-4">
+        <h4 className={styles.title}>
+          <div>
+            <span>SubCategories</span>
+          </div>
+        </h4>
+      </div>
+      <SubCategoryList />
     </>
   );
 };

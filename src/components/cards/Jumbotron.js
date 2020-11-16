@@ -20,11 +20,11 @@ const Jumbotron = () => {
 
           <div className="lead display-2">
             <TextLoop>
-              <h2 className="display-3">Shop More.</h2>
-              <h2 className="display-3">Save More.</h2>
-              <h2 className="display-3">See More.</h2>
+              <h2 className="display-3">SHOP MORE.</h2>
+              <h2 className="display-3">SAVE MORE.</h2>
+              <h2 className="display-3">SEE MORE.</h2>
             </TextLoop>
-            <h2 className="display-3">Pay Less.</h2>
+            <h2 className="display-3 ">PAY LESS.</h2>
           </div>
 
           <Link to="/" className="cta">
