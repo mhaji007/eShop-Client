@@ -17,13 +17,13 @@ const CategoryHome = ({ match }) => {
   const [loading, setLoading] = useState(false);
 
   const { slug } = match.params;
-   // Make request to retrieve a category
+  // Make request to retrieve a category
   // then based on the retrieved category
   // make another request to find
   // products that share the same category
   useEffect(() => {
     setLoading(true);
-     // Send slug to detemine which category
+    // Send slug to detemine which category
     // we want. The slug is pushed onto the url
     // via the link user clicks on in the home page
     getCategory(slug).then((res) => {
@@ -40,7 +40,7 @@ const CategoryHome = ({ match }) => {
         <div className="col">
           {loading ? (
             <h4 className="text-center p-3 mt-5 mb-5 display-4 ">
-              <Loader/>
+              <Loader />
             </h4>
           ) : (
             <h4 className="text-center p-3 mt-5 mb-5 display-4 ">

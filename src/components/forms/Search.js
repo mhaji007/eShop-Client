@@ -39,7 +39,7 @@ const Search = () => {
     // make a request to backend
     // ino rder to display the results
     // Therefore we send the text
-    // as a search query
+    // as a query parameter on the url
     history.push(`/shop?${text}`);
   };
 

@@ -1,5 +1,11 @@
 // Component used for listing all the categories
 // to be displayed in home page
+// If user clicks on any category
+// slug is pushed onto the url  as route parameter (/category/${c.slug})
+// and user is redirected to the CategoryHome page
+// where slug is extracted from the url and
+// a request is made to the backend to display all
+// products that share the chosen category
 
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -25,6 +31,7 @@ const CategoryList = () => {
         key={c._id}
         className="col btn btn-outlined-primary btn-lg btn-block btn-raised m-3"
       >
+         {/* Push slug onto the url */}
         <Link to={`/category/${c.slug}`}>{c.name}</Link>
       </div>
     ));
