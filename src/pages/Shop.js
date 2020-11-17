@@ -26,12 +26,21 @@ import {
   fetchProductsByFilter,
 } from "../functions/product";
 import { getCategories } from "../functions/category";
+// Accessing state and sending action to state
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
+// Custom loader
 import Loader from "../components/loader/Loader";
 // Menu, slider (price slider), checkbox (category checkbox)
 import { Menu, Slider, Checkbox } from "antd";
-import { DollarOutlined, DownSquareOutlined } from "@ant-design/icons";
+// Ant Design icons
+import {
+  DollarOutlined,
+  DownSquareOutlined,
+  StarOutlined,
+} from "@ant-design/icons";
+// Component used for displaying filter by star rating
+import Star from "../components/forms/Star";
 
 // Destructure submenu and item group
 const { SubMenu, ItemGroup } = Menu;
@@ -50,6 +59,8 @@ const Shop = () => {
   const [categories, setCategories] = useState([]);
   // State for storing categories checked by the user to send to the backend
   const [categoryIds, setCategoryIds] = useState([]);
+  // State for storing stars
+  const [star, setStar] = useState("");
 
   let dispatch = useDispatch();
   // Access redux state containing user's text input
@@ -146,7 +157,6 @@ const Shop = () => {
 
   // Categories handler
   const handleCheck = (e) => {
-
     // Reset any values displayed
     // on the search bar to prevent confusion
     // that search by text is still active
@@ -159,6 +169,8 @@ const Shop = () => {
     // by price is still active
     setPrice([0, 0]);
 
+    // Reset star rating
+    setStar("");
 
     // Should be able to check more than one category
     // Should not store duplicate categories in the state
@@ -187,6 +199,34 @@ const Shop = () => {
     fetchProducts({ category: inTheState });
   };
 
+  // Ratings handler
+  // Display products by star rating
+  const handleStarClick = (num) => {
+    // console.log(num);
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    // Reset price search
+    setPrice([0, 0]);
+    // Reset category search
+    setCategoryIds([]);
+    // Send request to backend
+    setStar(num);
+    fetchProducts({ stars: num });
+  };
+
+  // Function to display (1-5) star rating on the sidebar
+  const showStars = () => (
+    <div className="pr-4 pl-4 pb-2">
+      <Star starClick={handleStarClick} numberOfStars={5} />
+      <Star starClick={handleStarClick} numberOfStars={4} />
+      <Star starClick={handleStarClick} numberOfStars={3} />
+      <Star starClick={handleStarClick} numberOfStars={2} />
+      <Star starClick={handleStarClick} numberOfStars={1} />
+    </div>
+  );
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -196,7 +236,8 @@ const Shop = () => {
           {/* mode: inline for corret placement */}
           {/* defaultOpenKeys references the keys used for submenus
           What keys we want to have open */}
-          <Menu defaultOpenKeys={["1", "2"]} mode="inline">
+          <Menu defaultOpenKeys={["1", "2","3"]} mode="inline">
+            {/* Search query */}
             <SubMenu
               key="1"
               // title of the slider
@@ -227,7 +268,7 @@ const Shop = () => {
               </div>
             </SubMenu>
 
-            {/* category */}
+            {/* Category */}
             <SubMenu
               key="2"
               title={
@@ -238,19 +279,31 @@ const Shop = () => {
             >
               <div style={{ maringTop: "-10px" }}>{showCategories()}</div>
             </SubMenu>
+
+            {/* Stars */}
+            <SubMenu
+              key="3"
+              title={
+                <span className="h6">
+                  <StarOutlined /> Rating
+                </span>
+              }
+            >
+              <div style={{ maringTop: "-10px" }}>{showStars()}</div>
+            </SubMenu>
           </Menu>
         </div>
 
         <div className="col-md-9 pt-2">
           {loading ? (
-            <h4 className="text-danger">
+            <h4 >
               <Loader />
             </h4>
           ) : (
             <h4 className="text-center">{""}</h4>
           )}
 
-          {!products && products.length < 1 && <p>No products found</p>}
+          { products.length < 1 && <p>No products found</p>}
 
           <div className="row pb-5">
             {products.map((p) => (
