@@ -25,9 +25,7 @@ import {
   getProductsByCount,
   fetchProductsByFilter,
 } from "../functions/product";
-import {
-  getSubcategories
-} from "../functions/subcategory";
+import { getSubcategories } from "../functions/subcategory";
 import { getCategories } from "../functions/category";
 // Accessing state and sending action to state
 import { useSelector, useDispatch } from "react-redux";
@@ -35,13 +33,14 @@ import ProductCard from "../components/cards/ProductCard";
 // Custom loader
 import Loader from "../components/loader/Loader";
 // Menu, slider (price slider), checkbox (category checkbox)
-import { Menu, Slider, Checkbox } from "antd";
+import { Menu, Slider, Checkbox, Radio } from "antd";
 // Ant Design icons
 import {
   DollarOutlined,
   DownSquareOutlined,
   StarOutlined,
-  TagsOutlined
+  TagsOutlined,
+  AntDesignOutlined,
 } from "@ant-design/icons";
 // Component used for displaying filter by star rating
 import Star from "../components/forms/Star";
@@ -67,8 +66,20 @@ const Shop = () => {
   const [star, setStar] = useState("");
   // State for storing all the fetched subcategories
   const [subcategories, setSubcategories] = useState([]);
-  //
+
   const [subcategory, setSubcategory] = useState("");
+
+  
+
+  const [brand, setBrand] = useState("");
+  // State for storing the hardcoded brands
+  const [brands, setBrands] = useState([
+    "Apple",
+    "Samsung",
+    "Microsoft",
+    "Lenovo",
+    "ASUS",
+  ]);
 
   let dispatch = useDispatch();
   // Access redux state containing user's text input
@@ -159,7 +170,8 @@ const Shop = () => {
     // Update price in the state
     setPrice(value);
     setStar("");
-    setSubcategories([])
+    setSubcategories([]);
+    setBrand("");
     // Changing the ok state
     // so we can send a request
     // to the backend
@@ -185,7 +197,7 @@ const Shop = () => {
     // Reset star rating
     setStar("");
 
-
+    setBrand("");
 
     // Should be able to check more than one category
     // Should not store duplicate categories in the state
@@ -227,6 +239,8 @@ const Shop = () => {
     // Reset category search
     setCategoryIds([]);
 
+    setBrand("");
+
     // Send request to backend
     setStar(num);
     fetchProducts({ stars: num });
@@ -242,11 +256,11 @@ const Shop = () => {
       payload: { text: "" },
     });
     setPrice([0, 0]);
+    setBrand("");
     setCategoryIds([]);
     setStar("");
     fetchProducts({ subcategory });
   };
-
 
   // Function to display (1-5) star rating on the sidebar
   const showStars = () => (
@@ -259,8 +273,8 @@ const Shop = () => {
     </div>
   );
 
-    // Display products by subcategory
-    const showSubcategories = () =>
+  // Display products by subcategory
+  const showSubcategories = () =>
     subcategories.map((s) => (
       <div
         key={s._id}
@@ -272,7 +286,49 @@ const Shop = () => {
       </div>
     ));
 
+  const handleBrand = (brand) => {
+    // setSubcategories([]);
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+    setBrand(brand);
+    fetchProducts({ brand });
+    // fetchProducts({ e.target.value });
+  };
 
+  // Display products based on brand name
+  const showBrands = () =>
+    brands.map((b) => (
+      // <Radio
+      //   value={b}
+      //   name={b}
+
+      //// Only one could be checked at
+      //// a time. Check whether the one
+      //// that is being looped over is the
+      //// in  the state (pushed to state on click
+      //// via on change)
+      //// and display it as checked
+      //   checked={b === brand}
+
+      //   onChange={handleBrand}
+      //   className="pb-1 pl-4 pr-4"
+      // >
+      //   {b}
+      // </Radio>
+      <div
+        // key={b._id}
+        onClick={() => handleBrand(b)}
+        className="p-1 m-1 badge badge-secondary"
+        style={{ cursor: "pointer" }}
+      >
+        {b}
+      </div>
+    ));
 
   return (
     <div className="container-fluid">
@@ -283,7 +339,7 @@ const Shop = () => {
           {/* mode: inline for corret placement */}
           {/* defaultOpenKeys references the keys used for submenus
           What keys we want to have open */}
-          <Menu defaultOpenKeys={["1", "2", "3", "4"]} mode="inline">
+          <Menu defaultOpenKeys={["1", "2", "3", "4", "5"]} mode="inline">
             {/* Search query */}
             <SubMenu
               key="1"
@@ -339,17 +395,32 @@ const Shop = () => {
               <div style={{ maringTop: "-10px" }}>{showStars()}</div>
             </SubMenu>
 
-            {/* sub category */}
+            {/* Subcategory */}
             <SubMenu
               key="4"
               title={
                 <span className="h6">
-                  <TagsOutlined />Subcategories
+                  <TagsOutlined />
+                  Subcategories
                 </span>
               }
             >
               <div style={{ maringTop: "-10px" }} className="pl-4 pr-4">
                 {showSubcategories()}
+              </div>
+            </SubMenu>
+
+            {/* Brands */}
+            <SubMenu
+              key="5"
+              title={
+                <span className="h6">
+                  <AntDesignOutlined /> Brands
+                </span>
+              }
+            >
+              <div style={{ maringTop: "-10px" }} className="pl-4 pr-4">
+                {showBrands()}
               </div>
             </SubMenu>
           </Menu>
