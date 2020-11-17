@@ -25,6 +25,9 @@ import {
   getProductsByCount,
   fetchProductsByFilter,
 } from "../functions/product";
+import {
+  getSubcategories
+} from "../functions/subcategory";
 import { getCategories } from "../functions/category";
 // Accessing state and sending action to state
 import { useSelector, useDispatch } from "react-redux";
@@ -38,6 +41,7 @@ import {
   DollarOutlined,
   DownSquareOutlined,
   StarOutlined,
+  TagsOutlined
 } from "@ant-design/icons";
 // Component used for displaying filter by star rating
 import Star from "../components/forms/Star";
@@ -61,6 +65,10 @@ const Shop = () => {
   const [categoryIds, setCategoryIds] = useState([]);
   // State for storing stars
   const [star, setStar] = useState("");
+  // State for storing all the fetched subcategories
+  const [subcategories, setSubcategories] = useState([]);
+  //
+  const [subcategory, setSubcategory] = useState("");
 
   let dispatch = useDispatch();
   // Access redux state containing user's text input
@@ -72,6 +80,8 @@ const Shop = () => {
     loadAllProducts();
     // Fetch all categories and store the result in the state
     getCategories().then((res) => setCategories(res.data));
+    // Fetch all subcategories and store the result in the state
+    getSubcategories().then((res) => setSubcategories(res.data));
   }, []);
 
   // Load products by default on page load
@@ -145,8 +155,11 @@ const Shop = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
+    setCategoryIds([]);
     // Update price in the state
     setPrice(value);
+    setStar("");
+    setSubcategories([])
     // Changing the ok state
     // so we can send a request
     // to the backend
@@ -171,6 +184,8 @@ const Shop = () => {
 
     // Reset star rating
     setStar("");
+
+
 
     // Should be able to check more than one category
     // Should not store duplicate categories in the state
@@ -211,10 +226,27 @@ const Shop = () => {
     setPrice([0, 0]);
     // Reset category search
     setCategoryIds([]);
+
     // Send request to backend
     setStar(num);
     fetchProducts({ stars: num });
   };
+
+  // Subcategory handler
+
+  const handleSubcategories = (subcategory) => {
+    // console.log("SUB", sub);
+    setSubcategory(subcategory);
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+    fetchProducts({ subcategory });
+  };
+
 
   // Function to display (1-5) star rating on the sidebar
   const showStars = () => (
@@ -227,6 +259,21 @@ const Shop = () => {
     </div>
   );
 
+    // Display products by subcategory
+    const showSubcategories = () =>
+    subcategories.map((s) => (
+      <div
+        key={s._id}
+        onClick={() => handleSubcategories(s)}
+        className="p-1 m-1 badge badge-secondary"
+        style={{ cursor: "pointer" }}
+      >
+        {s.name}
+      </div>
+    ));
+
+
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -236,7 +283,7 @@ const Shop = () => {
           {/* mode: inline for corret placement */}
           {/* defaultOpenKeys references the keys used for submenus
           What keys we want to have open */}
-          <Menu defaultOpenKeys={["1", "2","3"]} mode="inline">
+          <Menu defaultOpenKeys={["1", "2", "3", "4"]} mode="inline">
             {/* Search query */}
             <SubMenu
               key="1"
@@ -291,19 +338,33 @@ const Shop = () => {
             >
               <div style={{ maringTop: "-10px" }}>{showStars()}</div>
             </SubMenu>
+
+            {/* sub category */}
+            <SubMenu
+              key="4"
+              title={
+                <span className="h6">
+                  <TagsOutlined />Subcategories
+                </span>
+              }
+            >
+              <div style={{ maringTop: "-10px" }} className="pl-4 pr-4">
+                {showSubcategories()}
+              </div>
+            </SubMenu>
           </Menu>
         </div>
 
         <div className="col-md-9 pt-2">
           {loading ? (
-            <h4 >
+            <h4>
               <Loader />
             </h4>
           ) : (
             <h4 className="text-center">{""}</h4>
           )}
 
-          { products.length < 1 && <p>No products found</p>}
+          {products.length < 1 && <p>No products found</p>}
 
           <div className="row pb-5">
             {products.map((p) => (
