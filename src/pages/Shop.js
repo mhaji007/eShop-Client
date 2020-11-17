@@ -1,5 +1,7 @@
 // Component for displaying default products as
 // well as products from search results.
+// This component houses all search/filter options
+
 // User lands on this page either by entering a
 // search term in the searchbar or by clicking
 // the shop link
@@ -23,16 +25,19 @@ import {
   getProductsByCount,
   fetchProductsByFilter,
 } from "../functions/product";
+import { getCategories } from "../functions/category";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
 import Loader from "../components/loader/Loader";
-// Menu and slider (price slider)
-import { Menu, Slider } from "antd";
-import { DollarOutlined } from "@ant-design/icons";
+// Menu, slider (price slider), checkbox (category checkbox)
+import { Menu, Slider, Checkbox } from "antd";
+import { DollarOutlined, DownSquareOutlined } from "@ant-design/icons";
+
 // Destructure submenu and item group
 const { SubMenu, ItemGroup } = Menu;
 
 const Shop = () => {
+  // State for storing the array of products to be displayed
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   // State for storing the array of prices
@@ -41,6 +46,10 @@ const Shop = () => {
   // without this variable when user moves the slider hundreds of request
   // will be sent to the backend
   const [ok, setOk] = useState(false);
+  // State for storing all the categoires fetched from the backend (sidebar display)
+  const [categories, setCategories] = useState([]);
+  // State for storing categories checked by the user to send to the backend
+  const [categoryIds, setCategoryIds] = useState([]);
 
   let dispatch = useDispatch();
   // Access redux state containing user's text input
@@ -48,7 +57,10 @@ const Shop = () => {
   const { text } = search;
 
   useEffect(() => {
+    // Fetch all products and store the result in the state
     loadAllProducts();
+    // Fetch all categories and store the result in the state
+    getCategories().then((res) => setCategories(res.data));
   }, []);
 
   // Load products by default on page load
@@ -82,6 +94,34 @@ const Shop = () => {
     fetchProducts({ price });
   }, [ok]);
 
+  // Load products based on category
+  // Loop through fetched categories and display the
+  // current categories in the state in a list of checkboxes
+  const showCategories = () =>
+    categories.map((c) => (
+      // Display each category in antd checkbox
+      <div key={c._id}>
+        <Checkbox
+          // Anytime user clicks
+          // grab the value and store it
+          // in the state
+          onChange={handleCheck}
+          className="pb-2 pl-4 pr-4"
+          // Value sent to the backend
+          // to fetch all the products
+          value={c._id}
+          name="category"
+          // Check for each category id in the categoryIds state
+          // If it is checked, display as checked otherwise display
+          // as unchecked
+          checked={categoryIds.includes(c._id)}
+        >
+          {c.name}
+        </Checkbox>
+        <br />
+      </div>
+    ));
+
   // Slider handler
   const handleSlider = (value) => {
     // Remove any search query term
@@ -104,14 +144,57 @@ const Shop = () => {
     }, 300);
   };
 
+  // Categories handler
+  const handleCheck = (e) => {
+
+    // Reset any values displayed
+    // on the search bar to prevent confusion
+    // that search by text is still active
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    // Reset any values displayed on the
+    // slider to prevent confusion that searh
+    // by price is still active
+    setPrice([0, 0]);
+
+
+    // Should be able to check more than one category
+    // Should not store duplicate categories in the state
+
+    // Store all the categories checked already in the state
+    let inTheState = [...categoryIds];
+    // Store the value user just checked or unchecked
+    let justChecked = e.target.value;
+    // Check whether the value checked by the user is
+    // present in the array of categories already checked in the state
+    let foundInTheState = inTheState.indexOf(justChecked);
+
+    // If the value just checked is not already in the state
+    if (foundInTheState === -1) {
+      // Push the newly chosen id to the state
+      inTheState.push(justChecked);
+    } else {
+      // If found pull out one item from index
+      // Take one item out of the array at the index of found
+      // Return inThestate without any duplicates
+      inTheState.splice(foundInTheState, 1);
+    }
+    // Store categories with no duplicate in the state
+    setCategoryIds(inTheState);
+    // Fetch products based on the array of categories
+    fetchProducts({ category: inTheState });
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-3 pt-2">
-          <h4>Filter</h4>
+        <div className="col-md-3 mt-3 pt-2">
+          {/* <h4 className="text-center">Filter</h4> */}
           <hr />
           {/* mode: inline for corret placement */}
-          {/* defaultOpenKeys is the keys used for submenus
+          {/* defaultOpenKeys references the keys used for submenus
           What keys we want to have open */}
           <Menu defaultOpenKeys={["1", "2"]} mode="inline">
             <SubMenu
@@ -137,23 +220,37 @@ const Shop = () => {
                   value={price}
                   // Update the state
                   onChange={handleSlider}
-                  // Set the max value for th slider
+                  // Set the max value for the slider
                   //(default is 100)
                   max="5000"
                 />
               </div>
+            </SubMenu>
+
+            {/* category */}
+            <SubMenu
+              key="2"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Categories
+                </span>
+              }
+            >
+              <div style={{ maringTop: "-10px" }}>{showCategories()}</div>
             </SubMenu>
           </Menu>
         </div>
 
         <div className="col-md-9 pt-2">
           {loading ? (
-            <h4 className="text-danger">Loading...</h4>
+            <h4 className="text-danger">
+              <Loader />
+            </h4>
           ) : (
-            <h4 className="text-danger">Products</h4>
+            <h4 className="text-center">{""}</h4>
           )}
 
-          {products.length < 1 && <p>No products found</p>}
+          {!products && products.length < 1 && <p>No products found</p>}
 
           <div className="row pb-5">
             {products.map((p) => (

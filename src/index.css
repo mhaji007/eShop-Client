@@ -10,7 +10,7 @@ body {
     padding-bottom: 7rem;
     margin-bottom: 0;
     margin:0;
-  
+
 
     background: linear-gradient(to bottom, #a0a0a0, #7abfff), url("./images/jumbo.jpg");
     /* background:  url("./images/jumbo.jpg"); */
@@ -43,8 +43,8 @@ body {
 
   .jumbotron .lead {
 
-    height: 400px;
-    letter-spacing: 7px;
+    height: 320px;
+    letter-spacing: 6px;
   }
 
 
