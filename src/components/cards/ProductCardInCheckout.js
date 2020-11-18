@@ -3,12 +3,19 @@
 // displaying poduct details in cart
 
 import React from "react";
+import ModalImage from "react-modal-image";
+import noImage from "../../images/noImage.jpg";
 
 const ProductCardInCheckout = ({ p }) => {
   return (
     <tbody>
       <tr>
-        <td>Image</td>
+        <td>
+          {/* height: auto so the image scales properly */}
+          <div style={{width:"200px", height:"auto"}}>
+            {p.images.length ? (<ModalImage small={p.images[0].url} large={p.images[0].url}/>): (<ModalImage small={noImage} large={noImage}/>)}
+          </div>
+          </td>
         <td>{p.title}</td>
         <td>${p.price}</td>
         <td>{p.brand}</td>
