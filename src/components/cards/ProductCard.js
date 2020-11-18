@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Tooltip} from "antd";
 import styles from "./ProductCard.module.css";
 import { Link } from "react-router-dom";
 import { showAverage } from "../../functions/rating";
@@ -14,6 +15,7 @@ import {
 } from "@ant-design/icons";
 
 const ProductCard = ({ product, handleRemove }) => {
+  const [tooltip, setTooltip] = useState("Click to add to cart")
   const [loading, setLoading] = useState(false);
   // Destructure values to be displayed
   // and slug (for deleting and editing)
@@ -43,6 +45,8 @@ const ProductCard = ({ product, handleRemove }) => {
       let unique = _.uniqWith(cart, _.isEqual);
       // Save to local storage
       localStorage.setItem("cart", JSON.stringify(unique));
+
+      setTooltip("Added to cart")
     }
   }
 
@@ -78,10 +82,12 @@ const ProductCard = ({ product, handleRemove }) => {
                   className="ml-5 mr-5"
                   style={{ fontSize: "30px" }}
                 />
+                <Tooltip title={tooltip}>
                 <a onClick={handleAddToCart}>
 
                 <div className="ml-3">Add to cart</div>
                 </a>
+                </Tooltip>
               </div>
             </Link>
             <Link to={`/product/${slug}`}>
