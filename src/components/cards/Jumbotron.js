@@ -27,7 +27,7 @@ const Jumbotron = () => {
             <h2 className="display-3 ">PAY LESS.</h2>
           </div>
 
-          <Link to="/" className="cta">
+          <Link to="/shop" className="cta">
             Discover Now
           </Link>
         </div>
