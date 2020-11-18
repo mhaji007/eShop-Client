@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // Ant Design imports
-import { Menu } from "antd";
+import { Menu, Badge } from "antd";
 import {
   HomeOutlined,
   IdcardOutlined,
@@ -8,7 +8,8 @@ import {
   SettingOutlined,
   LogoutOutlined,
   LoginOutlined,
-  ShoppingOutlined
+  ShoppingOutlined,
+  ShoppingCartOutlined
 } from "@ant-design/icons";
 // Link from react
 import { Link } from "react-router-dom";
@@ -35,7 +36,7 @@ const Header = () => {
   // Used in logout
   const dispatch = useDispatch();
   // Retrieve user from Redux store
-  let { user } = useSelector((state) => ({ ...state }));
+  let { user, cart } = useSelector((state) => ({ ...state }));
 
   let history = useHistory();
 
@@ -74,6 +75,13 @@ const Header = () => {
       </Item>
       <Item key="shop" icon={<ShoppingOutlined />}>
         <Link to="/shop">Shop</Link>
+      </Item>
+      <Item key="cart" icon={<ShoppingCartOutlined />}>
+        <Link to="/cart">
+        <Badge count={cart.length} offset={[9,0]}>
+          Cart
+        </Badge>
+        </Link>
       </Item>
       {!user && (
         <Item key="register" icon={<UserAddOutlined />} className="float-right">

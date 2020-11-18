@@ -1,8 +1,8 @@
 // Component for displaying product detail
 // Used by Product page
 
-import React from "react";
-import { Card, Tabs } from "antd";
+import React, { useState } from "react";
+import { Card, Tabs, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Carousel } from "react-responsive-carousel";
@@ -12,11 +12,50 @@ import ProductListItems from "./ProductListItems";
 import StarRating from "react-star-ratings";
 import RatingModal from "../modal/RatingModal";
 import { showAverage } from "../../functions/rating";
+import _ from "lodash";
+import { useSelector, useDispatch } from "react-redux";
 
 const { TabPane } = Tabs;
 
 const SingleProduct = ({ product, onStarClick, star }) => {
+  const [tooltip, setTooltip] = useState("Click to add to cart")
+  const { user, cart } = useSelector((state) => ({ ...state }));
+  const dispatch = useDispatch();
   const { title, images, description, _id } = product;
+
+  // Add to cart handler
+  // add product to local storage
+  const handleAddToCart = () => {
+    // Create the cart array
+    let cart = [];
+    if (typeof window !== "undefined") {
+      // If cart is in local storage get the cart
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+      // If there is no existing cart,
+      // push the new product to cart
+      // Speard all the fields and
+      // add the count field
+      cart.push({
+        ...product,
+        count: 1,
+      });
+      // Remove duplicate products
+      // users get to modify the number
+      // of products afterwards
+      let unique = _.uniqWith(cart, _.isEqual);
+      // Save to local storage
+      localStorage.setItem("cart", JSON.stringify(unique));
+
+      setTooltip("Added to cart")
+      // Save to redux state
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: unique,
+      });
+    }
+  }
 
   return (
     <>
@@ -69,10 +108,12 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         </div> */}
         <Card
           actions={[
-            <>
-              <ShoppingCartOutlined /> <br />
-              Add to Cart
-            </>,
+            <Tooltip title={tooltip}>
+            <a onClick={handleAddToCart}>
+
+            <div className="ml-3">Add to cart</div>
+            </a>
+            </Tooltip>,
             <Link to="/">
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
             </Link>,

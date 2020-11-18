@@ -4,6 +4,7 @@ import styles from "./ProductCard.module.css";
 import { Link } from "react-router-dom";
 import { showAverage } from "../../functions/rating";
 import _ from "lodash";
+import { useSelector, useDispatch } from "react-redux";
 
 // Used for displaying default placeholder
 // for products with no/broken image
@@ -15,6 +16,11 @@ import {
 } from "@ant-design/icons";
 
 const ProductCard = ({ product, handleRemove }) => {
+
+  const { user, cart } = useSelector((state) => ({ ...state }));
+
+  const dispatch = useDispatch();
+
   const [tooltip, setTooltip] = useState("Click to add to cart")
   const [loading, setLoading] = useState(false);
   // Destructure values to be displayed
@@ -47,6 +53,11 @@ const ProductCard = ({ product, handleRemove }) => {
       localStorage.setItem("cart", JSON.stringify(unique));
 
       setTooltip("Added to cart")
+      // Save to redux state
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: unique,
+      });
     }
   }
 
