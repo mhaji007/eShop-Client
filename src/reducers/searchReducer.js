@@ -1,3 +1,11 @@
+// Redux state component
+// used for storing user's search query
+// from the searchbox input
+// Since multiple components/pages
+// need access to the search text,
+// there is a need to store the search query
+// in redux state as well as local storage
+
 export const searchReducer = (state = { text: "" }, action) => {
   switch (action.type) {
     case "SEARCH_QUERY":
