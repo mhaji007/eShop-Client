@@ -46,7 +46,8 @@ const Cart = () => {
     {/* Dynamic table body - map through products and display
      each product in the cart  */}
       {cart.map((p) => (
-        <ProductCardInCheckout key={p._id} p={p} />
+        
+        <ProductCardInCheckout  key={p._id} p={p} />
       ))}
     </table>
   );
