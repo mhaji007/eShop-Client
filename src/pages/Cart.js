@@ -1,17 +1,29 @@
+// Page to display order summary and total
+// User lands on this page after clicking
+// on "Add to cart"
+
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
+  // Destructure user and cart from redux state
+  // user is needed to check for logged in status
+  // before allowing users to proceed to checkout
   const { cart, user } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
 
-  // Function to calculate the total
+  // Function to calculate the total for each of the products
+  // in the cart
   const getTotal = () => {
     return cart.reduce((currentValue, nextValue) => {
       return currentValue + nextValue.count * nextValue.price;
     }, 0);
   };
+
+  const saveOrderToDatabase = () => {
+
+  }
 
   return (
     <div className="container-fluid pt-2">
@@ -45,12 +57,20 @@ const Cart = () => {
           <hr />
           {/* Check if user is logged in before proceeding to checkout */}
           {user ? (
-            <button className="btn btn-sm btn-primary mt-2 text-info">
+            // If there is no item in cart, disable the proceed to checkout button
+            <button onClick ={saveOrderToDatabase}className="btn btn-sm btn-primary mt-2 text-info" disabled={!cart.length}>
               Proceed to Checkout
             </button>
           ) : (
             <button className="btn btn-sm btn-primary mt-2 text-alert">
+              {/* Redirect user to this (cart) page after logging in
+              - refer to roleBasedRedirect implemented in Login in auth */}
+                <Link to ={{
+                  pathname: "/login",
+                  state: {from:"cart"}
+                }}>
               Login to Checkout
+                </Link>
             </button>
           )}
         </div>
