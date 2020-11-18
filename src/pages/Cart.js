@@ -56,7 +56,7 @@ const Cart = () => {
       <div className="row">
         {/* Left side - where table is */}
         <div className="col-md-8">
-          <h4>Cart / {cart.length} Product</h4>
+          <h4>Products in cart: {cart.length}</h4>
 
           {!cart.length ? (
             <p>

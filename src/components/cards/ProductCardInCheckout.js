@@ -6,6 +6,7 @@ import React from "react";
 import ModalImage from "react-modal-image";
 import noImage from "../../images/noImage.jpg";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const ProductCardInCheckout = ({ p }) => {
   const colors = ["Black", "Brown", "Silver", "White", "Blue"];
@@ -26,6 +27,8 @@ const ProductCardInCheckout = ({ p }) => {
         // If product id passed down from cart page
         // is the same as the product we are looping over
         // update the color
+        // Otherwise all the products in table
+        // would update
         if (product._id === p._id) {
           cart[i].color = e.target.value;
         }
@@ -40,6 +43,39 @@ const ProductCardInCheckout = ({ p }) => {
       });
     }
   };
+
+  // Quantity change handler
+
+  const handleQuantityChange = (e) => {
+    // console.log("available quantity", p.quantity);
+    let count = e.target.value < 1 ? 1 : e.target.value;
+
+    if (count > p.quantity) {
+      toast.error(`Max available quantity: ${p.quantity}`);
+      return;
+    }
+
+    let cart = [];
+
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+
+      cart.map((product, i) => {
+        if (product._id == p._id) {
+          cart[i].count = count;
+        }
+      });
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: cart,
+      });
+    }
+  };
+
 
   return (
     <tbody>
@@ -92,9 +128,21 @@ const ProductCardInCheckout = ({ p }) => {
               ))}
           </select>
         </td>
-        <td>{p.count}</td>
+          {/* Product count */}
+          {/* {p.count} */}
+
+        <td className="text-center">
+          <input
+            type="number"
+            className="form-control"
+            value={p.count}
+            onChange={handleQuantityChange}
+          />
+        </td>
+
         <td>Shipping Icon</td>
         <td>Delete Icon</td>
+
       </tr>
     </tbody>
   );
