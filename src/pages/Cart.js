@@ -5,6 +5,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
+
 
 const Cart = () => {
   // Destructure user and cart from redux state
@@ -25,6 +27,30 @@ const Cart = () => {
 
   }
 
+// Function to return a table
+  const showCartItems = () => (
+    <table className="table table-bordered">
+      {/* Static heading - Table heading holding labels (headings) */}
+      <thead className="thead-light">
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col">Title</th>
+          <th scope="col">Price</th>
+          <th scope="col">Brand</th>
+          <th scope="col">Color</th>
+          <th scope="col">Count</th>
+          <th scope="col">Shipping</th>
+          <th scope="col">Remove</th>
+        </tr>
+      </thead>
+    {/* Dynamic table body - map through products and display
+     each product in the cart  */}
+      {cart.map((p) => (
+        <ProductCardInCheckout key={p._id} p={p} />
+      ))}
+    </table>
+  );
+
   return (
     <div className="container-fluid pt-2">
       <div className="row">
@@ -37,7 +63,7 @@ const Cart = () => {
               No products in cart. <Link to="/shop">Continue Shopping.</Link>
             </p>
           ) : (
-            "show cart items"
+            showCartItems()
           )}
         </div>
         {/* Right side - where order summary is displayed */}
