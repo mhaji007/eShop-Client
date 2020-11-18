@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./ProductCard.module.css";
 import { Link } from "react-router-dom";
 import { showAverage } from "../../functions/rating";
+import _ from "lodash";
 
 // Used for displaying default placeholder
 // for products with no/broken image
@@ -17,6 +18,33 @@ const ProductCard = ({ product, handleRemove }) => {
   // Destructure values to be displayed
   // and slug (for deleting and editing)
   const { title, description, images, slug, price } = product;
+
+  // Add to cart handler
+  // add product to local storage
+  const handleAddToCart = () => {
+    // Create the cart array
+    let cart = [];
+    if (typeof window !== "undefined") {
+      // If cart is in local storage get the cart
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+      // If there is no existing cart,
+      // push the new product to cart
+      // Speard all the fields and
+      // add the count field
+      cart.push({
+        ...product,
+        count: 1,
+      });
+      // Remove duplicate products
+      // users get to modify the number
+      // of products afterwards
+      let unique = _.uniqWith(cart, _.isEqual);
+      // Save to local storage
+      localStorage.setItem("cart", JSON.stringify(unique));
+    }
+  }
 
   return (
     <>
@@ -50,7 +78,10 @@ const ProductCard = ({ product, handleRemove }) => {
                   className="ml-5 mr-5"
                   style={{ fontSize: "30px" }}
                 />
+                <a onClick={handleAddToCart}>
+
                 <div className="ml-3">Add to cart</div>
+                </a>
               </div>
             </Link>
             <Link to={`/product/${slug}`}>
