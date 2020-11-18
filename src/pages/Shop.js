@@ -41,6 +41,7 @@ import {
   StarOutlined,
   TagsOutlined,
   AntDesignOutlined,
+  BgColorsOutlined,
 } from "@ant-design/icons";
 // Component used for displaying filter by star rating
 import Star from "../components/forms/Star";
@@ -69,7 +70,15 @@ const Shop = () => {
 
   const [subcategory, setSubcategory] = useState("");
 
-  
+  const [colors, setColors] = useState([
+    "Black",
+    "Brown",
+    "Silver",
+    "White",
+    "Blue",
+  ]);
+  // State for storing color chosen by the user to be sent to the backend
+  const [color, setColor] = useState("");
 
   const [brand, setBrand] = useState("");
   // State for storing the hardcoded brands
@@ -172,6 +181,7 @@ const Shop = () => {
     setStar("");
     setSubcategories([]);
     setBrand("");
+    setColor("");
     // Changing the ok state
     // so we can send a request
     // to the backend
@@ -198,6 +208,7 @@ const Shop = () => {
     setStar("");
 
     setBrand("");
+    setColor("");
 
     // Should be able to check more than one category
     // Should not store duplicate categories in the state
@@ -241,6 +252,8 @@ const Shop = () => {
 
     setBrand("");
 
+    setColor("");
+
     // Send request to backend
     setStar(num);
     fetchProducts({ stars: num });
@@ -257,6 +270,7 @@ const Shop = () => {
     });
     setPrice([0, 0]);
     setBrand("");
+    setColor("");
     setCategoryIds([]);
     setStar("");
     fetchProducts({ subcategory });
@@ -295,9 +309,24 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
+    setColor("");
     setBrand(brand);
     fetchProducts({ brand });
     // fetchProducts({ e.target.value });
+  };
+
+  const handleColor = (e) => {
+    // setSubcategories("");
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+    setBrand("");
+    setColor(e.target.value);
+    fetchProducts({ color: e.target.value });
   };
 
   // Display products based on brand name
@@ -329,6 +358,19 @@ const Shop = () => {
         {b}
       </div>
     ));
+  // Display products based on color
+  const showColors = () =>
+    colors.map((c) => (
+      <Radio
+        value={c}
+        name={c}
+        checked={c === color}
+        onChange={handleColor}
+        className="pb-1 pl-0"
+      >
+        {c}
+      </Radio>
+    ));
 
   return (
     <div className="container-fluid">
@@ -339,7 +381,7 @@ const Shop = () => {
           {/* mode: inline for corret placement */}
           {/* defaultOpenKeys references the keys used for submenus
           What keys we want to have open */}
-          <Menu defaultOpenKeys={["1", "2", "3", "4", "5"]} mode="inline">
+          <Menu defaultOpenKeys={["1", "2", "3", "4", "5", "6"]} mode="inline">
             {/* Search query */}
             <SubMenu
               key="1"
@@ -383,17 +425,6 @@ const Shop = () => {
               <div style={{ maringTop: "-10px" }}>{showCategories()}</div>
             </SubMenu>
 
-            {/* Stars */}
-            <SubMenu
-              key="3"
-              title={
-                <span className="h6">
-                  <StarOutlined /> Rating
-                </span>
-              }
-            >
-              <div style={{ maringTop: "-10px" }}>{showStars()}</div>
-            </SubMenu>
 
             {/* Subcategory */}
             <SubMenu
@@ -410,6 +441,19 @@ const Shop = () => {
               </div>
             </SubMenu>
 
+              {/* Stars */}
+              <SubMenu
+              key="3"
+              title={
+                <span className="h6">
+                  <StarOutlined /> Rating
+                </span>
+              }
+            >
+              <div style={{ maringTop: "-10px" }}>{showStars()}</div>
+            </SubMenu>
+
+
             {/* Brands */}
             <SubMenu
               key="5"
@@ -421,6 +465,20 @@ const Shop = () => {
             >
               <div style={{ maringTop: "-10px" }} className="pl-4 pr-4">
                 {showBrands()}
+              </div>
+            </SubMenu>
+
+            {/* Colors */}
+            <SubMenu
+              key="6"
+              title={
+                <span className="h6">
+                  <BgColorsOutlined /> Colors
+                </span>
+              }
+            >
+              <div style={{ maringTop: "-10px" }} className="pl-4 pr-4">
+                {showColors()}
               </div>
             </SubMenu>
           </Menu>
@@ -439,7 +497,7 @@ const Shop = () => {
 
           <div className="row pb-5">
             {products.map((p) => (
-              <div key={p._id} className="col-md-4 mt-3">
+              <div key={p._id} className=" row m-0 mb-3 mt-3 justify-content-center">
                 <ProductCard product={p} />
               </div>
             ))}
