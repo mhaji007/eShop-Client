@@ -26,6 +26,9 @@ import CategoryHome from "./pages/category/CategoryHome";
 import SubCategoryHome from "./pages/subcategory/SubCategoryHome";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
+// SideDrawer should be accessible across
+// all pages that is why it is imported here in App
+import SideDrawer from "./components/drawer/SideDrawer";
 
 
 
@@ -106,6 +109,7 @@ const App = () => {
   return (
     <>
       <Header />
+      <SideDrawer/>
       <ToastContainer />
       <Switch>
         <Route path="/" exact component={Home} />
