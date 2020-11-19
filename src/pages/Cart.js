@@ -6,6 +6,8 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
 
 const Cart = () => {
@@ -29,27 +31,28 @@ const Cart = () => {
 
 // Function to return a table
   const showCartItems = () => (
-    <table className="table table-bordered">
+
+    <Table className="table table-bordered">
       {/* Static heading - Table heading holding labels (headings) */}
-      <thead className="thead-light">
-        <tr>
-          <th scope="col">Image</th>
-          <th scope="col">Title</th>
-          <th scope="col">Price</th>
-          <th scope="col">Brand</th>
-          <th scope="col">Color</th>
-          <th scope="col">Count</th>
-          <th scope="col">Shipping</th>
+      <Thead className="thead-light">
+        <Tr>
+          <Th scope="col">Image</Th>
+          <Th scope="col">Title</Th>
+          <Th scope="col">Price</Th>
+          <Th scope="col">Brand</Th>
+          <Th scope="col">Color</Th>
+          <Th scope="col">Count</Th>
+          <Th scope="col">Shipping</Th>
           <th scope="col">Remove</th>
-        </tr>
-      </thead>
+        </Tr>
+      </Thead>
     {/* Dynamic table body - map through products and display
      each product in the cart  */}
       {cart.map((p) => (
-        
+
         <ProductCardInCheckout  key={p._id} p={p} />
       ))}
-    </table>
+    </Table>
   );
 
   return (

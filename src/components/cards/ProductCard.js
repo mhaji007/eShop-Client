@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Tooltip} from "antd";
+import { Tooltip } from "antd";
 import styles from "./ProductCard.module.css";
 import { Link } from "react-router-dom";
 import { showAverage } from "../../functions/rating";
@@ -16,12 +16,11 @@ import {
 } from "@ant-design/icons";
 
 const ProductCard = ({ product, handleRemove }) => {
-
   const { user, cart } = useSelector((state) => ({ ...state }));
 
   const dispatch = useDispatch();
 
-  const [tooltip, setTooltip] = useState("Click to add to cart")
+  const [tooltip, setTooltip] = useState("Click to add to cart");
   const [loading, setLoading] = useState(false);
   // Destructure values to be displayed
   // and slug (for deleting and editing)
@@ -52,14 +51,19 @@ const ProductCard = ({ product, handleRemove }) => {
       // Save to local storage
       localStorage.setItem("cart", JSON.stringify(unique));
 
-      setTooltip("Added to cart")
+      setTooltip("Added to cart");
       // Save to redux state
       dispatch({
         type: "ADD_TO_CART",
         payload: unique,
       });
+      // Display cart items in drawer
+      dispatch({
+        type: "SET_VISIBLE",
+        payload: true,
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -89,16 +93,15 @@ const ProductCard = ({ product, handleRemove }) => {
               component (AllProducts) as props */}
             <Link style={{ color: "#747474" }}>
               <div className="mx-auto">
+                <a onClick={handleAddToCart}>
+                  <Tooltip title={tooltip}>
                 <ShoppingCartOutlined
                   className="ml-5 mr-5"
                   style={{ fontSize: "30px" }}
                 />
-                <Tooltip title={tooltip}>
-                <a onClick={handleAddToCart}>
-
-                <div className="ml-3">Add to cart</div>
-                </a>
+                    <div className="ml-3">Add to cart</div>
                 </Tooltip>
+                  </a>
               </div>
             </Link>
             <Link to={`/product/${slug}`}>
@@ -124,7 +127,7 @@ const ProductCard = ({ product, handleRemove }) => {
 
         <div className={styles.description}>
           <div className={styles.icon}>
-            <QuestionCircleOutlined  style={{ fontSize: "16px" }} />
+            <QuestionCircleOutlined style={{ fontSize: "16px" }} />
           </div>
           <div className={styles.contents}>
             {/* <h2 className={styles.detailHead}>VIP Tutorials</h2> */}
@@ -140,7 +143,6 @@ const ProductCard = ({ product, handleRemove }) => {
               {description.lenght > 150
                 ? description.substring(0, 150)
                 : description}
-
             </p>{" "}
           </div>
         </div>

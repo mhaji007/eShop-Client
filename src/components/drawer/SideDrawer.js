@@ -9,12 +9,70 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import noImage from "../../images/noImage.jpg";
 
-// Content of the pop-up drawer
-const SideDrawer = ({ children }) => {
+const SideDrawer = () => {
   const dispatch = useDispatch();
   const { drawer, cart } = useSelector((state) => ({ ...state }));
 
-  return <Drawer visible={true}>{JSON.stringify(cart)}</Drawer>;
+  const imageStyle = {
+    width: "100%",
+    height: "50px",
+    objectFit: "cover",
+  };
+
+  return (
+    <Drawer
+      className="text-center"
+      title={`Cart / ${cart.length} Product`}
+      placement="right"
+      closable={false}
+      // On clicking anywhere
+      // other than drawer
+      // onClose will fire
+      onClose={() => {
+        dispatch({
+          type: "SET_VISIBLE",
+          payload: false,
+        });
+      }}
+      visible={drawer}
+    >
+      {cart.map((p) => (
+        <div key={p._id} className="row">
+          <div className="col">
+            {p.images[0] ? (
+              <>
+                <img src={p.images[0].url} style={imageStyle} />
+                <p className="text-center bg-secondary text-light">
+                  {p.title} x {p.count}
+                </p>
+              </>
+            ) : (
+              <>
+                <img src={noImage} style={imageStyle} />
+                <p className="text-center bg-secondary text-light">
+                  {p.title} x {p.count}
+                </p>
+              </>
+            )}
+          </div>
+        </div>
+      ))}
+
+      <Link to="/cart">
+        <button
+          onClick={() =>
+            dispatch({
+              type: "SET_VISIBLE",
+              payload: false,
+            })
+          }
+          className="text-center btn btn-primary bg-info btn-raised btn-block"
+        >
+          Go To Cart
+        </button>
+      </Link>
+    </Drawer>
+  );
 };
 
 export default SideDrawer;

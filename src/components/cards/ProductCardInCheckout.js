@@ -13,6 +13,8 @@ import {
   CloseOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
 const ProductCardInCheckout = ({ p }) => {
   const colors = ["Black", "Brown", "Silver", "White", "Blue"];
@@ -106,31 +108,32 @@ const ProductCardInCheckout = ({ p }) => {
   };
 
   return (
-    <tbody>
-      <tr>
-        <td>
+    <Tbody>
+      <Tr>
+        <Td>
           {/* height: auto so the image scales properly */}
-          <div style={{ width: "200px", height: "auto" }}>
+          <div style={{ width: "150px", height: "auto" }}>
             {p.images.length ? (
               <ModalImage small={p.images[0].url} large={p.images[0].url} />
             ) : (
               <ModalImage small={noImage} large={noImage} />
             )}
           </div>
-        </td>
-        <td class="align-middle">{p.title}</td>
-        <td class="align-middle">${p.price}</td>
-        <td class="align-middle">{p.brand}</td>
+        </Td>
+        <Td style={{paddingTop:"55px"}}>{p.title}</Td>
+        <Td style={{paddingTop:"55px"}}>${p.price}</Td>
+        <Td style={{paddingTop:"55px"}}>{p.brand}</Td>
 
         {/* Product color */}
         {/* <td>{p.color}</td> */}
-        <td class="align-middle">
+        <Td style={{paddingTop:"30px"}}>
           <select
             // Update the local storge and redux state
             // on click
             onChange={handleColorChange}
             name="color"
             className="form-control"
+
           >
             {/* if product has a color
             display the existing color */}
@@ -155,34 +158,34 @@ const ProductCardInCheckout = ({ p }) => {
                 </option>
               ))}
           </select>
-        </td>
+        </Td>
         {/* Product count */}
         {/* {p.count} */}
 
-        <td className="text-center align-middle">
+        <Td className="text-center align-middle">
           <input
             type="number"
             className="form-control"
             value={p.count}
             onChange={handleQuantityChange}
           />
-        </td>
+        </Td>
 
-        <td className="text-center align-middle">
+        <Td className="text-center align-middle">
           {p.shipping === "Yes" ? (
             <CheckCircleOutlined className="text-info" />
           ) : (
             <CloseCircleOutlined className="text-danger" />
           )}
-        </td>
-        <td className="text-center align-middle">
+        </Td>
+        <Td className="text-center align-middle">
           <DeleteOutlined
             onClick={handleRemove}
             className="text-danger pointer"
           />
-        </td>
-      </tr>
-    </tbody>
+        </Td>
+      </Tr>
+    </Tbody>
   );
 };
 

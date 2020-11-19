@@ -18,7 +18,7 @@ import { useSelector, useDispatch } from "react-redux";
 const { TabPane } = Tabs;
 
 const SingleProduct = ({ product, onStarClick, star }) => {
-  const [tooltip, setTooltip] = useState("Click to add to cart")
+  const [tooltip, setTooltip] = useState("Click to add to cart");
   const { user, cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
   const { title, images, description, _id } = product;
@@ -48,14 +48,20 @@ const SingleProduct = ({ product, onStarClick, star }) => {
       // Save to local storage
       localStorage.setItem("cart", JSON.stringify(unique));
 
-      setTooltip("Added to cart")
+      setTooltip("Added to cart");
       // Save to redux state
       dispatch({
         type: "ADD_TO_CART",
         payload: unique,
       });
+
+      // Display cart items in drawer
+      dispatch({
+        type: "SET_VISIBLE",
+        payload: true,
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -109,10 +115,10 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         <Card
           actions={[
             <Tooltip title={tooltip}>
-            <a onClick={handleAddToCart}>
-
-            <div className="ml-3">Add to cart</div>
-            </a>
+              <a onClick={handleAddToCart}>
+                <ShoppingCartOutlined /> <br /> Add to
+                Cart
+              </a>
             </Tooltip>,
             <Link to="/">
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
