@@ -21,7 +21,7 @@
 
 .cube {
   position: relative;
-  margin: 0 auto;
+  margin-left:800px;
   top:10rem;
   right:30rem;
   height: 200px;

@@ -7,6 +7,8 @@ import classnames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createOrUpdateUser } from "../../functions/auth";
+import Cube from "../../components/loader/Cube";
+import Loader from "../../components/loader/Loader";
 
 // Login user
 // Login is a route component
@@ -261,49 +263,62 @@ const Login = ({ history }) => {
   };
 
   return (
-    <div className="container">
-      {/* <div className="row"> */}
-      {/* <div className="col-md-6 offset-md-3"> */}
-
-      {loading ? <h4>Loading...</h4> : <h4></h4>}
-      {loginForm()}
-      <form
-        autoComplete="off"
-        className={styles.form}
-        onSubmit={handleGoogleSubmit}
-      >
-        <button
-          className={classnames(
-            styles.btn,
-            styles.blockCube,
-            styles.blockCubeHover,
-            styles.googleButton,
-            "mb-3"
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-md-2">
+          <Cube />
+        </div>
+        <div className="col-md-10 ">
+          {/* <div className="row"> */}
+          {/* <div className="col-md-6 offset-md-3"> */}
+          
+          {loading ? (
+            <h4>
+              <Loader />
+            </h4>
+          ) : (
+            <h4></h4>
           )}
-          type="submit"
-          onClick={googleLogin}
-        >
-          <div className={styles.bgTop}>
-            <div className={styles.bgInner}></div>
-          </div>
-          <div className={styles.bgRight}>
-            <div className={styles.bgInner}></div>
-          </div>
-          <div className={styles.bg}>
-            <div className={styles.bgInner}></div>
-          </div>
-          <div className={styles.text}>
-            {<GoogleOutlined />} {""} Login with Google
-          </div>
-        </button>
-        <Link to="/forgot/password" className="float-right text-danger">
-          {" "}
-          Forgot Password?
-        </Link>
-      </form>
+          {loginForm()}
+          <form
+            autoComplete="off"
+            className={styles.form}
+            onSubmit={handleGoogleSubmit}
+          >
+            <button
+              className={classnames(
+                styles.btn,
+                styles.blockCube,
+                styles.blockCubeHover,
+                styles.googleButton,
+                "mb-3"
+              )}
+              type="submit"
+              onClick={googleLogin}
+            >
+              <div className={styles.bgTop}>
+                <div className={styles.bgInner}></div>
+              </div>
+              <div className={styles.bgRight}>
+                <div className={styles.bgInner}></div>
+              </div>
+              <div className={styles.bg}>
+                <div className={styles.bgInner}></div>
+              </div>
+              <div className={styles.text}>
+                {<GoogleOutlined />} {""} Login with Google
+              </div>
+            </button>
+            <Link to="/forgot/password" className="float-right text-danger">
+              {" "}
+              Forgot Password?
+            </Link>
+          </form>
 
-      {/* </div> */}
-      {/* </div> */}
+          {/* </div> */}
+          {/* </div> */}
+        </div>
+      </div>
     </div>
   );
 };
