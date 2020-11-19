@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
-
+import {userCart} from '../functions/user';
 
 const Cart = ({history}) => {
   // Destructure user and cart from redux state
@@ -28,8 +28,14 @@ const Cart = ({history}) => {
   // Function for sending request to backend
   // to save the order in the database
   const saveOrderToDatabase = () => {
-    alert('save order to database');
-    history.push("/checkout")
+    // alert('save order to database');
+    userCart(cart, user.token)
+    .then(res => {
+      console.log("Cart post response", res);
+      // Only redirect user if res.data.ok is true
+      if(res.data.ok)
+      history.push("/checkout")
+    }).catch((err) => console.log ("Error saving to database", err))
   }
 
 // Function to return a table
