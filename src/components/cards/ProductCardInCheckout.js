@@ -171,14 +171,14 @@ const ProductCardInCheckout = ({ p }) => {
           />
         </Td>
 
-        <Td className="text-center align-middle">
+        <Td style={{paddingTop:"55px" , paddingLeft:"45px"}}>
           {p.shipping === "Yes" ? (
             <CheckCircleOutlined className="text-info" />
           ) : (
             <CloseCircleOutlined className="text-danger" />
           )}
         </Td>
-        <Td className="text-center align-middle">
+        <Td style={{paddingTop:"55px" , paddingLeft:"35px"}}>
           <DeleteOutlined
             onClick={handleRemove}
             className="text-danger pointer"

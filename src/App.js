@@ -26,6 +26,7 @@ import CategoryHome from "./pages/category/CategoryHome";
 import SubCategoryHome from "./pages/subcategory/SubCategoryHome";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 // SideDrawer should be accessible across
 // all pages that is why it is imported here in App
 import SideDrawer from "./components/drawer/SideDrawer";
@@ -145,6 +146,7 @@ const App = () => {
         <Route exact path="/subcategory/:slug" component={SubCategoryHome} />
         <Route exact path="/shop" component={Shop} />
         <Route exact path="/cart" component={Cart} />
+        <Route exact path="/checkout" component={Checkout} />
       </Switch>
     </>
   );

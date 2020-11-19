@@ -10,7 +10,7 @@ import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
 
-const Cart = () => {
+const Cart = ({history}) => {
   // Destructure user and cart from redux state
   // user is needed to check for logged in status
   // before allowing users to proceed to checkout
@@ -25,8 +25,11 @@ const Cart = () => {
     }, 0);
   };
 
+  // Function for sending request to backend
+  // to save the order in the database
   const saveOrderToDatabase = () => {
-
+    alert('save order to database');
+    history.push("/checkout")
   }
 
 // Function to return a table
@@ -59,7 +62,7 @@ const Cart = () => {
     <div className="container-fluid pt-2">
       <div className="row">
         {/* Left side - where table is */}
-        <div className="col-md-8">
+        <div className="col-lg-8">
           <h4>Products in cart: {cart.length}</h4>
 
           {!cart.length ? (
@@ -88,6 +91,8 @@ const Cart = () => {
           {/* Check if user is logged in before proceeding to checkout */}
           {user ? (
             // If there is no item in cart, disable the proceed to checkout button
+            // When user clicks on proceed to checkout button, before redirecting them
+            // to checkout, cart should be saved into database
             <button onClick ={saveOrderToDatabase}className="btn btn-sm btn-primary mt-2 text-info" disabled={!cart.length}>
               Proceed to Checkout
             </button>
