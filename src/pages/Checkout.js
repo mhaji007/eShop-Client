@@ -14,7 +14,6 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
 
-
   useEffect(() => {
     getUserCart(user.token).then((res) => {
       console.log("user cart res", JSON.stringify(res.data, null, 4));
@@ -49,13 +48,24 @@ const Checkout = () => {
       {/* Order summary */}
       <div className="col-md-6">
         <h4>Order Summary</h4>
-        {JSON.stringify(products)}
         <hr />
-        <p>Products x</p>
+        <p> Products {products.length}</p>
+        <hr />
+        {/* Loop through array of products */}
+        {products.map((p, i) => (
+          <div key={i}>
+            <p>
+              {/* p.product.title and p.product.price are the populated value
+              while p.color and p.count are added (user-chosen) values */}
+              {p.product.title} ({p.color}) x {p.count} ={" "}
+              {p.product.price * p.count}
+            </p>
+          </div>
+        ))}
         <hr />
         <p>List of products</p>
         <hr />
-        <p>Cart Total: $x</p>
+      <p>Cart Total: {total}</p>
 
         <div className="row">
           <div className="col-md-6">
