@@ -38,4 +38,17 @@ export const emptyUserCart = async (authtoken) =>
     },
   });
 
+// Function used for saving user's address
+// used in checkout
+  export const saveUserAddress = async (authtoken, address) =>
+  await axios.post(
+    `${process.env.REACT_APP_API}/user/address`,
+    { address },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+
 

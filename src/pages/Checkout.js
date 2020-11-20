@@ -6,11 +6,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { getUserCart, emptyUserCart } from "../functions/user";
+import { getUserCart, emptyUserCart, saveUserAddress } from "../functions/user";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const Checkout = () => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
+  const [address, setAddress] = useState("");
+  const [addressSaved, setAddressSaved] = useState(false);
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
@@ -24,7 +28,13 @@ const Checkout = () => {
   }, []);
 
   const saveAddressToDb = () => {
-    //
+    // console.log(address);
+    saveUserAddress(user.token, address).then((res) => {
+      if (res.data.ok) {
+        setAddressSaved(true);
+        toast.success("Address saved");
+      }
+    });
   };
 
   const emptyCart = () => {
@@ -48,15 +58,11 @@ const Checkout = () => {
   return (
     <div className="row">
       {/* Delivery address and coupon area */}
-      <div className="col-md-6">
+      <div className="col-md-6 ml-3">
         <h4>Delivery Address</h4>
-        <br />
-        <br />
-        textarea
-        <button
-          className="text-center btn btn-primary bg-info btn-raised"
-          onClick={saveAddressToDb}
-        >
+
+        <ReactQuill theme="snow" value={address} onChange={setAddress} />
+        <button className="text-center btn btn-primary bg-info btn-raised" onClick={saveAddressToDb} >
           Save
         </button>
         <hr />
@@ -64,6 +70,7 @@ const Checkout = () => {
         <br />
         coupon input and apply button
       </div>
+
       {/* Order summary */}
       <div className="col-md-6">
         <h4>Order Summary</h4>
@@ -82,12 +89,12 @@ const Checkout = () => {
           </div>
         ))}
         <hr />
-   
+
       <p>Cart Total: {total}</p>
 
         <div className="row">
           <div className="col-md-6">
-            <button className="text-center btn btn-primary bg-info btn-raised">
+            <button className="text-center btn btn-primary bg-info btn-raised" disabled={!addressSaved || !products.length}>
               Place Order
             </button>
           </div>

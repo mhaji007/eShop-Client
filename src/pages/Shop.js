@@ -120,6 +120,19 @@ const Shop = () => {
     const delayed = setTimeout(() => {
       // improve performance by delaying request
       fetchProducts({ query: text });
+      // Without this check, when we
+      // reload the page we encounter
+      // "No products found".
+      // Since text is included in dependency array,
+      // this useEffect is run on page load and
+      // in case of any text changes
+      // when we reload the page, there is no text and if the following
+      // check is not in place, the page attempts to
+      // fetch the products that matches '' and
+      // does not find any, returning an empty array
+      if (!text) {
+        loadAllProducts();
+      }
     }, 300);
     // Clear timeout
     return () => clearTimeout(delayed);
