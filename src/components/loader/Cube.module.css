@@ -21,7 +21,7 @@
 
 .cube {
   position: relative;
-  margin-left:800px;
+  margin-left:700px;
   top:10rem;
   right:30rem;
   height: 200px;
@@ -103,4 +103,10 @@
 
 .cube:hover {
   animation-play-state: paused
+}
+
+@media (max-width: 1190px) {
+  .Cubecontainer, .cube {
+    display: none;
+  }
 }

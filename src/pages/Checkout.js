@@ -3,9 +3,26 @@
 // after clicking on the proceed to
 // checkout button in the cart page
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserCart } from "../functions/user";
 
 const Checkout = () => {
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => ({ ...state }));
+
+  const [products, setProducts] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    getUserCart(user.token).then((res) => {
+      console.log("user cart res", JSON.stringify(res.data, null, 4));
+      setProducts(res.data.products);
+      setTotal(res.data.cartTotal);
+    });
+  }, []);
+
   const saveAddressToDb = () => {
     //
   };
@@ -18,7 +35,10 @@ const Checkout = () => {
         <br />
         <br />
         textarea
-        <button className="text-center btn btn-primary bg-info btn-raised" onClick={saveAddressToDb}>
+        <button
+          className="text-center btn btn-primary bg-info btn-raised"
+          onClick={saveAddressToDb}
+        >
           Save
         </button>
         <hr />
@@ -38,11 +58,15 @@ const Checkout = () => {
 
         <div className="row">
           <div className="col-md-6">
-            <button className="text-center btn btn-primary bg-info btn-raised">Place Order</button>
+            <button className="text-center btn btn-primary bg-info btn-raised">
+              Place Order
+            </button>
           </div>
 
           <div className="col-md-6">
-            <button className="text-center btn btn-primary bg-danger btn-raised">Empty Cart</button>
+            <button className="text-center btn btn-primary bg-danger btn-raised">
+              Empty Cart
+            </button>
           </div>
         </div>
       </div>

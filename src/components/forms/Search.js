@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { SearchOutlined } from "@ant-design/icons";
 import styles from "./Search.module.css";
-import classnames from "classnames";
+
 const Search = () => {
   const [clicked, setClicked] = useState(false);
 

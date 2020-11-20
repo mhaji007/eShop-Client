@@ -26,9 +26,10 @@ const Cart = ({history}) => {
   };
 
   // Function for sending request to backend
-  // to save the order in the database
+  // to save the cart in the database
   const saveOrderToDatabase = () => {
     // alert('save order to database');
+    // Send in cart from redux
     userCart(cart, user.token)
     .then(res => {
       console.log("Cart post response", res);
@@ -67,7 +68,7 @@ const Cart = ({history}) => {
   return (
     <div className="container-fluid pt-2">
       <div className="row">
-        {/* Left side - where table is */}
+        {/* Left side - where table is dispalyed */}
         <div className="col-lg-8">
           <h4>Products in cart: {cart.length}</h4>
 

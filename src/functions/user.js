@@ -1,10 +1,10 @@
-// Function used for saving
-// the product card in the database
-// used by the Cart page
 
 import React from 'react';
 import axios from "axios";
 
+// Function used for saving
+// the product cart in the database
+// used by the Cart page
 
 export const userCart = async(cart, authtoken) => (
   // Send in cart as an object
@@ -17,4 +17,14 @@ export const userCart = async(cart, authtoken) => (
   })
 )
 
+// Function used for retrieving
+// the product cart from the database
+// used by checkout
+export const getUserCart = async(authtoken) => (
+  await axios.get(`${process.env.REACT_APP_API}/user/cart`, {
+    headers: {
+      authtoken,
+    },
+  })
+)
 
