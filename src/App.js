@@ -21,6 +21,7 @@ import SubUpdate from "./pages/admin/subcategory/SubUpdate";
 import ProductCreate from "./pages/admin/product/ProductCreate";
 import AllProducts from "./pages/admin/product/AllProducts";
 import ProductUpdate from "./pages/admin/product/ProductUpdate";
+import CreateCouponPage from "./pages/admin/coupon/CreateCouponPage";
 import Product from "./pages/Product";
 import CategoryHome from "./pages/category/CategoryHome";
 import SubCategoryHome from "./pages/subcategory/SubCategoryHome";
@@ -39,6 +40,7 @@ import { auth } from "./firebase";
 // payload to update redux store
 import { useDispatch } from "react-redux";
 import { currentUser } from "./functions/auth";
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -147,6 +149,7 @@ const App = () => {
         <Route exact path="/shop" component={Shop} />
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/checkout" component={Checkout} />
+        <AdminRoute exact path="/admin/coupon" component={CreateCouponPage} />
       </Switch>
     </>
   );
