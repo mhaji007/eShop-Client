@@ -67,9 +67,9 @@ const Cart = ({history}) => {
 
   return (
     <div className="container-fluid pt-2">
-      <div className="row">
+      <div className="row mt-3">
         {/* Left side - where table is dispalyed */}
-        <div className="col-lg-8">
+        <div className="col-lg-8 pr-3">
           <h4>Products in cart: {cart.length}</h4>
 
           {!cart.length ? (
@@ -100,7 +100,7 @@ const Cart = ({history}) => {
             // If there is no item in cart, disable the proceed to checkout button
             // When user clicks on proceed to checkout button, before redirecting them
             // to checkout, cart should be saved into database
-            <button onClick ={saveOrderToDatabase}className="btn btn-sm btn-primary mt-2 text-info" disabled={!cart.length}>
+            <button onClick ={saveOrderToDatabase}className="btn btn-sm btn-primary border border-info mt-2 text-info" disabled={!cart.length}>
               Proceed to Checkout
             </button>
           ) : (

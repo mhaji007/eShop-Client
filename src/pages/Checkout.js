@@ -56,13 +56,14 @@ const Checkout = () => {
   };
 
   return (
-    <div className="row">
+    <div className="container-fluid mt-3">
+        <div className="row ">
       {/* Delivery address and coupon area */}
-      <div className="col-md-6 ml-3">
+      <div className="col-md-6">
         <h4>Delivery Address</h4>
 
         <ReactQuill theme="snow" value={address} onChange={setAddress} />
-        <button className="text-center btn btn-primary bg-info btn-raised" onClick={saveAddressToDb} >
+        <button className="text-center btn btn-primary text-success border border-success mt-2" onClick={saveAddressToDb} >
           Save
         </button>
         <hr />
@@ -94,13 +95,13 @@ const Checkout = () => {
 
         <div className="row">
           <div className="col-md-6">
-            <button className="text-center btn btn-primary bg-info btn-raised" disabled={!addressSaved || !products.length}>
+            <button className="text-center btn btn-primary text-info border border-info" disabled={!addressSaved || !products.length}>
               Place Order
             </button>
           </div>
 
           <div className="col-md-6">
-            <button className="text-center btn btn-primary bg-danger btn-raised"  disabled={!products.length}
+            <button className="text-center btn  text-danger border border-danger"  disabled={!products.length}
               onClick={emptyCart}>
               Empty Cart
             </button>
@@ -108,6 +109,9 @@ const Checkout = () => {
         </div>
       </div>
     </div>
+
+    </div>
+
   );
 };
 
