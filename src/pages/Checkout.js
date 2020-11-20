@@ -5,7 +5,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserCart } from "../functions/user";
+import { toast } from "react-toastify";
+import { getUserCart, emptyUserCart } from "../functions/user";
 
 const Checkout = () => {
   const [products, setProducts] = useState([]);
@@ -26,6 +27,24 @@ const Checkout = () => {
     //
   };
 
+  const emptyCart = () => {
+    // Remove from local storage
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("cart");
+    }
+    // Remove from redux
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: [],
+    });
+    // Remove from backend
+    emptyUserCart(user.token).then((res) => {
+      setProducts([]);
+      setTotal(0);
+      toast.success("Cart is emapty. Contniue shopping.");
+    });
+  };
+
   return (
     <div className="row">
       {/* Delivery address and coupon area */}
@@ -41,7 +60,7 @@ const Checkout = () => {
           Save
         </button>
         <hr />
-        <h4>Got Coupon?</h4>
+        <h4>Got a coupon?</h4>
         <br />
         coupon input and apply button
       </div>
@@ -63,8 +82,7 @@ const Checkout = () => {
           </div>
         ))}
         <hr />
-        <p>List of products</p>
-        <hr />
+   
       <p>Cart Total: {total}</p>
 
         <div className="row">
@@ -75,7 +93,8 @@ const Checkout = () => {
           </div>
 
           <div className="col-md-6">
-            <button className="text-center btn btn-primary bg-danger btn-raised">
+            <button className="text-center btn btn-primary bg-danger btn-raised"  disabled={!products.length}
+              onClick={emptyCart}>
               Empty Cart
             </button>
           </div>

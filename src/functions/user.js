@@ -28,3 +28,14 @@ export const getUserCart = async(authtoken) => (
   })
 )
 
+// Function used for deleting/emptying
+// the product cart from the database
+// used in checkout
+export const emptyUserCart = async (authtoken) =>
+  await axios.delete(`${process.env.REACT_APP_API}/user/cart`,{
+    headers: {
+      authtoken,
+    },
+  });
+
+
