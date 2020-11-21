@@ -119,7 +119,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
           onChange={fileUploadAndResize}
         />
       </label>
-      <div className="row">
+      {/* <div className="row"> */}
         <div className="row">
           {values.images &&
             values.images.map((image) => {
@@ -142,7 +142,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
               );
             })}
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };
