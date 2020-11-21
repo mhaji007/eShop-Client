@@ -15,6 +15,7 @@ const Checkout = () => {
   const [total, setTotal] = useState(0);
   const [address, setAddress] = useState("");
   const [addressSaved, setAddressSaved] = useState(false);
+  const [coupon, setCoupon] = useState("");
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
@@ -37,6 +38,34 @@ const Checkout = () => {
     });
   };
 
+  const showAddress = () => (
+    <>
+      <ReactQuill theme="snow" value={address} onChange={setAddress} />
+      <button
+        className="text-center btn btn-primary text-success border border-success mt-2"
+        onClick={saveAddressToDb}
+      >
+        Save
+      </button>
+    </>
+  );
+
+  const applyDiscountCoupon = () => {
+    console.log('send coupon to backend', coupon);
+  }
+
+  const showProductSummary = () =>
+    products.map((p, i) => (
+      <div key={i}>
+        <p>
+          {/* p.product.title and p.product.price are the populated value
+          while p.color and p.count are added (user-chosen) values */}
+          {p.product.title} ({p.color}) x {p.count} ={" "}
+          {p.product.price * p.count}
+        </p>
+      </div>
+    ));
+
   const emptyCart = () => {
     // Remove from local storage
     if (typeof window !== "undefined") {
@@ -55,63 +84,77 @@ const Checkout = () => {
     });
   };
 
+
+
+  const showApplyCoupon = () => (
+    <>
+      <input
+        type="text"
+        onChange={(e) => setCoupon(e.target.value)}
+        value={coupon}
+        type="text"
+        className="form-control"
+      />
+
+      <button
+        onClick={applyDiscountCoupon}
+        className="text-center btn btn-primary text-info border border-info"
+      >
+        Apply
+      </button>
+    </>
+  );
+
+
+
   return (
     <div className="container-fluid mt-3">
-        <div className="row ">
-      {/* Delivery address and coupon area */}
-      <div className="col-md-6">
-        <h4>Delivery Address</h4>
+      <div className="row ">
+        {/* Delivery address and coupon area */}
+        <div className="col-md-6">
+          <h4>Delivery Address</h4>
+          {showAddress()}
+          <hr />
+          <h4>Got a coupon?</h4>
+          <br />
+          {showApplyCoupon()}
+        </div>
 
-        <ReactQuill theme="snow" value={address} onChange={setAddress} />
-        <button className="text-center btn btn-primary text-success border border-success mt-2" onClick={saveAddressToDb} >
-          Save
-        </button>
-        <hr />
-        <h4>Got a coupon?</h4>
-        <br />
-        coupon input and apply button
-      </div>
+        {/* Order summary */}
+        <div className="col-md-6">
+          <h4>Order Summary</h4>
+          <hr />
+          <p> Products {products.length}</p>
+          <hr />
+          {/* Loop through array of products */}
+          {showProductSummary()}
+          <hr />
 
-      {/* Order summary */}
-      <div className="col-md-6">
-        <h4>Order Summary</h4>
-        <hr />
-        <p> Products {products.length}</p>
-        <hr />
-        {/* Loop through array of products */}
-        {products.map((p, i) => (
-          <div key={i}>
-            <p>
-              {/* p.product.title and p.product.price are the populated value
-              while p.color and p.count are added (user-chosen) values */}
-              {p.product.title} ({p.color}) x {p.count} ={" "}
-              {p.product.price * p.count}
-            </p>
-          </div>
-        ))}
-        <hr />
+          <p>Cart Total: {total}</p>
 
-      <p>Cart Total: {total}</p>
+          <div className="row">
+            <div className="col-md-6">
+              <button
+                className="text-center btn btn-primary text-info border border-info"
+                disabled={!addressSaved || !products.length}
+              >
+                Place Order
+              </button>
+            </div>
 
-        <div className="row">
-          <div className="col-md-6">
-            <button className="text-center btn btn-primary text-info border border-info" disabled={!addressSaved || !products.length}>
-              Place Order
-            </button>
-          </div>
-
-          <div className="col-md-6">
-            <button className="text-center btn  text-danger border border-danger"  disabled={!products.length}
-              onClick={emptyCart}>
-              Empty Cart
-            </button>
+            <div className="col-md-6">
+              <button
+                className="text-center btn  text-danger border border-danger"
+                disabled={!products.length}
+                onClick={emptyCart}
+              >
+                Empty Cart
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    </div>
-
   );
 };
 
