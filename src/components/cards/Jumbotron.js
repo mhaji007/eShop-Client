@@ -11,25 +11,38 @@ const Jumbotron = () => {
     <div>
       <section className="jumbotron ">
         {/* <Cube  /> */}
-        <div className="container ">
-          <img
-            src={eShop}
-            className="pull-left mr-3"
-            style={{ width: "200px" }}
-          />
+        <div className="container">
+          <div className="row">
 
-          <div className="lead display-2">
-            <TextLoop>
-              <h2 className="display-3">SHOP MORE.</h2>
-              <h2 className="display-3">SAVE MORE.</h2>
-              <h2 className="display-3">SEE MORE.</h2>
-            </TextLoop>
-            <h2 className="display-3 ">PAY LESS.</h2>
+            <img
+              src={eShop}
+              className="pull-left mr-3"
+              style={{ maxWidth: "200px" }}
+            />
+
+            <col-mid-6>
+              <div className="lead display-2">
+                <TextLoop>
+                  <span className="display-3 ">SHOP </span>
+                  <span className="display-3 ">SAVE </span>
+              
+                </TextLoop>
+
+                <span className="display-3"> MORE.</span>
+
+                <h2 className="display-3 ">PAY LESS.</h2>
+              </div>
+            </col-mid-6>
           </div>
-
-          <Link to="/shop" className="cta">
-            Discover Now
-          </Link>
+        </div>
+        <div className="container ">
+          <div className="row ">
+            <div className="col-md-6 pl-0">
+              <Link to="/shop" className="cta">
+                Discover Now
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </div>

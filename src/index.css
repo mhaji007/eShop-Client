@@ -1,3 +1,10 @@
+html,
+body {
+
+
+
+}
+
 body {
 
   font-family: monospace, serif;
@@ -29,10 +36,11 @@ body {
 
 
   .jumbotron .container {
-    max-width: 65rem;
+    /* max-width: 65rem; */
     /* background: transparent; */
-    /* padding: 2rem; */
+    padding: 2rem;
     /* color: white; */
+
   }
 
   /* .jumbotron p {
@@ -43,19 +51,11 @@ body {
 
   .jumbotron .lead {
 
-    height: 320px;
+    /* height: 280px; */
     letter-spacing: 6px;
   }
 
 
-  .jumbotron .btn {
-   /* font-weight: bold; */
-   color:#fff;
-   border-radius: 0px;
-   border: 2px solid black;
-   margin-left: 5px;
-
-  }
 
 
 
@@ -150,6 +150,14 @@ body {
 
   }
 }
+
+/* * {
+  background: #000 !important;
+  color: #0f0 !important;
+  outline: solid #f00 1px !important;
+} */
+
+
 
 /* @media (max-width:411px) {
   .jumbotron .lead {
