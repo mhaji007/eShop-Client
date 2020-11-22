@@ -6,7 +6,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { getUserCart, emptyUserCart, saveUserAddress } from "../functions/user";
+import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon } from "../functions/user";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -16,6 +16,8 @@ const Checkout = () => {
   const [address, setAddress] = useState("");
   const [addressSaved, setAddressSaved] = useState(false);
   const [coupon, setCoupon] = useState("");
+  const [totalAfterDiscount, setTotalAfterDiscount] = useState("");
+  const [discountError, setDiscountError] = useState("");
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
@@ -52,6 +54,21 @@ const Checkout = () => {
 
   const applyDiscountCoupon = () => {
     console.log('send coupon to backend', coupon);
+    applyCoupon(user.token, coupon). then (res => {
+      console.log("Res from coupon applied", res.data);
+      if(res.data) {
+        setTotalAfterDiscount(res.data);
+        // Update redux store
+        // We need access to the discounted price on other pages
+
+      }
+      if (res.data.err) {
+        setDiscountError(res.data.err);
+        // Update redux coupon applied
+        
+      }
+    })
+
   }
 
   const showProductSummary = () =>

@@ -59,6 +59,8 @@ const CreateCouponPage = () => {
         setDiscount("");
         setExpiry("");
         toast.success(`"${res.data.name}" is created`);
+        loadAllCoupons();
+
       })
       .catch((err) => console.log("create coupon err", err));
   };
@@ -139,7 +141,7 @@ const CreateCouponPage = () => {
                 )}
               >
                 <input
-                  type="number"
+                  type="text"
                   placeholder="Discount %"
                   onChange={(e) => setDiscount(e.target.value)}
                   value={discount}
