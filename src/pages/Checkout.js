@@ -65,7 +65,7 @@ const Checkout = () => {
       if (res.data.err) {
         setDiscountError(res.data.err);
         // Update redux coupon applied
-        
+
       }
     })
 
@@ -97,6 +97,13 @@ const Checkout = () => {
     emptyUserCart(user.token).then((res) => {
       setProducts([]);
       setTotal(0);
+      // If user decides to empty the cart
+      // after discount is applied and
+      // success message is shown
+      // Clear discount total
+      setTotalAfterDiscount(0);
+      // Clear coupon
+      setCoupon("");
       toast.success("Cart is emapty. Contniue shopping.");
     });
   };
@@ -107,7 +114,13 @@ const Checkout = () => {
     <>
       <input
         type="text"
-        onChange={(e) => setCoupon(e.target.value)}
+        onChange={(e) => {
+          setCoupon(e.target.value)
+          // If error is displayed previously
+          // because of entering invalid coupon
+          // clear it once user starts to type
+          setDiscountError("")
+        }}
         value={coupon}
         type="text"
         className="form-control"
@@ -115,7 +128,7 @@ const Checkout = () => {
 
       <button
         onClick={applyDiscountCoupon}
-        className="text-center btn btn-primary text-info border border-info"
+        className="text-center btn btn-primary text-info border border-info mt-2"
       >
         Apply
       </button>
@@ -135,6 +148,8 @@ const Checkout = () => {
           <h4>Got a coupon?</h4>
           <br />
           {showApplyCoupon()}
+          <br/>
+          {discountError && <p className="text-white bg-danger p-2">{discountError}</p>}
         </div>
 
         {/* Order summary */}
@@ -148,6 +163,10 @@ const Checkout = () => {
           <hr />
 
           <p>Cart Total: {total}</p>
+
+          {totalAfterDiscount > 0 && (
+           <p className="text-white bg-success p-2"> Discount Applied - Total Payable: ${totalAfterDiscount}</p>
+          )}
 
           <div className="row">
             <div className="col-md-6">
