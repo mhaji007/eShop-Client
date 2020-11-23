@@ -10,7 +10,7 @@ import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon } from "../fun
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const Checkout = () => {
+const Checkout = ({history}) => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [address, setAddress] = useState("");
@@ -20,7 +20,7 @@ const Checkout = () => {
   const [discountError, setDiscountError] = useState("");
 
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user} = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
     getUserCart(user.token).then((res) => {
@@ -60,16 +60,22 @@ const Checkout = () => {
         setTotalAfterDiscount(res.data);
         // Update redux store
         // We need access to the discounted price on other pages
-
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: true,
+        });
       }
+      // error
       if (res.data.err) {
         setDiscountError(res.data.err);
-        // Update redux coupon applied
-
+        // update redux coupon applied true/false
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: false,
+        });
       }
-    })
-
-  }
+    });
+  };
 
   const showProductSummary = () =>
     products.map((p, i) => (
@@ -173,6 +179,7 @@ const Checkout = () => {
               <button
                 className="text-center btn btn-primary text-info border border-info"
                 disabled={!addressSaved || !products.length}
+                onClick={() => history.push("/payment")}
               >
                 Place Order
               </button>

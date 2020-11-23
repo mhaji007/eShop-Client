@@ -28,6 +28,7 @@ import SubCategoryHome from "./pages/subcategory/SubCategoryHome";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import Payment from "./pages/Payment";
 // SideDrawer should be accessible across
 // all pages that is why it is imported here in App
 import SideDrawer from "./components/drawer/SideDrawer";
@@ -150,6 +151,7 @@ const App = () => {
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/checkout" component={Checkout} />
         <AdminRoute exact path="/admin/coupon" component={CreateCouponPage} />
+        <UserRoute exact path="/payment" component={Payment} />
       </Switch>
     </>
   );
