@@ -1,6 +1,8 @@
 import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import StripeCheckout from "../components/StripeCheckout";
+import "../stripe.css";
 
 // Load stripe outside of component render
 // to avoid recreating stripe object on
@@ -14,7 +16,7 @@ const Payment = () => {
       <h4>Complete your purchase</h4>
       <Elements stripe={promise}>
         <div className="col-md-8 offset-md-2">
-          <p>Stripe Checkout</p>
+          <StripeCheckout />
         </div>
       </Elements>
     </div>
