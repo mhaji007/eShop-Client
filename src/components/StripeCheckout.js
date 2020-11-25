@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useSelector, useDispatch } from "react-redux";
 import { createPaymentIntent } from "../functions/stripe";
+import {Link} from "react-router-dom";
 
 const StripeCheckout = ({ history }) => {
   const dispatch = useDispatch();
@@ -21,7 +22,6 @@ const StripeCheckout = ({ history }) => {
   // on component load
   const [clientSecret, setClientSecret] = useState("");
 
-
   const stripe = useStripe();
   const elements = useElements();
   // Make request to backend to retrieve
@@ -36,11 +36,39 @@ const StripeCheckout = ({ history }) => {
   }, []);
 
   const handleSubmit = async (e) => {
-    //
+    e.preventDefault();
+    setProcessing(true);
+
+    const payload = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: e.target.name.value,
+        },
+      },
+    });
+
+    if (payload.error) {
+      setError(`Payment failed ${payload.error.message}`);
+      setProcessing(false);
+    } else {
+      // Get result after successful payment
+      // create order and save in database for admin to process
+      // empty user cart from redux store and local storage
+      console.log(JSON.stringify(payload, null, 4));
+      setError(null);
+      setProcessing(false);
+      setSucceeded(true);
+    }
   };
 
+  // Listen for changes in the card element
+  // and display any errors as the user types their card details
   const handleChange = async (e) => {
-    //
+    // Disable pay button if errors
+    setDisabled(e.empty);
+    // Display error message
+    setError(e.error ? e.error.message : "");
   };
 
   const cartStyle = {
@@ -63,6 +91,10 @@ const StripeCheckout = ({ history }) => {
 
   return (
     <>
+       <p className={succeeded ? "result-message" : "result-message hidden"}>
+        Payment Successful.{" "}
+        <Link to="/user/history">View in purchase history.</Link>
+      </p>
       <form id="payment-form" className="stripe-form" onSubmit={handleSubmit}>
         <CardElement
           id="card-element"
@@ -77,6 +109,12 @@ const StripeCheckout = ({ history }) => {
             {processing ? <div className="spinner" id="spinner"></div> : "Pay"}
           </span>
         </button>
+        <br />
+        {error && (
+          <div className="card-error" role="alert">
+            {error}
+          </div>
+        )}
       </form>
     </>
   );

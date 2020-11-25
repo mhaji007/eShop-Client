@@ -22,7 +22,7 @@
   font-size: 16px;
 }
 .result-message a {
-  color: rgb(89, 111, 214);
+  color: #539aff;
   font-weight: 600;
   text-decoration: none;
 }
@@ -50,7 +50,7 @@
 }
 /* Buttons and links */
 .stripe-button {
-  background: #5469d4;
+  background: #539aff;
   font-family: Arial, sans-serif;
   color: #ffffff;
   border-radius: 0 0 4px 4px;
