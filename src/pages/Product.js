@@ -26,9 +26,9 @@ const Product = ({ match }) => {
 
   // Called on mount
   useEffect(() => {
-    if ( localStorage.getItem(`star ${slug}`)) {
-      setStar(JSON.parse( localStorage.getItem(`star ${slug}`) ))
-    }
+    // if (typeof window !== "undefined" && localStorage.getItem(`star ${slug}`)) {
+    //   setStar(JSON.parse( localStorage.getItem(`star ${slug}`) ))
+    // }
     loadSingleProduct();
 
   }, [slug]);
@@ -52,7 +52,10 @@ const Product = ({ match }) => {
         );
 
         existingRatingObject && setStar(existingRatingObject.star); // current user's star
-         localStorage.setItem( `star ${slug}`, JSON.stringify( star ) );
+        // if (typeof window !== "undefined") {
+
+        //   localStorage.setItem( `star ${slug}`, JSON.stringify( star ) );
+        // }
       }
     });
 

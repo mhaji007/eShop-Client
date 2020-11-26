@@ -93,13 +93,13 @@ const ProductCard = ({ product, handleRemove }) => {
               component (AllProducts) as props */}
             <Link style={{ color: "#747474" }}>
               <div className="mx-auto">
-                <a onClick={handleAddToCart}>
+                <a onClick={handleAddToCart} disabled={product.quantity < 1}>
                   <Tooltip title={tooltip}>
                 <ShoppingCartOutlined
                   className="ml-5 mr-5"
                   style={{ fontSize: "30px" }}
                 />
-                    <div className="ml-3">Add to cart</div>
+                    <div className="ml-3">{product.quantity < 1 ? "Out of stock" : "Add to cart"}</div>
                 </Tooltip>
                   </a>
               </div>
