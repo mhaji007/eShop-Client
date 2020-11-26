@@ -8,6 +8,7 @@ import {Link} from "react-router-dom";
 import { Card } from "antd";
 import { DollarOutlined, CheckOutlined, SwapOutlined } from "@ant-design/icons";
 import noImage from "../images/noImage.jpg";
+import { createOrder, emptyUserCart } from "../functions/user";
 
 const StripeCheckout = ({ history }) => {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const StripeCheckout = ({ history }) => {
       setClientSecret(res.data.clientSecret);
             // Additional response received on successful payment
 
-            console.log("======>", res.data)
+            console.log("======>", res.data.cartTotal)
             console.log("======>", res.data.cartTotal)
             setCartTotal(res.data.cartTotal);
             setTotalAfterDiscount(res.data.totalAfterDiscount);
@@ -71,9 +72,27 @@ const StripeCheckout = ({ history }) => {
       setError(`Payment failed ${payload.error.message}`);
       setProcessing(false);
     } else {
-      // Get result after successful payment
-      // create order and save in database for admin to process
-      // empty user cart from redux store and local storage
+      // Get the result after successful payment.
+      // Create order and save in database for admin to process
+      createOrder(payload, user.token).then((res) => {
+        if (res.data.ok) {
+          // Empty cart from local storage
+          if (typeof window !== "undefined") localStorage.removeItem("cart");
+          // Empty cart from redux
+          dispatch({
+            type: "ADD_TO_CART",
+            payload: [],
+          });
+          // Reset coupon to false
+          dispatch({
+            type: "COUPON_APPLIED",
+            payload: false,
+          });
+          // Empty cart from database
+          emptyUserCart(user.token);
+        }
+      });
+      // Empty user cart from redux store and local storage
       console.log(JSON.stringify(payload, null, 4));
       setError(null);
       setProcessing(false);
@@ -167,7 +186,7 @@ const StripeCheckout = ({ history }) => {
         <br />
         <p className={succeeded ? "result-message" : "result-message hidden"}>
           Payment Successful.{" "}
-          <Link to="/user/history">See it in your purchase history.</Link>
+          <Link to="/user/history">View purchase history.</Link>
         </p>
       </form>
     </>
