@@ -6,6 +6,7 @@ import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { toast } from "react-toastify";
+import ShowPaymentInfo from "../../components/cards/ShowPaymentInfo";
 
 const History = () => {
   const [orders, setOrders] = useState([]);
@@ -60,7 +61,7 @@ const History = () => {
   const showEachOrders = () =>
     orders.map((order, i) => (
       <div key={i} className="m-5 p-3 card">
-        <p>show payment info</p>
+           <ShowPaymentInfo order={order} />
         {showOrderInTable(order)}
         <div className="row">
           <div className="col">
