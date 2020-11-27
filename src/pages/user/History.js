@@ -3,6 +3,8 @@ import UserNav from "../../components/nav/UserNav";
 import { getUserOrders } from "../../functions/user";
 import { useSelector, useDispatch } from "react-redux";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { toast } from "react-toastify";
 
 const History = () => {
@@ -18,8 +20,42 @@ const History = () => {
       console.log(JSON.stringify(res.data, null, 4));
       setOrders(res.data);
     });
+    const showOrderInTable = (order) => (
+      <Table className="table table-bordered">
+        <Thead className="thead-light">
+          <Tr>
+            <Th scope="col">Title</Th>
+            <Th scope="col">Price</Th>
+            <Th scope="col">Brand</Th>
+            <Th scope="col">Color</Th>
+            <Th scope="col">Count</Th>
+            <Th scope="col">Shipping</Th>
+          </Tr>
+        </Thead>
 
-  const showOrderInTable = (order) => <p>each order and it's products</p>;
+        <Tbody>
+          {order.products.map((p, i) => (
+            <Tr key={i}>
+              <Td>
+                <b>{p.product.title}</b>
+              </Td>
+              <Td>{p.product.price}</Td>
+              <Td>{p.product.brand}</Td>
+              <Td>{p.color}</Td>
+              <Td>{p.count}</Td>
+              <Td>
+                {p.product.shipping === "Yes" ? (
+                  <CheckCircleOutlined className="text-info"/>
+                ) : (
+                  <CloseCircleOutlined className="text-danger" />
+                )}
+              </Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+    );
+
 
   const showEachOrders = () =>
     orders.map((order, i) => (
