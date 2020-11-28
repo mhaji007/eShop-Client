@@ -28,7 +28,7 @@ const ShowPaymentInfo = ({ order }) => (
         {new Date(order.paymentIntent.created * 1000).toLocaleString()}
       </span>
       {" / "}
-      <span className="badge bg-primary text-white">
+      <span className={order.orderStatus === "Not Processed"? "badge bg-warning text-white" : "badge bg-info text-white"}>
         STATUS: {order.orderStatus}
       </span>
     </p>
