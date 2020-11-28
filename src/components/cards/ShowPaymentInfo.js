@@ -28,7 +28,21 @@ const ShowPaymentInfo = ({ order }) => (
         {new Date(order.paymentIntent.created * 1000).toLocaleString()}
       </span>
       {" / "}
-      <span className={order.orderStatus === "Not Processed"? "badge bg-warning text-white" : "badge bg-info text-white"}>
+      <br/>
+      <span
+      // Conditionally render style for each order status
+        className={
+          order.orderStatus === "Not Processed"
+            ? "badge bg-secondary text-white"
+            : order.orderStatus === "Processing"
+            ? "badge bg-info text-white"
+            : order.orderStatus === "Cancelled"
+            ? "badge bg-danger text-white"
+            : order.orderStatus === "Dispatched"
+            ? "badge bg-primary text-white"
+            : "badge bg-success text-white"
+        }
+      >
         STATUS: {order.orderStatus}
       </span>
     </p>
