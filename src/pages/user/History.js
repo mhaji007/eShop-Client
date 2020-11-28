@@ -7,6 +7,15 @@ import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { toast } from "react-toastify";
 import ShowPaymentInfo from "../../components/cards/ShowPaymentInfo";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  PDFDownloadLink,
+  PDFViewer,
+} from "@react-pdf/renderer";
 
 const History = () => {
   const [orders, setOrders] = useState([]);
@@ -57,6 +66,25 @@ const History = () => {
       </Table>
     );
 
+    const showDownloadLink = (order) => (
+      <PDFDownloadLink
+        document={
+          <Document>
+            <Page size="A4">
+              <View>
+                <Text>Section #1</Text>
+                <Text>Section #2</Text>
+              </View>
+            </Page>
+          </Document>
+        }
+        fileName="invoice.pdf"
+        className="btn btn-sm btn-block btn-outline-primary"
+      >
+        Download PDF
+      </PDFDownloadLink>
+    );
+
 
   const showEachOrders = () =>
     orders.map((order, i) => (
@@ -64,9 +92,7 @@ const History = () => {
            <ShowPaymentInfo order={order} />
         {showOrderInTable(order)}
         <div className="row">
-          <div className="col">
-            <p>PDF download</p>
-          </div>
+        <div className="col">{showDownloadLink(order)}</div>
         </div>
       </div>
     ));
