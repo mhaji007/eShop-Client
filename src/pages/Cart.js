@@ -6,11 +6,11 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
-import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
-import {userCart} from '../functions/user';
+import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
+import { userCart } from "../functions/user";
 
-const Cart = ({history}) => {
+const Cart = ({ history }) => {
   // Destructure user and cart from redux state
   // user is needed to check for logged in status
   // before allowing users to proceed to checkout
@@ -31,17 +31,33 @@ const Cart = ({history}) => {
     // alert('save order to database');
     // Send in cart from redux
     userCart(cart, user.token)
-    .then(res => {
-      console.log("Cart post response", res);
-      // Only redirect user if res.data.ok is true
-      if(res.data.ok)
-      history.push("/checkout")
-    }).catch((err) => console.log ("Error saving to database", err))
-  }
+      .then((res) => {
+        console.log("Cart post response", res);
+        // Only redirect user if res.data.ok is true
+        if (res.data.ok) history.push("/checkout");
+      })
+      .catch((err) => console.log("Error saving to database", err));
+  };
 
-// Function to return a table
+  // Function to update the Redux
+  // for redirecting the user after clicking on the pay cash on delivery
+  // option instead of taking them to payment page
+  const saveCashOrderToDb = () => {
+    // console.log("cart", JSON.stringify(cart, null, 4));
+    dispatch({
+      type: "COD",
+      payload: true,
+    });
+    userCart(cart, user.token)
+      .then((res) => {
+        console.log("CART POST RES", res);
+        if (res.data.ok) history.push("/checkout");
+      })
+      .catch((err) => console.log("cart save err", err));
+  };
+
+  // Function to return a table
   const showCartItems = () => (
-
     <Table className="table table-bordered">
       {/* Static heading - Table heading holding labels (headings) */}
       <Thead className="thead-light">
@@ -56,11 +72,10 @@ const Cart = ({history}) => {
           <th scope="col">Remove</th>
         </Tr>
       </Thead>
-    {/* Dynamic table body - map through products and display
+      {/* Dynamic table body - map through products and display
      each product in the cart  */}
       {cart.map((p) => (
-
-        <ProductCardInCheckout  key={p._id} p={p} />
+        <ProductCardInCheckout key={p._id} p={p} />
       ))}
     </Table>
   );
@@ -100,19 +115,35 @@ const Cart = ({history}) => {
             // If there is no item in cart, disable the proceed to checkout button
             // When user clicks on proceed to checkout button, before redirecting them
             // to checkout, cart should be saved into database
-            <button onClick ={saveOrderToDatabase}className="btn btn-sm btn-primary border border-info mt-2 text-info" disabled={!cart.length}>
-              Proceed to Checkout
-            </button>
+            <>
+              <button
+                onClick={saveOrderToDatabase}
+                className="btn btn-sm btn-primary border border-info mt-2 text-info"
+                disabled={!cart.length}
+              >
+                Proceed to Checkout
+              </button>
+              <br/>
+              <button
+                onClick={saveCashOrderToDb}
+                className="btn btn-sm btn-secondary mt-2 border mt-2"
+                disabled={!cart.length}
+              >
+                Pay Cash on Delivery
+              </button>
+            </>
           ) : (
             <button className="btn btn-sm btn-primary mt-2 text-alert">
               {/* Redirect user to this (cart) page after logging in
               - refer to roleBasedRedirect implemented in Login in auth */}
-                <Link to ={{
+              <Link
+                to={{
                   pathname: "/login",
-                  state: {from:"cart"}
-                }}>
-              Login to Checkout
-                </Link>
+                  state: { from: "cart" },
+                }}
+              >
+                Login to Checkout
+              </Link>
             </button>
           )}
         </div>

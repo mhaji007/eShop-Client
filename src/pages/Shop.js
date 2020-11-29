@@ -572,11 +572,11 @@ const Shop = () => {
 
           {products.length < 1 && <p>No products found</p>}
 
-          <div className="row pb-5">
+          <div className="row m-0 mb-3 justify-content-center">
             {products.map((p) => (
               <div
                 key={p._id}
-                className=" row m-0 mb-3 mt-3 justify-content-center"
+            
               >
                 <ProductCard product={p} />
               </div>
