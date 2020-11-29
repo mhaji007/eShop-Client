@@ -51,7 +51,9 @@
 import React, { useEffect, lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { currentUser } from "./functions/auth";
+
 import Loader from "./components/loader/Loader";
 // Access the currenlty logged in user
 import { auth } from "./firebase";
