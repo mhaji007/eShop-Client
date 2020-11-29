@@ -28,7 +28,7 @@ const History = () => {
 
   const loadUserOrders = () =>
     getUserOrders(user.token).then((res) => {
-      console.log(JSON.stringify(res.data, null, 4));
+      console.log("ORDERS LOADED IN HISTORY PAGE =======>", JSON.stringify(res.data, null, 4));
       setOrders(res.data);
     });
     const showOrderInTable = (order) => (
@@ -79,7 +79,8 @@ const History = () => {
 
 
   const showEachOrders = () =>
-    orders.map((order, i) => (
+  // Display recently created oorders first (reverse method)
+    orders.reverse().map((order, i) => (
       <div key={i} className="m-5 p-3 card">
            <ShowPaymentInfo order={order} />
         {showOrderInTable(order)}
