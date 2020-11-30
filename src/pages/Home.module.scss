@@ -1,6 +1,7 @@
-.title,.title div span {
-	display:inline-block;
-  color: #7B7B7B;
+.title,
+.title div span {
+  display: inline-block;
+  color: #7b7b7b;
   // font-family: 'Simplifica';
   // letter-spacing: 15px;
   letter-spacing: 12px;
@@ -10,11 +11,13 @@
   // font-weight: bold;
 }
 
-.title div span:last-child{ color:black;}
+.title div span:last-child {
+  color: black;
+}
 .title {
-	position:relative;
-	padding-top:32px;
-	margin:0 auto;
+  position: relative;
+  padding-top: 32px;
+  margin: 0 auto;
 }
 // .title:before {
 // 	content:"";
@@ -28,28 +31,45 @@
 //     -webkit-animation: widthize70 .6s 1 cubic-bezier(.7, 0, .175, 1) forwards;
 // }
 .title div {
-	overflow:hidden;
-	width:0%;
-	animation: widthize100 .8s 1 .3s cubic-bezier(.7, 0, .175, 1) forwards;
-    -webkit-animation: widthize100 .8s 1 .3s cubic-bezier(.7, 0, .175, 1) forwards;
+  overflow: hidden;
+  width: 0%;
+  animation: widthize100 0.8s 1 0.3s cubic-bezier(0.7, 0, 0.175, 1) forwards;
+  -webkit-animation: widthize100 0.8s 1 0.3s cubic-bezier(0.7, 0, 0.175, 1)
+    forwards;
 }
 .title div span {
-	white-space: nowrap;
+  white-space: nowrap;
 }
 
 @keyframes widthize70 {
-    0% { width: 0%; }
-    100% { width: 70%; }
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 70%;
+  }
 }
 @-webkit-keyframes widthize70 {
-    0% { width: 0%; }
-    100% { width: 70%; }
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 70%;
+  }
 }
 @keyframes widthize100 {
-    0% { width: 0%; }
-    100% { width: 100%; }
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
 }
 @-webkit-keyframes widthize100 {
-    0% { width: 0%; }
-    100% { width: 100%; }
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
 }

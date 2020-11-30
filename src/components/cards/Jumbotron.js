@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./Jumbotron.module.css";
 import classnames from "classnames";
 import eShop from "../../images/eShop.jpg";
 import TextLoop from "react-text-loop";
@@ -25,7 +24,7 @@ const Jumbotron = () => {
                 <TextLoop>
                   <span className="display-3 ">SHOP </span>
                   <span className="display-3 ">SAVE </span>
-              
+
                 </TextLoop>
 
                 <span className="display-3"> MORE.</span>

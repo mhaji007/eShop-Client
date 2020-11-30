@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 // For access to redux store and dispatching actions to redux store
 import { useSelector, useDispatch } from "react-redux";
 import { SearchOutlined } from "@ant-design/icons";
-import styles from "./Search.module.css";
+
 
 const Search = () => {
   const [clicked, setClicked] = useState(false);
