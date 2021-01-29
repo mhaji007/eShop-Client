@@ -19,16 +19,16 @@ A complete ecommerce built using MERN stack
 ## Core Technologies
 
 Client
-React/Redux
+- React/Redux
 
 Styling framework 
-Ant Design along with custom CSS
+- Ant Design along with custom CSS
 
 Database
-MongoDB
+- MongoDB
 
 Authentication system
-Firebase (forgot password, reset password, confirmation email, refresh tokens)
+- Firebase (forgot password, reset password, confirmation email, refresh tokens)
 
 
 ## Core features
