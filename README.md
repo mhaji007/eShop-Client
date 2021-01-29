@@ -52,7 +52,7 @@ Authentication system
 
 ### Login page
 
-![eshop-landing](https://user-images.githubusercontent.com/22078200/106308170-4b85a700-622e-11eb-8649-6b72d922ebfc.gif)
+![eshop-login](https://user-images.githubusercontent.com/22078200/106312139-36ac1200-6234-11eb-8d64-bca55f430ddd.gif)
 
 ### Home page
 
