@@ -22,7 +22,7 @@ Client
 - React/Redux
 
 Styling framework 
-- Ant Design along with custom CSS
+- Ant Design, Bootstrap, custom CSS
 
 Database
 - MongoDB
