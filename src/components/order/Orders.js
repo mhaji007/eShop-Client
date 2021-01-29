@@ -17,12 +17,13 @@ const Orders = ({ orders, handleStatusChange }) => {
           <Th scope="col">Shipping</Th>
         </Tr>
       </Thead>
+   
 
       <Tbody>
         {order.products.map((p, i) => (
           <Tr key={i}>
             <Td>
-              <b>{p.product.title}</b>
+              <b>{p.product.title&& p.product.title}</b>
             </Td>
             <Td>{p.product.price}</Td>
             <Td>{p.product.brand}</Td>
