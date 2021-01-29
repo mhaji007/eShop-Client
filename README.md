@@ -16,7 +16,7 @@ A complete ecommerce built using MERN stack
   </tr>
 </table>
 
-Core Technologies
+## Core Technologies
 
 Client
 React/Redux
